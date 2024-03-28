@@ -29,7 +29,7 @@ class MacCheckerMiddleware
             }
         }
         
-        return response()->view('views.404');
+        return response()->view('errors.404');
         
         
     }//end of handle
