@@ -4,62 +4,120 @@ namespace App\Http\Requests\Auth;
 
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
 class LoginRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
+    
     public function authorize(): bool
     {
         return true;
-    }
+    }//end of authorize
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\Rule|array|string>
-     */
     public function rules(): array
     {
-        return [
-            'email' => ['required', 'string', 'email'],
+        $rules = [];
+        switch ($this->type) {
+            case 'admin':
+                $rules = [
+                    'email' => ['required', 'string'],
+                ];
+                break;
+            case 'clinic':
+            case 'pharmacy':
+                $rules =  [
+                    'number' => ['required', 'string', 'min:7', 'max:7'],
+                ];
+                break;
+            case 'doctor':
+            case 'patient':
+                $rules =  [
+                    'civil_id' => ['required', 'string', 'min:10', 'max:10'],
+                ];
+                break;
+            default:
+                $rules =  [
+                    'civil_id' => ['required', 'string', 'min:10', 'max:10'],
+                ];
+        }
+        $rules = [
+            ...$rules,
             'password' => ['required', 'string'],
         ];
-    }
+    
+        return $rules;
+    }//end of rules
 
-    /**
-     * Attempt to authenticate the request's credentials.
-     *
-     * @throws \Illuminate\Validation\ValidationException
-     */
+
+    
     public function authenticate(): void
     {
+        
         $this->ensureIsNotRateLimited();
 
-        if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
+        if (!auth($this->type)->attempt($this->getCredentialsForUserType($this->type),$this->remember)) {
+
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
-                'email' => trans('auth.failed'),
+                $this->checkerKey() => __('auth.failed'),
             ]);
         }
 
         RateLimiter::clear($this->throttleKey());
-    }
+    }//end of authenticate
 
-    /**
-     * Ensure the login request is not rate limited.
-     *
-     * @throws \Illuminate\Validation\ValidationException
-     */
+
+    protected function checkerKey(): string
+    {
+        
+        $key = '';
+        switch ($this->type) {
+            case 'admin':
+                $key = 'email';
+                break;
+            case 'clinic':
+            case 'pharmacy':
+                $key = 'number';
+                break;
+            case 'doctor':
+            case 'patient':
+                $key = 'civil_id';
+                break;
+            default:
+                $key =  'civil_id';
+                break;
+        };
+        return $key;
+    } //end of checkerKey
+
+    protected function getCredentialsForUserType(string $userType): array
+    {
+        switch ($userType) {
+            case 'admin':
+                return $this->only('email', 'password');
+                break;
+            case 'clinic':
+            case 'pharmacy':
+                return $this->only('number', 'password');
+                break;
+            case 'doctor':
+            case 'patient':
+                return $this->only('civil_id', 'password');
+                break;
+            default:
+                return $this->only('civil_id', 'password');
+                break;
+        }
+    } // end of getCredentialsForUserType
+
+
     public function ensureIsNotRateLimited(): void
     {
-        if (! RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
+        
+        if (!RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
             return;
         }
 
@@ -68,18 +126,16 @@ class LoginRequest extends FormRequest
         $seconds = RateLimiter::availableIn($this->throttleKey());
 
         throw ValidationException::withMessages([
-            'email' => trans('auth.throttle', [
+            $this->checkerKey() => trans('auth.throttle', [
                 'seconds' => $seconds,
                 'minutes' => ceil($seconds / 60),
             ]),
         ]);
-    }
+    }//end of ensureIsNotRateLimited
 
-    /**
-     * Get the rate limiting throttle key for the request.
-     */
+   
     public function throttleKey(): string
     {
-        return Str::transliterate(Str::lower($this->string('email')).'|'.$this->ip());
-    }
+        return Str::transliterate(Str::lower($this->string($this->checkerKey())) . '|' . $this->ip());
+    }//end of throttleKey
 }
