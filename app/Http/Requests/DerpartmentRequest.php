@@ -1,0 +1,69 @@
+<?php
+
+namespace App\Http\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+
+class DerpartmentRequest extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     */
+    public function authorize(): bool
+    {
+        return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     */
+    public function rules(): array
+    {
+        $rules =  [
+            'ar.name' => ['required','string','min:5','max:100','unique:department_translations,name,NULL,id,locale,ar'],
+            'en.name' => ['required','string','min:5','max:100','unique:department_translations,name,NULL,id,locale,en'],
+            'scientific_name' => ['required', 'string', 'max:30'],
+            'status' => ['required', 'in:0,1'],
+        ];
+
+        if ($this->getMethod() == 'PUT') {
+
+            array_pop($rules['ar.name']);
+            array_pop($rules['en.name']);
+
+            $rules['ar.name'] = [
+                ...$rules['ar.name'],
+                Rule::unique('department_translations', 'name')->where('locale','ar')->ignore($this->department->id, 'department_id'),
+            ];
+            $rules['en.name'] = [
+                ...$rules['en.name'],
+                Rule::unique('department_translations', 'name')->where('locale','en')->ignore($this->department->id, 'department_id'),
+            ];
+        }
+
+        return $rules;
+    }
+
+
+    public function messages()
+    {
+        return [
+            'ar.name.required' => __('departments.name.ar.required'),
+            'en.name.required' => __('departments.name.en.required'),
+            'ar.name.string' => __('departments.name.string'),
+            'en.name.string' => __('departments.name.string'),
+            'ar.name.min' => __('departments.name.ar.min'),
+            'en.name.max' => __('departments.name.en.max'),
+            'ar.name.unique' => __('departments.name.ar.unique'),
+            'en.name.unique' => __('departments.name.en.unique'),
+            'scientific_name.required' => __('departments.scientific_name.required'),
+            'scientific_name.string' => __('departments.scientific_name.string'),
+            'scientific_name.max' => __('departments.scientific_name.max'),
+            'status.required' => __('departments.status.required'),
+            'status.in' => __('departments.status.in')
+        ];
+    }
+}
