@@ -1,21 +1,21 @@
 <?php
 
 return [
-   'btn_create_department' => 'اضافة قسم',
-   'name_department' => 'اسم القسم',
-   'name_department_ar' => 'اسم القسم بالعربيه',
-   'name_department_en' => 'اسم القسم بالانجليزيه',
-   'scientific_name' => 'الاسم العلمي للقسم',
-   'description' => 'الوصف',
-   'description_ar' => 'الوصف بالعربيه',
-   'description_en' => 'الوصف بالانجليزيه',
-   'given_drug' => 'حالة صرف الأدوية',
-   'give_drug' => 'يصرف',
-   'not_give_drug' => 'لا يصرف',
-   'created_at' => 'تاريخ الاضافة',
+    'btn_create_department' => 'اضافة قسم',
+    'name_department' => 'اسم القسم',
+    'name_department_ar' => 'اسم القسم بالعربيه',
+    'name_department_en' => 'اسم القسم بالانجليزيه',
+    'scientific_name' => 'الاسم العلمي للقسم',
+    'description' => 'الوصف',
+    'description_ar' => 'الوصف بالعربيه',
+    'description_en' => 'الوصف بالانجليزيه',
+    'given_drug' => 'حالة صرف الأدوية',
+    'give_drug' => 'يصرف',
+    'not_give_drug' => 'لا يصرف',
+    'created_at' => 'تاريخ الاضافة',
 
 
-
+    //validation
     'name.ar.required' => 'حقل الاسم بالعربيه مطلوب.',
     'name.en.required' => 'حقل الاسم بالانجليزيه مطلوب.',
     'name.string' => 'يجب أن يكون الاسم نصًا.',

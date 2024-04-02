@@ -3,9 +3,7 @@
 @section('css')
 @endsection
 
-@if ($guardName == 'admin')
-	@include('admin.index')
-@endif
+@include($guardName . '.index')
 
 @section('js')
 @endsection

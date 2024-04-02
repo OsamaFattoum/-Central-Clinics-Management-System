@@ -12,7 +12,7 @@ class DepartmentController extends Controller
 
     public function index()
     {
-        return view('department.index', [
+        return view('departments.index', [
             'departments' => Department::all(),
         ]);
     } //end of index
@@ -21,13 +21,10 @@ class DepartmentController extends Controller
 
     public function store(DerpartmentRequest $request)
     {
-        
         try {
-           
             Department::create($request->all());
-
             session()->flash('add');
-            return redirect()->route('departments.index');
+            return redirect()->route('departments.index')->withInput();
         } catch (Exception $e) {
             return redirect()->route('departments.index')->withErrors(['error' => $e->getMessage()]);
         }

@@ -1,5 +1,5 @@
 <!-- Title -->
-<title>نظام العيادات المركزي</title>
+<title>@lang('site.project_title')</title>
 <!-- Favicon -->
 <link rel="icon" href="{{URL::asset('assets/img/brand/favicon.png')}}" type="image/x-icon"/>
 <!-- Icons css -->

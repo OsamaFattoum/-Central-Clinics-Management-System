@@ -11,7 +11,7 @@
                             <div class="card-sigin">
                                 <div class="mb-5 d-flex">
                                     <a href="{{ route('welcome') }}">
-                                        <img src="{{URL::asset('assets/img/brand/logo.png')}}"
+                                        <img src="{{URL::asset('assets/img/brand/logo_' . config('app.locale') . '.png')}}"
                                             class="sign-favicon ht-70" alt="logo">
                                     </a>
                                 </div>

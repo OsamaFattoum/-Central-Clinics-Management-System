@@ -2,6 +2,7 @@
 
 namespace App\Models\Department;
 
+use App\Models\Clinic\Clinic;
 use Astrotomic\Translatable\Translatable;
 use Astrotomic\Translatable\Contracts\Translatable as ContractsTranslatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -14,4 +15,9 @@ class Department extends Model implements ContractsTranslatable
     public $translatedAttributes = ['name','description'];
 
     protected $guarded = [];
+
+    public function clinics()
+    {
+        return $this->belongsToMany(Clinic::class,'department_clinic');
+    } //end of clinics relation
 }

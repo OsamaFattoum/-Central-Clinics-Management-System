@@ -1,5 +1,5 @@
 $(function() {
-			
+    
     $("[name=select_all]").click(function(source) {
         checkboxes = $("[name=delete_select]");
         for(var i in checkboxes){

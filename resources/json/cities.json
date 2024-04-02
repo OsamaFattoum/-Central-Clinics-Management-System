@@ -1,0 +1,15 @@
+[
+    { "id": 1, "name_en": "Amman", "name_ar": "عمّان" },
+    { "id": 2, "name_en": "Zarqa", "name_ar": "الزرقاء" },
+    { "id": 3, "name_en": "Irbid", "name_ar": "إربد" },
+    { "id": 4, "name_en": "Aqaba", "name_ar": "العقبة" },
+    { "id": 5, "name_en": "Salt", "name_ar": "السلط" },
+    { "id": 6, "name_en": "Ar Ramtha", "name_ar": "الرمثا" },
+    { "id": 7, "name_en": "Jerash", "name_ar": "جرش" },
+    { "id": 8, "name_en": "Madaba", "name_ar": "مادبا" },
+    { "id": 9, "name_en": "Mafraq", "name_ar": "المفرق" },
+    { "id": 10, "name_en": "Karak", "name_ar": "الكرك" },
+    { "id": 11, "name_en": "Tafilah", "name_ar": "الطفيلة" },
+    { "id": 12, "name_en": "Ma'an", "name_ar": "معان" },
+    { "id": 13, "name_en": "Ajloun", "name_ar": "عجلون" }
+]

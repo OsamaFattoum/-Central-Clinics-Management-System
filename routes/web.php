@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ClinicController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -33,6 +34,10 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('departments',DepartmentController::class)->except(['create','show','edit']);
     Route::delete('departments', [DepartmentController::class, 'bulk'])->name('departments.bulk');
+
+    Route::resource('clinics',ClinicController::class);
+    Route::delete('clinics', [ClinicController::class, 'bulk'])->name('clinics.bulk');
+
 
 });
 

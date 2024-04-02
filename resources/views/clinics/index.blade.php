@@ -4,7 +4,7 @@
 @include('layouts.table-head')
 @endsection
 
-@include('components.breadcrumb',['pervPage' => __('sidebar.main_l') , 'currentPage' => __('sidebar.departments_t')])
+@include('components.breadcrumb',['pervPage' => __('sidebar.main_l') , 'currentPage' => __('sidebar.clinics_t')])
 
 @section('content')
 @include('components.messages_alert')
@@ -16,9 +16,9 @@
                 <div class="card-header pb-0">
                     <div class="d-flex justify-content-between">
                         <div class="">
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#create">
-                                @lang('departments.btn_create_department')
-                            </button>
+                            <a href="{{route('clinics.create')}}" class="btn btn-primary">
+                                @lang('clinics.btn_create_clinic')
+                            </a>
                             <button type="button" class="btn btn-danger"
                                 id="btn_delete_all">@lang('delete.btn_delete_selected_data')</button>
                         </div>
@@ -33,37 +33,38 @@
                                     <th class="pr-2 wd-5p"> <label class="ckbox"><input type="checkbox"
                                                 name="select_all"><span></span></label>
                                     </th>
-                                    <th class="pr-2">@lang('departments.name_department')</th>
-                                    <th class="pr-2">@lang('departments.scientific_name')</th>
-                                    <th class="pr-2">@lang('departments.description')</th>
-                                    <th class="pr-2">@lang('departments.given_drug')</th>
-                                    <th class="pr-2">@lang('departments.created_at')</th>
+                                    <th class="pr-2">@lang('clinics.name_clinic')</th>
+                                    <th class="pr-2">@lang('clinics.phone')</th>
+                                    <th class="pr-2">@lang('clinics.department')</th>
+                                    <th class="pr-2">@lang('clinics.description')</th>
+                                    <th class="pr-2">@lang('clinics.city')</th>
+                                    <th class="pr-2">@lang('clinics.postal_code')</th>
                                     <th class="pr-2">@lang('dropdown_op.processes')</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($departments as $department)
+                                @foreach ($clinics as $clinic)
                                 <tr>
                                     <td class="pr-2">
                                         <label class="ckbox">
-                                            <input type="checkbox" name="delete_select" value="{{ $department->id }}">
+                                            <input type="checkbox" name="delete_select" value="{{ $clinic->id }}">
                                             <span></span>
                                         </label>
                                     </td>
-                                    <td class="pr-2">{{ $department->name }}</td>
+                                    <td class="pr-2">{{ $clinic->name }}</td>
+                                    <td class="pr-2">{{ $clinic->facilityProfile->phone }}</td>
                                     <td class="pr-2">
-                                        <span class="badge badge-info">{{$department->scientific_name}}</span>
+                                        @foreach ($clinic->departments as $department )
+                                            
+                                        <span class="badge badge-info">{{ $department->translate(app()->getLocale())->name}}</span><br>
+                                        @endforeach
                                     </td>
                                     <td class="pr-2">
-                                        @include('components.description_data_table',['description'=>$department->description,'id'=>$department->id])
+                                        @include('components.description_data_table',['description'=>$clinic->description,'id'=>$clinic->id])
                                     </td>
-                                    <td class="pr-2">
-                                        <span
-                                            class="badge badge-{{$department->status == 0 ? 'danger' : 'success'}}">{{$department->status
-                                            == 0 ? __('departments.not_give_drug') :
-                                            __('departments.give_drug')}}</span>
-                                    </td>
-                                    <td class="pr-2">{{ $department->created_at->diffForHumans()}}</td>
+                                    <td class="pr-2">{{ $clinic->cityName() }}</td>
+                                    <td class="pr-2">{{ $clinic->facilityProfile->postal_code }}</td>
+
                                     <td class="pr-2">
                                         <div class="dropdown">
                                             <button aria-expanded="false" aria-haspopup="true"
@@ -71,24 +72,25 @@
                                                 type="button">@lang('dropdown_op.processes')<i
                                                     class="fas fa-caret-down mx-1"></i></button>
                                             <div class="dropdown-menu tx-13">
-                                                <a class="dropdown-item" href="#" data-toggle="modal"
-                                                    data-target="#edit{{ $department->id }}"><i style="color: #0ba360"
-                                                        class="text-success ti-pencil-alt"></i>&nbsp;&nbsp;@lang('dropdown_op.drop_down_edit')</a>
+                                                <a class="dropdown-item"
+												href="{{route('clinics.edit',$clinic->id)}}"><i
+													style="color: #0ba360"
+													class="text-success ti-pencil-alt"></i>&nbsp;&nbsp;@lang('dropdown_op.drop_down_edit')</a>
 
 
                                                 <a class="dropdown-item" href="#" data-toggle="modal"
-                                                    data-target="#delete{{$department->id}}"><i
+                                                    data-target="#delete{{$clinic->id}}"><i
                                                         class="text-danger  ti-trash"></i>&nbsp;&nbsp;@lang('dropdown_op.drop_down_delete')</a>
 
                                             </div>
                                         </div>
 
                                     </td>
-                                    @include('components.delete',['id'=>$department->id,'name' =>
-                                    $department->name,'route'=>'departments'])
-                                    @include('department._edit')
-                                    @include('components.desc',['id'=>$department->id,'name' =>
-                                    $department->name,'desc'=>$department->description])
+                                    @include('components.delete',['id'=>$clinic->id,'name' =>
+                                    $clinic->name,'route'=>'clinics'])
+                                    
+                                    @include('components.desc',['id'=>$clinic->id,'name' =>
+                                    $clinic->name,'desc'=>$clinic->description])
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -101,8 +103,8 @@
         <!--/div-->
     </div>
 </div>
-@include('department._create')
-@include('components.delete_select',['route' => 'departments'])
+
+@include('components.delete_select',['route' => 'clinics'])
 </div>
 <!-- Container closed -->
 </div>
@@ -110,5 +112,5 @@
 @endsection
 
 @section('js')
-@include('layouts.table-footer',['orderIndex' => 1,'targetsNotOrdered' => [0,2,3,4,5,6]])
+@include('layouts.table-footer',['orderIndex'=>1,'targetsNotOrdered' => [0,2,3,5,6]])
 @endsection

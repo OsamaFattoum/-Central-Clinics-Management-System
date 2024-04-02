@@ -7,19 +7,13 @@ use Illuminate\Validation\Rule;
 
 class DerpartmentRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
+    
     public function authorize(): bool
     {
         return true;
-    }
+    }//end of authorize
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
+ 
     public function rules(): array
     {
         $rules =  [
@@ -45,7 +39,7 @@ class DerpartmentRequest extends FormRequest
         }
 
         return $rules;
-    }
+    }//end of rules
 
 
     public function messages()
@@ -65,5 +59,5 @@ class DerpartmentRequest extends FormRequest
             'status.required' => __('departments.status.required'),
             'status.in' => __('departments.status.in')
         ];
-    }
+    }//end of messages
 }
