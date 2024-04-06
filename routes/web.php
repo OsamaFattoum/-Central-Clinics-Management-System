@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ClinicAccreditationsController;
 use App\Http\Controllers\ClinicController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\ProfileController;
@@ -36,7 +37,14 @@ Route::middleware('auth')->group(function () {
     Route::delete('departments', [DepartmentController::class, 'bulk'])->name('departments.bulk');
 
     Route::resource('clinics',ClinicController::class);
+    Route::get('clinics/{clinic}/status', [ClinicController::class, 'status'])->name('clinics.status');
     Route::delete('clinics', [ClinicController::class, 'bulk'])->name('clinics.bulk');
+
+    Route::prefix('clinics/{clinic}')->group(function(){
+        Route::resource('accreditations',ClinicAccreditationsController::class)->except(['create','show','edit']);
+        Route::delete('accreditations', [ClinicAccreditationsController::class, 'bulk'])->name('accreditations.bulk');
+
+    });
 
 
 });

@@ -51,7 +51,7 @@
 <script>
     window.onload = function() {
                 notif({
-                    msg: "The status has been change successfully",
+                    msg: "{{ __('messages.status') }}",
                     type: "success"
                 });
             }

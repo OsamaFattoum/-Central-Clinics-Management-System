@@ -18,10 +18,15 @@ class ClinicController extends Controller
 {
     use ImageOperations;
 
-    public function index()
+    public function index(Request $request)
     {
+        $clinics = Clinic::when($request->department, function ($query) use ($request) {
+            return $query->whereHas('departments', function ($subquery) use ($request) {
+                $subquery->where('department_id', $request->department);
+            });
+        })->with(['departments','facilityProfile'])->get();
         return view('clinics.index', [
-            'clinics' => Clinic::with(['departments', 'facilityProfile'])->get(),
+            'clinics' =>  $clinics,
         ]);
     } //end of index
 
@@ -95,9 +100,9 @@ class ClinicController extends Controller
 
     public function show(Clinic $clinic)
     {
-        // return view('dashboard.doctors.show',[
-        //     'doctor'=> $doctor
-        // ]);
+        return view('clinics.show',[
+            'clinic'=> $clinic
+        ]);
     } //end of show
 
     public function edit(Clinic $clinic)
@@ -182,14 +187,25 @@ class ClinicController extends Controller
     } //end of update
 
 
+    public function status(Clinic $clinic)
+    {
+        try {
+            $clinic->update(['status' => !$clinic->status]);
+            session()->flash('change_status');
+            return redirect()->route('clinics.index');
+        } catch (Exception $e) {
+            return redirect()->route('clinics.index')->withErrors(['error' => $e->getMessage()]);
+        }
+    }//end of status
+
     public function destroy(Clinic $clinic)
     {
-       
+
         DB::beginTransaction();
         try {
             if ($clinic->image) {
 
-                $this->deleteImage('uploads',$clinic->image, $clinic->id);
+                $this->deleteImage('uploads', $clinic->image, $clinic->id);
             }
             $clinic->delete();
             $clinic->facilityDays()->delete();

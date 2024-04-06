@@ -3,7 +3,6 @@
 return [
    'btn_create_clinic' => 'إضافة عيادة',
    
-
    'title_main_info' => 'المعلومات الاساسية',
    'name_clinic' => 'اسم العيادة',
    'name_clinic_ar' => 'اسم العياده بالعربيه',
@@ -32,7 +31,18 @@ return [
 
    'edit_image' => 'تعديل الصورة',
 
+   'clinic_contact' => 'معلومات التواصل',
+   
+   'phone_contact' => 'هاتف العيادة',
+   'phone_owner_contact' => 'هاتف مالك العيادة',
+   'name_owner_profile' => 'اسم مالك العيادة',
+   'email_owner_profile' => 'البريد الالكتروني لمالك العيادة',
 
+   'status' => 'الحالة',
+   'open' => 'مفتوح',
+   'close' => 'مغلق',
+   'enabled' => 'مفعل',
+   'not_enabled' => 'غير فعال',
 
    //validation
    'name.ar.required' => 'حقل الاسم بالعربيه مطلوب.',

@@ -39,6 +39,8 @@
                                     <th class="pr-2">@lang('clinics.description')</th>
                                     <th class="pr-2">@lang('clinics.city')</th>
                                     <th class="pr-2">@lang('clinics.postal_code')</th>
+                                    <th class="pr-2">@lang('clinics.status')</th>
+                                    <th class="pr-2">@lang('clinic_accreditations.accreditions')</th>
                                     <th class="pr-2">@lang('dropdown_op.processes')</th>
                                 </tr>
                             </thead>
@@ -51,12 +53,14 @@
                                             <span></span>
                                         </label>
                                     </td>
-                                    <td class="pr-2">{{ $clinic->name }}</td>
+                                    <td class="pr-2"><a href="{{ route('clinics.show',$clinic->id) }}">{{
+                                            $clinic->name }}</a></td>
                                     <td class="pr-2">{{ $clinic->facilityProfile->phone }}</td>
                                     <td class="pr-2">
                                         @foreach ($clinic->departments as $department )
-                                            
-                                        <span class="badge badge-info">{{ $department->translate(app()->getLocale())->name}}</span><br>
+
+                                        <span class="badge badge-info">{{
+                                            $department->translate(app()->getLocale())->name}}</span><br>
                                         @endforeach
                                     </td>
                                     <td class="pr-2">
@@ -64,7 +68,11 @@
                                     </td>
                                     <td class="pr-2">{{ $clinic->cityName() }}</td>
                                     <td class="pr-2">{{ $clinic->facilityProfile->postal_code }}</td>
+                                    <td class="pr-2"> <span class="badge badge-{{ $clinic->status ? 'success' : 'danger' }}">{{ $clinic->status ? __('clinics.enabled') : __('clinics.not_enabled') }}</span></td>
 
+                                    <td class="pr-2"><a class="btn btn-outline-dark btn-sm"
+                                            href="{{ route('accreditations.index',$clinic->id) }}">@lang('clinic_accreditations.accreditions')</a>
+                                    </td>
                                     <td class="pr-2">
                                         <div class="dropdown">
                                             <button aria-expanded="false" aria-haspopup="true"
@@ -72,11 +80,12 @@
                                                 type="button">@lang('dropdown_op.processes')<i
                                                     class="fas fa-caret-down mx-1"></i></button>
                                             <div class="dropdown-menu tx-13">
+                                                <a class="dropdown-item" href="{{route('clinics.edit',$clinic->id)}}"><i
+                                                        style="color: #0ba360"
+                                                        class="text-success ti-pencil-alt"></i>&nbsp;&nbsp;@lang('dropdown_op.drop_down_edit')</a>
                                                 <a class="dropdown-item"
-												href="{{route('clinics.edit',$clinic->id)}}"><i
-													style="color: #0ba360"
-													class="text-success ti-pencil-alt"></i>&nbsp;&nbsp;@lang('dropdown_op.drop_down_edit')</a>
-
+                                                    href="{{route('clinics.status',$clinic->id)}}"><i
+                                                        class="text-warning ti-back-right"></i>&nbsp;&nbsp;@lang('dropdown_op.drop_down_status')</a>
 
                                                 <a class="dropdown-item" href="#" data-toggle="modal"
                                                     data-target="#delete{{$clinic->id}}"><i
@@ -88,7 +97,7 @@
                                     </td>
                                     @include('components.delete',['id'=>$clinic->id,'name' =>
                                     $clinic->name,'route'=>'clinics'])
-                                    
+
                                     @include('components.desc',['id'=>$clinic->id,'name' =>
                                     $clinic->name,'desc'=>$clinic->description])
                                 </tr>

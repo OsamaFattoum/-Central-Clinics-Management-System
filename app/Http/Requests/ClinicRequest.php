@@ -8,7 +8,6 @@ use Illuminate\Validation\Rule;
 
 class ClinicRequest extends FormRequest
 {
-    use RulesOperations;
 
     public function authorize(): bool
     {

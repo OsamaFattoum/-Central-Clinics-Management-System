@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('number',7)->unique();
             $table->string('password');
             $table->string('email')->unique();
-            $table->boolean('open_status')->default(1);
             $table->boolean('status')->default(1);
             $table->timestamps();
         });

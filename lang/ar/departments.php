@@ -9,6 +9,7 @@ return [
     'description' => 'الوصف',
     'description_ar' => 'الوصف بالعربيه',
     'description_en' => 'الوصف بالانجليزيه',
+    'related_clinic' => 'العيادات المرتبطة',
     'given_drug' => 'حالة صرف الأدوية',
     'give_drug' => 'يصرف',
     'not_give_drug' => 'لا يصرف',
