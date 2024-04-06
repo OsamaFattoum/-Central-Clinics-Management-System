@@ -16,6 +16,10 @@ class AuthenticatedSessionController extends Controller
     {
         return view('auth.login');
     } //end of login admin
+    public function loginFacility()
+    {
+        return view('auth.facility-login');
+    } //end of login admin
 
 
     public function store(LoginRequest $request): RedirectResponse
@@ -23,7 +27,7 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
         
         $request->session()->regenerate();
-
+      
         return redirect()->intended(route('dashboard', absolute: false));
         
     }//end of store

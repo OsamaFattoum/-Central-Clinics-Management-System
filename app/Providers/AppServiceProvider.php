@@ -21,10 +21,12 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         View::composer('*', function ($view) {
-            $types = ['admin'];
+            $types = ['admin', 'clinic'];
+
             foreach ($types as $type) {
-                if (auth()->guard($type)->check()) {
-                    $view->with('guardName', $type);
+                
+                if (auth()->guard($type)->check()) {                
+                    $view->with('guardName',$type);
                 }
             }
         });

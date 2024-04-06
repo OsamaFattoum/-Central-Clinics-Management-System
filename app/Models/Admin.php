@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -33,6 +34,8 @@ class Admin extends Authenticatable
         'remember_token',
     ];
 
+    
+
     /**
      * The attributes that should be cast.
      *
@@ -42,4 +45,21 @@ class Admin extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+
+    protected $appends = ['image_path'];
+
+    //attr
+    public function getImagePathAttribute()
+    {
+        $disk = 'uploads/';
+        return $this->image == null ? $disk . 'admin.png' : $disk . $this->image->url;
+    } //end of getImagePathAttribute
+
+
+      //relation
+      public function image(): MorphOne
+      {
+          return $this->morphOne(Image::class, 'imageable');
+      } //end of image relation
 }
