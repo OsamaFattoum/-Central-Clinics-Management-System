@@ -2,32 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ClinicRequest;
-use App\Models\Clinic\Clinic;
+use App\Http\Requests\PharmacyRequest;
 use App\Models\Day\Day;
-use App\Models\Department\Department;
-use App\Models\Facility\FacilityDay;
+use App\Models\Pharmacy\Pharmacy;
 use App\Traits\ImageOperations;
-use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
-class ClinicController extends Controller
+class PharmacyController extends Controller
 {
     use ImageOperations;
 
     public function index(Request $request)
     {
-        $clinics = Clinic::when($request->department, function ($query) use ($request) {
-            return $query->whereHas('departments', function ($subquery) use ($request) {
-                $subquery->where('department_id', $request->department);
-            });
-        })->with(['departments','facilityProfile'])->get();
-        return view('clinics.index', [
-            'clinics' =>  $clinics,
+        $pharmacies = Pharmacy::all();
+
+        return view('pharmacies.index', [
+            'pharmacies' =>  $pharmacies,
         ]);
+
     } //end of index
 
     public function create()
@@ -35,19 +30,18 @@ class ClinicController extends Controller
         $citiesJson = file_get_contents(resource_path('json/cities.json'));
         $cities = json_decode($citiesJson, true);
 
-        return view('clinics.create', [
+        return view('pharmacies.create', [
             'days' => Day::all(),
-            'departments' => Department::all(),
             'cities' => $cities,
         ]);
     } //end of create
 
-    public function store(ClinicRequest $request)
+    public function store(PharmacyRequest $request)
     {
 
         DB::beginTransaction();
         try {
-            $clinic = Clinic::create([
+            $pharmacy = Pharmacy::create([
                 "ar" => [
                     "name" => $request->ar['name'],
                     "description" => $request->ar['description'],
@@ -60,22 +54,21 @@ class ClinicController extends Controller
                 "email" => $request->email,
                 "password" => Hash::make($request->password),
             ]);
-            $clinic->departments()->attach($request->departments);
 
             // Attach each day to the clinic
             $daysIds = $request->days;
 
             foreach ($daysIds as $day) {
-                $clinic->facilityDays()->create([
+                $pharmacy->facilityDays()->create([
                     'day_id' => $day,
-                    'facility_type' => Clinic::class,
-                    'facility_id' => $clinic->id,
+                    'facility_type' => Pharmacy::class,
+                    'facility_id' => $pharmacy->id,
                 ]);
             }
 
-            $clinic->facilityProfile()->create([
-                'facility_id' => $clinic->id,
-                'facility_type' => Clinic::class,
+            $pharmacy->facilityProfile()->create([
+                'facility_id' => $pharmacy->id,
+                'facility_type' => Pharmacy::class,
                 "address" => $request->address,
                 "city" => $request->city,
                 'phone' => $request->phone,
@@ -87,51 +80,51 @@ class ClinicController extends Controller
                 "owner_email" => $request->owner_email,
             ]);
 
-            $this->verifyAndStoreImage($request, 'image', 'clinics', 'uploads', $clinic->id, Clinic::class);
+            $this->verifyAndStoreImage($request, 'image', 'pharmacies', 'uploads', $pharmacy->id, Pharmacy::class);
 
             DB::commit();
             session()->flash('add');
-            return redirect()->route('clinics.index');
+            return redirect()->route('pharmacies.index');
         } catch (Exception $e) {
             DB::rollback();
-            return redirect()->route('clinics.index')->withErrors(['error' => $e->getMessage()]);
+            return redirect()->route('pharmacies.index')->withErrors(['error' => $e->getMessage()]);
         }
     } //end of store
 
-    public function show(Clinic $clinic)
+
+    public function show(Pharmacy $pharmacy)
     {
-        return view('clinics.show',[
-            'clinic'=> $clinic
+        return view('pharmacies.show',[
+            'pharmacy'=> $pharmacy
         ]);
     } //end of show
 
-    public function edit(Clinic $clinic)
+    public function edit(Pharmacy $pharmacy)
     {
         $citiesJson = file_get_contents(resource_path('json/cities.json'));
         $cities = json_decode($citiesJson, true);
 
-        return view('clinics.edit', [
-            'clinic' => $clinic,
+        return view('pharmacies.edit', [
+            'pharmacy' => $pharmacy,
             'days' => Day::all(),
-            'departments' => Department::all(),
             'cities' => $cities,
         ]);
     } //end of edit
 
-    public function update(ClinicRequest $request, Clinic $clinic)
+    public function update(PharmacyRequest $request,Pharmacy $pharmacy)
     {
 
         DB::beginTransaction();
         try {
 
             if ($request->image) {
-                if ($clinic->image) {
-                    $this->deleteImage('uploads', $clinic->image->url, $clinic->id);
+                if ($pharmacy->image) {
+                    $this->deleteImage('uploads', $pharmacy->image->url, $pharmacy->id);
                 }
-                $this->verifyAndStoreImage($request, 'image', 'clinics', 'uploads', $clinic->id, Clinic::class);
+                $this->verifyAndStoreImage($request, 'image', 'pharmacies', 'uploads', $pharmacy->id, Pharmacy::class);
             }
 
-            $clinic->update([
+            $pharmacy->update([
                 "ar" => [
                     "name" => $request->ar['name'],
                     "description" => $request->ar['description'],
@@ -144,29 +137,26 @@ class ClinicController extends Controller
                 "email" => $request->email,
                 "password" => Hash::make($request->password),
             ]);
-            $clinic->departments()->sync($request->departments);
-
-
 
             // Attach each day to the clinic
 
-            foreach ($clinic->facilityDays as $facilityDay) {
+            foreach ($pharmacy->facilityDays as $facilityDay) {
                 $facilityDay->delete();
             }
 
             $daysIds = $request->days;
 
             foreach ($daysIds as $day) {
-                $clinic->facilityDays()->create([
+                $pharmacy->facilityDays()->create([
                     'day_id' => $day,
-                    'facility_type' => Clinic::class,
-                    'facility_id' => $clinic->id,
+                    'facility_type' => Pharmacy::class,
+                    'facility_id' => $pharmacy->id,
                 ]);
             }
 
-            $clinic->facilityProfile()->update([
-                'facility_id' => $clinic->id,
-                'facility_type' => Clinic::class,
+            $pharmacy->facilityProfile()->update([
+                'facility_id' => $pharmacy->id,
+                'facility_type' => Pharmacy::class,
                 "address" => $request->address,
                 "city" => $request->city,
                 'phone' => $request->phone,
@@ -179,43 +169,42 @@ class ClinicController extends Controller
             ]);
             DB::commit();
             session()->flash('edit');
-            return redirect()->route('clinics.index');
+            return redirect()->route('pharmacies.index');
         } catch (Exception $e) {
             DB::rollback();
-            return redirect()->route('clinics.index')->withErrors(['error' => $e->getMessage()]);
+            return redirect()->route('pharmacies.index')->withErrors(['error' => $e->getMessage()]);
         }
     } //end of update
 
-
-    public function status(Clinic $clinic)
+    public function status(Pharmacy $pharmacy)
     {
         try {
-            $clinic->update(['status' => !$clinic->status]);
+            $pharmacy->update(['status' => !$pharmacy->status]);
             session()->flash('change_status');
-            return redirect()->route('clinics.index');
+            return redirect()->route('pharmacies.index');
         } catch (Exception $e) {
-            return redirect()->route('clinics.index')->withErrors(['error' => $e->getMessage()]);
+            return redirect()->route('pharmacies.index')->withErrors(['error' => $e->getMessage()]);
         }
     }//end of status
 
-    public function destroy(Clinic $clinic)
+    public function destroy(Pharmacy $pharmacy)
     {
 
         DB::beginTransaction();
         try {
-            if ($clinic->image->exists()) {
+            if ($pharmacy->image->exists()) {
 
-                $this->deleteImage('uploads', $clinic->image->url, $clinic->id);
+                $this->deleteImage('uploads', $pharmacy->image->url, $pharmacy->id);
             }
-            $clinic->delete();
-            $clinic->facilityDays()->delete();
-            $clinic->facilityProfile()->delete();
+            $pharmacy->delete();
+            $pharmacy->facilityDays()->delete();
+            $pharmacy->facilityProfile()->delete();
             DB::commit();
             session()->flash('delete');
-            return redirect()->route('clinics.index');
+            return redirect()->route('pharmacies.index');
         } catch (Exception $e) {
             DB::rollback();
-            return redirect()->route('clinics.index')->withErrors(['error' => $e->getMessage()]);
+            return redirect()->route('pharmacies.index')->withErrors(['error' => $e->getMessage()]);
         }
     } //end of destroy
 
@@ -225,21 +214,20 @@ class ClinicController extends Controller
         DB::beginTransaction();
         try {
             foreach ($ids as $id) {
-                $clinic = Clinic::findOrFail($id);
-                if ($clinic->image->exists()) {
-                    $this->deleteImage('uploads', $clinic->image->url, $clinic->id);
+                $pharmacy = Pharmacy::findOrFail($id);
+                if ($pharmacy->image->exists()) {
+                    $this->deleteImage('uploads', $pharmacy->image->url, $pharmacy->id);
                 }
-                $clinic->facilityDays()->delete();
-                $clinic->facilityProfile()->delete();
+                $pharmacy->facilityDays()->delete();
+                $pharmacy->facilityProfile()->delete();
             }
-            Clinic::destroy($ids);
+            Pharmacy::destroy($ids);
             DB::commit();
             session()->flash('delete');
-            return redirect()->route('clinics.index');
+            return redirect()->route('pharmacies.index');
         } catch (Exception $e) {
             DB::rollback();
-            return redirect()->route('clinics.index')->withErrors(['error' => $e->getMessage()]);
+            return redirect()->route('pharmacies.index')->withErrors(['error' => $e->getMessage()]);
         }
     } //end of bulk
-
 }

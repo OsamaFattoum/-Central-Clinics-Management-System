@@ -21,7 +21,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         View::composer('*', function ($view) {
-            $types = ['admin', 'clinic'];
+            $types = ['admin', 'clinic','pharmacy'];
 
             foreach ($types as $type) {
                 

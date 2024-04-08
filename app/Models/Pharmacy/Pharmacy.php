@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Models\Clinic;
+namespace App\Models\Pharmacy;
 
-use App\Models\Department\Department;
 use App\Models\Facility\FacilityProfile;
 use App\Models\Facility\FacilityDay;
 use App\Models\Image;
@@ -14,7 +13,7 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class Clinic extends Authenticatable implements ContractsTranslatable
+class Pharmacy extends Authenticatable implements ContractsTranslatable
 {
     use HasFactory, Translatable, Notifiable;
 
@@ -33,7 +32,7 @@ class Clinic extends Authenticatable implements ContractsTranslatable
     public function getImagePathAttribute()
     {
         $disk = 'uploads/';
-        return $this->image == null ? $disk . 'clinic.png' : $disk . $this->image->url;
+        return $this->image == null ? $disk . 'pharmacy.jpg' : $disk . $this->image->url;
     } //end of getImagePathAttribute
 
     public function checkOpenStatus()
@@ -47,7 +46,6 @@ class Clinic extends Authenticatable implements ContractsTranslatable
 
             return $thisTime->between($open_hours, $close_hours) ? 1 : 0;
         }
-
     } //end of checkOpenStatus
 
     public function openStatusLabel()
@@ -76,16 +74,6 @@ class Clinic extends Authenticatable implements ContractsTranslatable
     {
         return $this->morphMany(FacilityDay::class, 'facility');
     } //end of facilityDays relation
-
-    public function accreditations()
-    {
-        return $this->hasMany(ClinicAccreditation::class);
-    } //end of accreditations relation
-
-    public function departments()
-    {
-        return $this->belongsToMany(Department::class, 'department_clinic');
-    } //end of departments relation
 
     public function facilityProfile()
     {

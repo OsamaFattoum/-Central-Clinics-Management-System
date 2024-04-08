@@ -48,7 +48,7 @@
                 <div class="card-header pb-3">
                     <div class="d-flex justify-content-between ">
                         <div class="">
-                            <h4>@lang('clinics.title_main_info')</h4>
+                            <h4>@lang('facility.title_main_info')</h4>
                         </div>
                         <i class="mdi mdi-dots-horizontal text-gray"></i>
                     </div>
@@ -61,7 +61,7 @@
                 <div class="card-header pb-3">
                     <div class="d-flex justify-content-between ">
                         <div class="">
-                            <h4>@lang('clinics.title_general_info')</h4>
+                            <h4>@lang('facility.title_general_info')</h4>
                         </div>
                         <i class="mdi mdi-dots-horizontal text-gray"></i>
                     </div>
@@ -74,7 +74,7 @@
                 <div class="card-header pb-3">
                     <div class="d-flex justify-content-between ">
                         <div class="">
-                            <h4>@lang('clinics.title_owner_info')</h4>
+                            <h4>@lang('facility.title_owner_info')</h4>
                         </div>
                         <i class="mdi mdi-dots-horizontal text-gray"></i>
                     </div>

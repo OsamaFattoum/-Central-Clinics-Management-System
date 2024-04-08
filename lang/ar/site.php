@@ -6,4 +6,8 @@ return [
 
 
     'select_package_placeholder' => 'إختر من القائمة',
+
+    //auth
+    'caption_welcome' => 'مرحبا بعودتك',
+
 ];

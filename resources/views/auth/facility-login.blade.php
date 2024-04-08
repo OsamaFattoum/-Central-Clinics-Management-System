@@ -1,9 +1,10 @@
-
 @extends('layouts.guest')
 @section('css')
 <!-- Sidemenu-respoansive-tabs css -->
 <link href="{{URL::asset('assets/plugins/sidemenu-responsive-tabs/css/sidemenu-responsive-tabs.css')}}"
     rel="stylesheet">
+<!-- Internal Select2 css -->
+<link href="{{URL::asset('assets/plugins/select2/css/select2.min.css')}}" rel="stylesheet">
 @endsection
 @section('content')
 <div class="container-fluid">
@@ -30,34 +31,43 @@
                                             class="sign-favicon ht-60" alt="logo"></a></div>
                                 <div class="card-sigin">
                                     <div class="main-signup-header">
-                                        <h2>مرحبا بعودتك</h2>
-                                        <h5 class="font-weight-semibold mb-4">من فضلك سجل دخولك للمتابعة.</h5>
+                                        <h2>@lang('site.caption_welcome')</h2>
+                                        <h5 class="font-weight-semibold mb-4">@lang('facility.sub_caption_welcome')</h5>
                                         <form method="POST" action="{{ route('login') }}">
                                             @csrf
-                                            <input type="hidden" name="type" value="clinic">
                                             <div class="form-group">
-                                                <label>رقم العيادة</label>
+                                                <label for="facility_type">@lang('facility.l_select_type')</label>
+                                                <select name="type" class="form-control select2-no-search" id="facility_type">
+                                                    <option value="clinic">@lang('facility.option_clinic')</option>
+                                                    <option value="pharmacy">@lang('facility.option_pharmacy')</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="number_facility">@lang('facility.l_facility_number')</label>
                                                 <input class="form-control @error('number') parsley-error @enderror"
-                                                    placeholder="أدخل رقم العيادة" type="text" name="number"
+                                                    placeholder="{{ __('facility.placeholder_facility_number') }}"
+                                                    type="text" name="number" id="number_facility"
                                                     value="{{ old('number') }}">
                                                 @include('components.input-error',['input' => 'number'])
                                             </div>
                                             <div class="form-group">
-                                                <label>كلمة السر</label>
+                                                <label for="facility_password">@lang('facility.password')</label>
                                                 <input class="form-control @error('password') parsley-error @enderror"
-                                                    placeholder="أدخل كلمة السر" name="password" type="password">
+                                                    placeholder="{{ __('facility.placeholder_facility_password') }}"
+                                                    id="facility_password" name="password" type="password">
                                                 @include('components.input-error',['input' => 'password'])
                                             </div>
                                             <div class="form-group mb-3">
                                                 <label class="ckbox"><input name="remember"
-                                                        type="checkbox"><span>تذكرني</span></label>
+                                                        type="checkbox"><span>@lang('facility.l_remember')</span></label>
                                             </div>
 
-                                            <button class="btn btn-primary btn-block">تسجيل الدخول</button>
+                                            <button
+                                                class="btn btn-primary btn-block">@lang('facility.btn_login')</button>
 
                                         </form>
                                         <div class="main-signin-footer mt-3">
-                                            <p><a href="">هل نسيت كلمه السر؟</a></p>
+                                            <p><a href="">@lang('facility.t_forgot_password')</a></p>
                                         </div>
                                     </div>
                                 </div>
@@ -73,4 +83,6 @@
 
 
 @section('js')
+<script src="{{URL::asset('assets/plugins/select2/js/select2.min.js')}}"></script>
+@include('components.select_multi')
 @endsection

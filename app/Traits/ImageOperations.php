@@ -39,6 +39,7 @@ trait ImageOperations
     public function deleteImage($disk, $path, $id)
     {
             $selected_disk = Storage::disk($disk);
+           
             if ($selected_disk->exists($path)) {
                 $selected_disk->delete($path);
             }

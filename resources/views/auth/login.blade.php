@@ -17,7 +17,7 @@
                                 </div>
                                 <div class="card-sigin">
                                     <div class="main-signup-header">
-                                        <h2>@lang('admin_auth.caption_welcome')</h2>
+                                        <h2>@lang('site.caption_welcome')</h2>
                                         <h5 class="font-weight-semibold mb-4">@lang('admin_auth.sub_caption_welcome')</h5>
                                         <form method="POST" action="{{ route('login') }}">
                                             @csrf

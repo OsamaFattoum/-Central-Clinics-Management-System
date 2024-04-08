@@ -2,7 +2,6 @@
 
 return [
 
-    'caption_welcome' => 'مرحبا بعودتك',
     'sub_caption_welcome' => 'بنظام ادارة العيادات المركزي',
     'l_email' => 'البريد الالكتروني',
     'placeholder_email' => 'أدخل بريدك الإلكتروني',

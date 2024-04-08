@@ -2,29 +2,26 @@
 
 namespace App\Http\Requests;
 
-use App\Traits\RulesOperations;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class ClinicRequest extends FormRequest
+class PharmacyRequest extends FormRequest
 {
-
+    
     public function authorize(): bool
     {
         return true;
-    } //end of authorize
-
+    }//end of authorize
 
     public function rules(): array
     {
         $rules =  [
-            'ar.name' => ['required', 'string', 'min:5', 'max:100', 'unique:clinic_translations,name,NULL,id,locale,ar'],
-            'en.name' => ['required', 'string', 'min:5', 'max:100', 'unique:clinic_translations,name,NULL,id,locale,en'],
-            'number' => ['required', 'regex:[^\d+$]', 'string', 'min:7', 'max:7', 'unique:clinics,number'],
-            'email' => ['required', 'email', 'unique:clinics,email'],
+            'ar.name' => ['required', 'string', 'min:5', 'max:100', 'unique:pharmacy_translations,name,NULL,id,locale,ar'],
+            'en.name' => ['required', 'string', 'min:5', 'max:100', 'unique:pharmacy_translations,name,NULL,id,locale,en'],
+            'number' => ['required', 'regex:[^\d+$]', 'string', 'min:7', 'max:7', 'unique:pharmacies,number'],
+            'email' => ['required', 'email', 'unique:pharmacies,email'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'password_confirmation' => ['required', 'string'],
-            'departments' => ['required', 'array', 'min:1'],
             'days' => ['required', 'array', 'min:1'],
             'address' => ['required', 'min:5', 'string'],
             'city' => ['required', 'in:1,2,3,4,5,6,7,8,9,10,11,12,13'],
@@ -47,19 +44,19 @@ class ClinicRequest extends FormRequest
 
             $rules['ar.name'] = [
                 ...$rules['ar.name'],
-                Rule::unique('clinic_translations', 'name')->where('locale','ar')->ignore($this->clinic->id, 'clinic_id'),
+                Rule::unique('pharmacy_translations', 'name')->where('locale','ar')->ignore($this->pharmacy->id, 'pharmacy_id'),
             ];
             $rules['en.name'] = [
                 ...$rules['en.name'],
-                Rule::unique('clinic_translations', 'name')->where('locale','en')->ignore($this->clinic->id, 'clinic_id'),
+                Rule::unique('pharmacy_translations', 'name')->where('locale','en')->ignore($this->pharmacy->id, 'pharmacy_id'),
             ];
             $rules['number'] = [
                 ...$rules['number'],
-                Rule::unique('clinics', 'number')->ignore($this->clinic->id, 'id'),
+                Rule::unique('pharmacies', 'number')->ignore($this->pharmacy->id, 'id'),
             ];
             $rules['email'] = [
                 ...$rules['email'],
-                Rule::unique('clinics', 'email')->ignore($this->clinic->id, 'id'),
+                Rule::unique('pharmacies', 'email')->ignore($this->pharmacy->id, 'id'),
             ];
 
         }
@@ -67,6 +64,7 @@ class ClinicRequest extends FormRequest
 
         return $rules;
     } //end of rules
+
 
 
     public function messages()
@@ -102,10 +100,6 @@ class ClinicRequest extends FormRequest
 
             'password_confirmation.required' => __('validation.password_confirmation.required'),
             'password_confirmation.string' => __('validation.password_confirmation.string'),
-
-            'departments.required' => __('clinics.departments.required'),
-            'departments.array' => __('clinics.departments.array'),
-            'departments.min' => __('clinics.departments.min'),
 
             'days.required' => __('validation.days.required'),
             'days.array' => __('validation.days.array'),
@@ -155,7 +149,6 @@ class ClinicRequest extends FormRequest
             'owner_email.email' => __('validation.owner_email.email'),
         ];
     } //end of messages
-
 
 
 }

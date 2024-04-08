@@ -3,6 +3,7 @@
 use App\Http\Controllers\ClinicAccreditationsController;
 use App\Http\Controllers\ClinicController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\PharmacyController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -23,7 +24,7 @@ Route::get('/', function () {
 
 
 
-Route::middleware('auth:admin,clinic')->group(function () {
+Route::middleware('auth:admin,clinic,pharmacy')->group(function () {
 
     Route::get('/dashboard', function () {
         return view('dashboard');
@@ -46,6 +47,10 @@ Route::middleware('auth:admin,clinic')->group(function () {
         Route::resource('accreditations', ClinicAccreditationsController::class)->except(['create', 'show', 'edit']);
         Route::delete('accreditations', [ClinicAccreditationsController::class, 'bulk'])->name('accreditations.bulk');
     });
+
+    Route::resource('pharmacies', PharmacyController::class);
+    Route::get('pharmacies/{pharmacy}/status', [PharmacyController::class, 'status'])->name('pharmacies.status');
+    Route::delete('pharmacies', [PharmacyController::class, 'bulk'])->name('pharmacies.bulk');
 });
 
 require __DIR__ . '/auth.php';

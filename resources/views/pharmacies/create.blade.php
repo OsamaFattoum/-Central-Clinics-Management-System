@@ -7,13 +7,6 @@
 <link href="{{URL::asset('assets/plugins/fileuploads/css/fileupload.css')}}" rel="stylesheet" type="text/css" />
 
 
-@error('departments')
-<style>
-    .department-select2>span .select2-selection--multiple {
-        border-color: #ee335e !important;
-    }
-</style>
-@enderror
 
 @error('days')
 <style>
@@ -36,15 +29,14 @@
 
 @endsection
 
-@include('components.breadcrumb',['pervPage' => __('sidebar.clinics_t') , 'currentPage' => $clinic->translate(app()->getLocale())->name])
+@include('components.breadcrumb',['pervPage' => __('sidebar.pharmacies_t') , 'currentPage' => __('sidebar.pharmacies_add_t')])
 
 @section('content')
 
 <div class="row row-sm">
     <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
-        <form action="{{ route('clinics.update',$clinic->id) }}" method="post" autocomplete="off" enctype="multipart/form-data">
+        <form action="{{ route('pharmacies.store') }}" method="post" autocomplete="off" enctype="multipart/form-data">
             @csrf
-            @method('PUT')
             <div class="card  box-shadow-0 ">
                 <div class="card-header pb-3">
                     <div class="d-flex justify-content-between ">
@@ -55,7 +47,7 @@
                     </div>
                 </div>
                 <div class="card-body pt-0">
-                    @include('clinics.includes.main_section')
+                    @include('pharmacies.includes.main_section')
                 </div>
             </div>
             <div class="card  box-shadow-0 ">
@@ -68,7 +60,7 @@
                     </div>
                 </div>
                 <div class="card-body pt-0">
-                    @include('clinics.includes.general_section')
+                    @include('pharmacies.includes.general_section')
                 </div>
             </div>
             <div class="card  box-shadow-0 ">
@@ -81,7 +73,7 @@
                     </div>
                 </div>
                 <div class="card-body pt-0">
-                    @include('clinics.includes.owner_section')
+                    @include('pharmacies.includes.owner_section')
                 </div>
             </div>
             <div class="card  box-shadow-0 ">
@@ -106,10 +98,6 @@
 
 @include('components.select_multi')
 <script>
-      $('#check_edit').change(function (e) { 
-        $('#image_uploade').toggleClass('d-none');
-        
-    });
     $('.dropify').dropify({
 	messages: {
 		'default': "{{ __('file_upload.default') }}",
