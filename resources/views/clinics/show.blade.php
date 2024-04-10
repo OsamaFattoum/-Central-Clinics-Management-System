@@ -20,7 +20,8 @@ __('sidebar.clinics_t')])
                             <div>
                                 <h5 class="main-profile-name">{{ $clinic->name }}</h5>
                                 <p class="main-profile-name-text">{{ $clinic->email }}</p>
-                                <span class="badge op-5 badge-{{ $clinic->status ? 'success' : 'danger' }}">{{ $clinic->status ? __('facility.enabled') : __('facility.not_enabled') }}</span>
+                                <span class="badge op-5 badge-{{ $clinic->status ? 'success' : 'danger' }}">{{
+                                    $clinic->status ? __('facility.enabled') : __('facility.not_enabled') }}</span>
                             </div>
                         </div>
                         <h6>@lang('facility.description')</h6>
@@ -72,27 +73,31 @@ __('sidebar.clinics_t')])
     </div>
     <div class="col-lg-8">
         <div class="row row-sm">
+
             <div class="col-sm-12 col-xl-4 col-lg-12 col-md-12">
                 <div class="card bg-whi">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="icon1 mt-2 text-center">
-                                    <i class="fe fe-layers tx-40"></i>
+                    <a class="tx-dark" href="{{route('departments.index',['clinic'=>$clinic->id])}}">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="icon1 mt-2 text-center">
+                                        <i class="fe fe-layers tx-40"></i>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="mt-0 text-center">
-                                    <span>@lang('clinics.department')</span>
-                                    <h2>{{ $clinic->departments()->count() }}</h2>
+                                <div class="col-6">
+                                    <div class="mt-0 text-center">
+                                        <span>@lang('clinics.department')</span>
+                                        <h2>{{ $clinic->departments()->count() }}</h2>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
             <div class="col-sm-12 col-xl-4 col-lg-12 col-md-12">
                 <div class="card bg-whi ">
+                    <a class="tx-dark" href="{{route('accreditations.index',$clinic->id)}}">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-6">
@@ -108,6 +113,7 @@ __('sidebar.clinics_t')])
                             </div>
                         </div>
                     </div>
+                    </a>
                 </div>
             </div>
             <div class="col-sm-12 col-xl-4 col-lg-12 col-md-12">

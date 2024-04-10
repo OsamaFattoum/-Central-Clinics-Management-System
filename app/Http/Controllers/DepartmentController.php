@@ -10,10 +10,15 @@ use Illuminate\Http\Request;
 class DepartmentController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
+        $departments = Department::when($request->clinic, function ($query) use ($request) {
+            return $query->whereHas('clinics', function ($subquery) use ($request) {
+                $subquery->where('clinic_id', $request->clinic);
+        });
+        })->get();
         return view('departments.index', [
-            'departments' => Department::all(),
+            'departments' => $departments,
         ]);
     } //end of index
 
