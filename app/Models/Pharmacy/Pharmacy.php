@@ -12,10 +12,12 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laratrust\Contracts\LaratrustUser;
+use Laratrust\Traits\HasRolesAndPermissions;
 
-class Pharmacy extends Authenticatable implements ContractsTranslatable
+class Pharmacy extends Authenticatable implements ContractsTranslatable,LaratrustUser
 {
-    use HasFactory, Translatable, Notifiable;
+    use HasFactory, Translatable, Notifiable,HasRolesAndPermissions;
 
     public $translatedAttributes = ['name', 'description'];
 

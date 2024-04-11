@@ -11,6 +11,18 @@ use Illuminate\Support\Facades\DB;
 
 class ClinicAccreditationsController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware(['permission:read-clinics_accreditations'])->only(['index']);
+        $this->middleware(['permission:create-clinics_accreditations'])->only(['store']);
+        $this->middleware(['permission:update-clinics_accreditations'])->only(['update']);
+        $this->middleware(['permission:delete-clinics_accreditations'])->only(['destroy','bulk']);
+
+    } //end of construct
+
+
+
     public function index(Clinic $clinic)
     {
         return view('clinics.accreditations.index', [

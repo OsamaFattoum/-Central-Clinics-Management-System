@@ -10,6 +10,15 @@ use Illuminate\Http\Request;
 class DepartmentController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->middleware(['permission:read-departments'])->only(['index']);
+        $this->middleware(['permission:create-departments'])->only(['store']);
+        $this->middleware(['permission:update-departments'])->only(['update']);
+        $this->middleware(['permission:delete-departments'])->only(['destroy','bulk']);
+
+    } //end of construct
+    
     public function index(Request $request)
     {
         $departments = Department::when($request->clinic, function ($query) use ($request) {

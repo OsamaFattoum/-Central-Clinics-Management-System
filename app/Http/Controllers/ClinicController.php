@@ -14,6 +14,16 @@ use Illuminate\Support\Facades\Hash;
 
 class ClinicController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['permission:read-clinics'])->only(['index','show']);
+        $this->middleware(['permission:create-clinics'])->only(['create','store']);
+        $this->middleware(['permission:update-clinics'])->only(['edit','update','status']);
+        $this->middleware(['permission:delete-clinics'])->only(['destroy','bulk']);
+
+    } //end of construct
+
+
     use ImageOperations;
 
     public function index(Request $request)

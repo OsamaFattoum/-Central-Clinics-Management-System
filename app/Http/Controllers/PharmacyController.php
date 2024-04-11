@@ -13,6 +13,16 @@ use Illuminate\Support\Facades\Hash;
 
 class PharmacyController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware(['permission:read-pharmacies'])->only(['index','show']);
+        $this->middleware(['permission:create-pharmacies'])->only(['create','store']);
+        $this->middleware(['permission:update-pharmacies'])->only(['edit','update','status']);
+        $this->middleware(['permission:delete-pharmacies'])->only(['destroy','bulk']);
+
+    } //end of construct
+
     use ImageOperations;
 
     public function index(Request $request)
