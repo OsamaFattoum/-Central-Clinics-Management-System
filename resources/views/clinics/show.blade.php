@@ -118,6 +118,7 @@ __('sidebar.clinics_t')])
             </div>
             <div class="col-sm-12 col-xl-4 col-lg-12 col-md-12">
                 <div class="card bg-whi ">
+                    <a class="tx-dark" href="{{route('doctors.index',['clinic'=>$clinic->id])}}">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-6">
@@ -127,14 +128,16 @@ __('sidebar.clinics_t')])
                             </div>
                             <div class="col-6">
                                 <div class="mt-0 text-center">
-                                    <span class="text-black">Members</span>
-                                    <h2 class="text-black mb-0">600</h2>
+                                    <span>@lang('doctors.doctors')</span>
+                                    <h2>{{ $clinic->doctors()->count() }}</h2>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    </a>
                 </div>
             </div>
+            
         </div>
         <div class="card">
             <div class="card-body">

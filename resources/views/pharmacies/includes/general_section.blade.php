@@ -49,24 +49,3 @@
         @include('components.input-error',['input'=> 'close_hours'])
     </div>
 </div>
-@isset($pharmacy)
-    <div class="row d-block mx-1">
-        <label class="d-block">@lang('clinics.image_clinic')</label>
-        <img alt="" class="img-thumbnail wd-100p wd-sm-200"
-            src="{{ URL::asset($pharmacy->image_path) }}">
-        <label class="ckbox mt-2 mb-4"><input type="checkbox"
-                id="check_edit"><span>@lang('facility.edit_image')</span></label>
-    </div>
-@endisset
-<div class="row {{ isset($pharmacy) ? 'd-none' : '' }}" @isset($pharmacy) id="image_uploade" @endisset>
-    <div class="col-12"> 
-        <label for="image">@if(!isset($pharmacy)) @lang('pharmacy.image_pharmacy') @endif</label>
-        <input type="file" name="image" accept="image/jpeg,image/png,image/gif" id="image" class="dropify"
-            data-height="150" />
-        @error('image')<span class="error text-danger text-xs">{{$message}}</span>@enderror
-    </div>
-    <span class="text-success font-weight-bold mt-2 mx-3">* @lang('facility.image_note') :
-        jpg,png,gif</span>
-
-
-</div>

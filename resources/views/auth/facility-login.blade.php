@@ -7,6 +7,7 @@
 <link href="{{URL::asset('assets/plugins/select2/css/select2.min.css')}}" rel="stylesheet">
 @endsection
 @section('content')
+@include('components.messages_alert')
 <div class="container-fluid">
     <div class="row no-gutter">
         <!-- The image half -->
@@ -26,7 +27,7 @@
                     <div class="row">
                         <div class="col-md-10 col-lg-10 col-xl-9 mx-auto">
                             <div class="card-sigin">
-                                <div class="mb-5 d-flex"> <a href="{{ route('welcome') }}"><img
+                                <div class="mb-4 d-flex"> <a href="{{ route('welcome') }}"><img
                                             src="{{URL::asset('assets/img/brand/logo_'. app()->getLocale() .'.png')}}"
                                             class="sign-favicon ht-60" alt="logo"></a></div>
                                 <div class="card-sigin">

@@ -90,8 +90,6 @@ class PharmacyController extends Controller
                 "owner_email" => $request->owner_email,
             ]);
 
-            $this->verifyAndStoreImage($request, 'image', 'pharmacies', 'uploads', $pharmacy->id, Pharmacy::class);
-
             DB::commit();
             session()->flash('add');
             return redirect()->route('pharmacies.index');
@@ -126,14 +124,6 @@ class PharmacyController extends Controller
 
         DB::beginTransaction();
         try {
-
-            if ($request->image) {
-                if ($pharmacy->image) {
-                    $this->deleteImage('uploads', $pharmacy->image->url, $pharmacy->id);
-                }
-                $this->verifyAndStoreImage($request, 'image', 'pharmacies', 'uploads', $pharmacy->id, Pharmacy::class);
-            }
-
             $pharmacy->update([
                 "ar" => [
                     "name" => $request->ar['name'],
@@ -202,7 +192,7 @@ class PharmacyController extends Controller
 
         DB::beginTransaction();
         try {
-            if ($pharmacy->image->exists()) {
+            if ($pharmacy->image()->exists()) {
 
                 $this->deleteImage('uploads', $pharmacy->image->url, $pharmacy->id);
             }
@@ -225,7 +215,7 @@ class PharmacyController extends Controller
         try {
             foreach ($ids as $id) {
                 $pharmacy = Pharmacy::findOrFail($id);
-                if ($pharmacy->image->exists()) {
+                if ($pharmacy->image()->exists()) {
                     $this->deleteImage('uploads', $pharmacy->image->url, $pharmacy->id);
                 }
                 $pharmacy->facilityDays()->delete();

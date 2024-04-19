@@ -63,7 +63,7 @@ class FacilitySeeder extends Seeder
             "owner_email" => 'xuvyde@mailinator.com',
         ]);
 
-        $clinic->addRole('clinic');
+        
     }//end of create clinics
 
     private function createPharmacies()
@@ -106,6 +106,5 @@ class FacilitySeeder extends Seeder
             "owner_phone" => '0775314544',
             "owner_email" => 'xuvyde@mailinator.com',
         ]);
-        $pharmacy->addRole('pharmacy');
     }//end of create Pharmacies
 }

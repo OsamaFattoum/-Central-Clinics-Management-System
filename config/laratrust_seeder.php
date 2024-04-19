@@ -17,11 +17,15 @@ return [
             'clinics' => 'c,r,u,d',
             'clinics_accreditations' => 'c,r,u,d',
             'pharmacies' => 'c,r,u,d',
+            'doctors' => 'c,r,u,d',
         ],
         'clinic' => [
 
         ],
         'pharmacy' => [
+
+        ],
+        'doctor' => [
 
         ],
 

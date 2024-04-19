@@ -1,3 +1,5 @@
+
+@if (Request::is('departments') || Request::is('*/accreditations'))
 @if (count($errors) > 0)
 <div class="alert alert-danger">
     <button aria-label="Close" class="close" data-dismiss="alert" type="button">
@@ -11,9 +13,9 @@
     </ul>
 </div>
 @endif
+@endif
 
 @if (session()->has('add'))
-
 <script>
     window.onload = function() {
                 notif({
@@ -53,6 +55,17 @@
                 notif({
                     msg: "{{ __('messages.status') }}",
                     type: "success"
+                });
+            }
+
+</script>
+@endif
+@if (session()->has('status_unathorized'))
+<script>
+    window.onload = function() {
+                notif({
+                    msg: "{{ __('messages.status_unathorized') }}",
+                    type: "error"
                 });
             }
 
@@ -100,7 +113,7 @@
 <script>
     window.onload = function() {
                 notif({
-                    msg: "This Entity doesn't Exist",
+                    msg: "{{ __('messages.no-id') }}",
                     type: "error"
                 });
             }

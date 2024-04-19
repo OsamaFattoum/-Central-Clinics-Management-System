@@ -140,26 +140,5 @@ class LoginRequest extends FormRequest
     }//end of throttleKey
 
 
-    public function messages()
-    {
-        return  [
-            'number.required' => __('validation.number.required'),
-            'number.string' => __('validation.number.string'),
-            'number.min' => __('validation.number.min'),
-            'number.max' => __('validation.number.max'),
-
-            'email.required' => __('validation.email.required'),
-            'email.email' => __('validation.email.email'),
-
-            'civil_id.required' => __('validation.civil_id.required'),
-            'civil_id.string' => __('validation.civil_id.string'),
-            'civil_id.min' => __('validation.civil_id.min'),
-            'civil_id.max' => __('validation.civil_id.max'),
-
-            'password.required' => __('validation.password.required'),
-            'password.string' => __('validation.password.string'),
-            'password.min' => __('validation.password.min'),
-        ];
-    } //end of messages
 
 }

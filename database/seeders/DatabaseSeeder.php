@@ -15,8 +15,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
        
-
-        $this->call([DepartmentSeeder::class, DaysSeeder::class, FacilitySeeder::class, LaratrustSeeder::class,UsersSeeder::class]);
+        $this->call([LaratrustSeeder::class,DepartmentSeeder::class, DaysSeeder::class, FacilitySeeder::class,UsersSeeder::class]);
    
      
     }

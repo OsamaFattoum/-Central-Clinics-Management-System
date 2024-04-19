@@ -41,5 +41,19 @@ class AccreditaionRequest extends FormRequest
 
         return $rules;
     }//end of rules
+
+
+    public function messages()
+    {
+        return [
+            'name.required' => __('clinic_accreditations.name.required'),
+            'name.string' => __('clinic_accreditations.name.string'),
+            'name.min' => __('clinic_accreditations.name.min'),
+            'name.max' => __('clinic_accreditations.name.max'),
+            'name.unique' => __('clinic_accreditations.name.unique'),
+        ];
+        
+        
+    }//end of messages
     
 }

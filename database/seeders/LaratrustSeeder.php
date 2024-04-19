@@ -19,7 +19,6 @@ class LaratrustSeeder extends Seeder
         $this->truncateLaratrustTables();
 
         $config = Config::get('laratrust_seeder.roles_structure');
-
         if ($config === null) {
             $this->command->error("The configuration has not been published. Did you run `php artisan vendor:publish --tag=\"laratrust-seeder\"`");
             $this->command->line('');
@@ -27,7 +26,7 @@ class LaratrustSeeder extends Seeder
         }
 
         $mapPermission = collect(config('laratrust_seeder.permissions_map'));
-
+        
         foreach ($config as $key => $modules) {
 
             // Create a new role
@@ -38,7 +37,7 @@ class LaratrustSeeder extends Seeder
             ]);
             $permissions = [];
 
-            $this->command->info('Creating Role '. strtoupper($key));
+            $this->command->info('Creating Role ' . strtoupper($key));
 
             // Reading role permission modules
             foreach ($modules as $module => $value) {
@@ -53,7 +52,7 @@ class LaratrustSeeder extends Seeder
                         'description' => ucfirst($permissionValue) . ' ' . ucfirst($module),
                     ])->id;
 
-                    $this->command->info('Creating Permission to '.$permissionValue.' for '. $module);
+                    $this->command->info('Creating Permission to ' . $permissionValue . ' for ' . $module);
                 }
             }
 
@@ -65,12 +64,20 @@ class LaratrustSeeder extends Seeder
                 // Create default user for each role
                 $user = \App\Models\Admin::create([
                     'name' => ucwords(str_replace('_', ' ', $key)),
-                    'email' => $key.'@app.com',
+                    'email' => $key . '@app.com',
                     'password' => bcrypt('password')
                 ]);
                 $user->addRole($role);
             }
+        }
 
+
+        foreach (config('laratrust_seeder.permissions_map') as $value) {
+            \App\Models\Permission::firstOrCreate([
+                'name' => $value . '-' . 'drug',
+                'display_name' => ucfirst($value) . ' ' . ucfirst('drug'),
+                'description' => ucfirst($value) . ' ' . ucfirst('drug'),
+            ]);
         }
     }
 

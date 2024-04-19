@@ -4,7 +4,6 @@
 
 
 <link href="{{URL::asset('assets/plugins/select2/css/select2.min.css')}}" rel="stylesheet">
-<link href="{{URL::asset('assets/plugins/fileuploads/css/fileupload.css')}}" rel="stylesheet" type="text/css" />
 
 
 
@@ -12,14 +11,6 @@
 @error('days')
 <style>
     .days-select2>span .select2-selection--multiple {
-        border-color: #ee335e !important;
-    }
-</style>
-@enderror
-
-@error('image')
-<style>
-    .dropify-wrapper {
         border-color: #ee335e !important;
     }
 </style>
@@ -96,25 +87,8 @@
 
 @section('js')
 <script src="{{URL::asset('assets/plugins/select2/js/select2.min.js')}}"></script>
-<script src="{{URL::asset('assets/plugins/fileuploads/js/fileupload.js')}}"></script>
 
 @include('components.select_multi')
-<script>
-      $('#check_edit').change(function (e) { 
-        $('#image_uploade').toggleClass('d-none');
-        
-    });
-    $('.dropify').dropify({
-	messages: {
-		'default': "{{ __('file_upload.default') }}",
-		'replace': '{{__("file_upload.replace")}}',
-		'remove': '{{__("file_upload.remove")}}',
-		'error': '{{__("file_upload.error")}}'
-	},
-	error: {
-		'fileSize': '{{__("file_upload.fileSize")}}'
-	}
-});
-</script>
+
 
 @endsection

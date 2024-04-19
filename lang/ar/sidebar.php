@@ -15,6 +15,10 @@ return [
     'pharmacies_t' => 'الصيدليات',
     'pharmacies_add_t' => 'إضافة صيدلية',
 
+    'doctors_t' => 'الاطباء',
+    'doctors_add_t' => 'إضافة طبيب',
+
+
     'all' => 'عرض الكل',
 
 

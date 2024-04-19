@@ -40,7 +40,6 @@
                                     <th class="pr-2">@lang('facility.city')</th>
                                     <th class="pr-2">@lang('facility.postal_code')</th>
                                     <th class="pr-2">@lang('facility.status')</th>
-                                    <th class="pr-2">@lang('clinic_accreditations.accreditions')</th>
                                     <th class="pr-2">@lang('dropdown_op.processes')</th>
                                 </tr>
                             </thead>
@@ -70,9 +69,7 @@
                                     <td class="pr-2">{{ $clinic->facilityProfile->postal_code }}</td>
                                     <td class="pr-2"> <span class="badge badge-{{ $clinic->status ? 'success' : 'danger' }}">{{ $clinic->status ? __('facility.enabled') : __('facility.not_enabled') }}</span></td>
 
-                                    <td class="pr-2"><a class="btn btn-outline-dark btn-sm"
-                                            href="{{ route('accreditations.index',$clinic->id) }}">@lang('clinic_accreditations.accreditions')</a>
-                                    </td>
+                                
                                     <td class="pr-2">
                                         <div class="dropdown">
                                             <button aria-expanded="false" aria-haspopup="true"
@@ -121,5 +118,5 @@
 @endsection
 
 @section('js')
-@include('layouts.table-footer',['orderIndex'=>1,'targetsNotOrdered' => [0,2,3,4,6,8,9]])
+@include('layouts.table-footer',['orderIndex'=>1,'targetsNotOrdered' => [0,2,3,4,6,8]])
 @endsection

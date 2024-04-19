@@ -102,6 +102,7 @@ return [
         'admins' => \App\Models\Admin::class,
         'clinics' => \App\Models\Clinic\Clinic::class,
         'pharmaceis' => \App\Models\Pharmacy\Pharmacy::class,
+        'doctors' => \App\Models\Users\Doctor::class,
     ],
 
     /*

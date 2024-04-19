@@ -6,7 +6,6 @@ use App\Http\Requests\ClinicRequest;
 use App\Models\Clinic\Clinic;
 use App\Models\Day\Day;
 use App\Models\Department\Department;
-use App\Traits\ImageOperations;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -22,9 +21,6 @@ class ClinicController extends Controller
         $this->middleware(['permission:delete-clinics'])->only(['destroy','bulk']);
 
     } //end of construct
-
-
-    use ImageOperations;
 
     public function index(Request $request)
     {
@@ -95,8 +91,6 @@ class ClinicController extends Controller
                 "owner_email" => $request->owner_email,
             ]);
 
-            $this->verifyAndStoreImage($request, 'image', 'clinics', 'uploads', $clinic->id, Clinic::class);
-
             DB::commit();
             session()->flash('add');
             return redirect()->route('clinics.index');
@@ -131,13 +125,6 @@ class ClinicController extends Controller
 
         DB::beginTransaction();
         try {
-
-            if ($request->image) {
-                if ($clinic->image) {
-                    $this->deleteImage('uploads', $clinic->image->url, $clinic->id);
-                }
-                $this->verifyAndStoreImage($request, 'image', 'clinics', 'uploads', $clinic->id, Clinic::class);
-            }
 
             $clinic->update([
                 "ar" => [
@@ -211,7 +198,7 @@ class ClinicController extends Controller
 
         DB::beginTransaction();
         try {
-            if ($clinic->image->exists()) {
+            if ($clinic->image()->exists()) {
 
                 $this->deleteImage('uploads', $clinic->image->url, $clinic->id);
             }
@@ -234,7 +221,7 @@ class ClinicController extends Controller
         try {
             foreach ($ids as $id) {
                 $clinic = Clinic::findOrFail($id);
-                if ($clinic->image->exists()) {
+                if ($clinic->image()->exists()) {
                     $this->deleteImage('uploads', $clinic->image->url, $clinic->id);
                 }
                 $clinic->facilityDays()->delete();

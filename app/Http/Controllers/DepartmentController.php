@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\DerpartmentRequest;
 use App\Models\Department\Department;
+use App\Models\Permission;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DepartmentController extends Controller
 {
@@ -35,11 +37,21 @@ class DepartmentController extends Controller
 
     public function store(DerpartmentRequest $request)
     {
+        DB::beginTransaction();
         try {
-            Department::create($request->all());
+            $department = Department::create($request->all());
+            foreach (config('laratrust_seeder.permissions_map') as $map) {
+                Permission::firstOrCreate([
+                    'name' => $map . '-' . $department->scientific_name,
+                    'display_name' => ucfirst($map) . ' ' . ucfirst($department->scientific_name),
+                    'description' => ucfirst($map) . ' ' . ucfirst($department->scientific_name),
+                ]);
+            }
+            DB::commit();
             session()->flash('add');
             return redirect()->route('departments.index')->withInput();
         } catch (Exception $e) {
+            DB::rollback();
             return redirect()->route('departments.index')->withErrors(['error' => $e->getMessage()]);
         }
     } //end of store

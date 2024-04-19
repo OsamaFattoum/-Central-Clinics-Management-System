@@ -6,6 +6,7 @@ use App\Models\Department\Department;
 use App\Models\Facility\FacilityProfile;
 use App\Models\Facility\FacilityDay;
 use App\Models\Image;
+use App\Models\Users\Doctor;
 use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Astrotomic\Translatable\Contracts\Translatable as ContractsTranslatable;
@@ -69,6 +70,9 @@ class Clinic extends Authenticatable implements ContractsTranslatable , Laratrus
     } //end of city name
 
     //relation
+    public function doctors(){
+        return $this->hasMany(Doctor::class);
+    }//end of doctors relation
     public function image(): MorphOne
     {
         return $this->morphOne(Image::class, 'imageable');

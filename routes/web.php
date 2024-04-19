@@ -3,6 +3,7 @@
 use App\Http\Controllers\ClinicAccreditationsController;
 use App\Http\Controllers\ClinicController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\PharmacyController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -24,7 +25,7 @@ Route::get('/', function () {
 
 
 
-Route::middleware('auth:admin,clinic,pharmacy')->group(function () {
+Route::middleware(['auth:admin,clinic,pharmacy,doctor','statusCheck'])->group(function () {
 
     Route::get('/dashboard', function () {
         return view('dashboard');
@@ -51,6 +52,17 @@ Route::middleware('auth:admin,clinic,pharmacy')->group(function () {
     Route::resource('pharmacies', PharmacyController::class);
     Route::get('pharmacies/{pharmacy}/status', [PharmacyController::class, 'status'])->name('pharmacies.status');
     Route::delete('pharmacies', [PharmacyController::class, 'bulk'])->name('pharmacies.bulk');
+
+
+    
+    Route::controller(DoctorController::class)->group(function () {
+        Route::get('doctors','index')->name('doctors.index');
+        Route::get('doctors/manage/{doctor?}', 'manage')->name('doctors.manage');
+        Route::get('doctors/{doctor}','show')->name('doctors.show');
+        Route::get('doctors/{doctor}/status', 'status')->name('doctors.status');
+        Route::delete('doctors/{doctor}','destroy')->name('doctors.destroy');
+        Route::delete('doctors', 'bulk')->name('doctors.bulk');
+    });
 });
 
 require __DIR__ . '/auth.php';
