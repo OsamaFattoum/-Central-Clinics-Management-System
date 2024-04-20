@@ -46,23 +46,30 @@
 <div class="row">
     <div class="form-group col-lg-6">
         <label for="clinics">@lang('users.clinics')<span class="tx-danger">*</span></label>
+        @auth('clinic')
+        <input type="text" id="clinics" value="{{ $clinics->name }}"
+            class="form-control @error('form.clinic') parsley-error @enderror" readonly>
+        @include('components.input-error',['input'=> 'form.clinic'])
+        @else
         <select wire:model.live="form.clinic" id="clinics" wire:change='selectClinic'
-            class="form-control @error('form.clinic') custom-select2-border @enderror"
-            data-parsley-error="#slErrorContainer" dir="{{ config('app.locale') == 'ar' ? 'rtl' : 'ltr'  }}">
+            class="form-control  @error('form.clinic') custom-select2-border @enderror "
+            dir="{{ config('app.locale') == 'ar' ? 'rtl' : 'ltr'  }}">
             <option value="">@lang('site.select_package_placeholder')</option>
             @foreach ($clinics as $clinic)
             <option value="{{ $clinic->id }}">{{ $clinic->name }}</option>
             @endforeach
         </select>
         @include('components.input-error',['input'=> 'form.clinic','is_select'=>true])
+        @endauth
     </div>
 
     <div class="form-group col-lg-6">
         <label for="departments">@lang('users.departments')<span class="tx-danger">*</span></label>
+
         @if ($selectedClinic)
         <select wire:model.live="form.department" id="departments" wire:change='selectDepartment'
             class="form-control @error('form.department') custom-select2-border @enderror"
-            data-parsley-error="#slErrorContainer" dir="{{ config('app.locale') == 'ar' ? 'rtl' : 'ltr'  }}">
+             dir="{{ config('app.locale') == 'ar' ? 'rtl' : 'ltr'  }}">
             <option value="">@lang('site.select_package_placeholder')</option>
             @foreach ($departments as $department)
             <option value="{{ $department->id }}">{{ $department->name }}</option>
@@ -100,12 +107,14 @@
         </div>
         <div class="panel-body tabs-menu-body main-content-body-right border-top-0 border">
             <div class="tab-content">
-                <div  class="tab-pane active" id="tab1">
+                <div class="tab-pane active" id="tab1">
                     <div class="d-flex">
                         @foreach (config('laratrust_seeder.permissions_map') as $map)
                         <label class="ckbox mt-2 mb-2 mx-2">
-                            <input wire:key='{{$map}}-{{$selectedDepartment->scientific_name}}' type="checkbox" wire:click="toggleChecked('{{$map}}-{{$selectedDepartment->scientific_name}}')" wire:model='form.permissions.{{$map . '-' .
-                            $selectedDepartment->scientific_name }}' id="{{$selectedDepartment->scientific_name .
+                            <input wire:key='{{$map}}-{{$selectedDepartment->scientific_name}}' type="checkbox"
+                                wire:click="toggleChecked('{{$map}}-{{$selectedDepartment->scientific_name}}')"
+                                wire:model='form.permissions.{{$map . '-' . $selectedDepartment->scientific_name }}'
+                            id="{{$selectedDepartment->scientific_name .
                             $map}}">
                             <span>@lang('doctors.'. $map)</span>
                         </label>
@@ -113,11 +122,12 @@
                     </div>
                 </div>
                 @if ($selectedDepartment->status)
-                <div  class="tab-pane" id="tab2">
+                <div class="tab-pane" id="tab2">
                     <div class="d-flex">
                         @foreach (config('laratrust_seeder.permissions_map') as $map)
                         <label for="drug{{$map}}" class="ckbox mt-2 mb-2 mx-2">
-                            <input wire:key='{{$map}}-drug' wire:click="toggleChecked('{{$map}}-drug')" wire:model='form.permissions.{{$map . '-drug'}}' id="drug{{$map}}"
+                            <input wire:key='{{$map}}-drug' wire:click="toggleChecked('{{$map}}-drug')"
+                                wire:model='form.permissions.{{$map . '-drug'}}' id="drug{{$map}}"
                                 type="checkbox"><span>@lang('doctors.'. $map)</span></label>
                         @endforeach
                     </div>

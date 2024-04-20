@@ -38,6 +38,7 @@
                                     <th class="pr-2">@lang('users.phone')</th>
                                     <th class="pr-2">@lang('users.gender')</th>
                                     <th class="pr-2">@lang('users.city')</th>
+                                    <th class="pr-2">@lang('users.clinic')</th>
                                     <th class="pr-2">@lang('users.status')</th>
                                     <th class="pr-2">@lang('dropdown_op.processes')</th>
                                 </tr>
@@ -57,6 +58,7 @@
                                     <td class="pr-2">{{ $doctor->profile->phone }}</td>
                                     <td class="pr-2">{{ $doctor->gender }}</td>
                                     <td class="pr-2">{{ $doctor->city_name }}</td>
+                                    <td class="pr-2"><span class="badge badge-info">{{ $doctor->clinic->name }}</span></td>
                                     <td class="pr-2">
                                         <span class="badge badge-{{ $doctor->status ? 'success' : 'danger' }}">{{
                                             $doctor->status ? __('users.enabled') : __('users.not_enabled')}}
@@ -112,5 +114,5 @@
 @endsection
 
 @section('js')
-@include('layouts.table-footer',['orderIndex'=>1,'targetsNotOrdered' => [0,2,3,5,7]])
+@include('layouts.table-footer',['orderIndex'=>1,'targetsNotOrdered' => [0,2,3,7]])
 @endsection

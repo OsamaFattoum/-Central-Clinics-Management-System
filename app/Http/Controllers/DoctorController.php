@@ -11,20 +11,25 @@ class DoctorController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['permission:read-doctors'])->only(['index','show']);
-        $this->middleware(['permission:create-doctors'])->only(['manage','store']);
-        $this->middleware(['permission:update-doctors'])->only(['manage','update','status']);
-        $this->middleware(['permission:delete-doctors'])->only(['destroy','bulk']);
-
+        $this->middleware(['permission:read-doctors'])->only(['index', 'show']);
+        $this->middleware(['permission:create-doctors'])->only(['manage', 'store']);
+        $this->middleware(['permission:update-doctors'])->only(['manage', 'update', 'status']);
+        $this->middleware(['permission:delete-doctors'])->only(['destroy', 'bulk']);
     } //end of construct
 
     public function index(Request $request)
     {
-        $doctors = Doctor::when($request->clinic, function ($query) use ($request) {
-            return $query->whereHas('clinic', function ($subquery) use ($request) {
-                $subquery->where('clinic_id', $request->clinic);
-        });
-        })->with('profile')->get();
+        if (auth()->guard('clinic')->check()) {
+
+            $doctors = Doctor::with(['profile', 'clinic'])->where('clinic_id', auth()->user()->id)->get();
+        } else {
+            $doctors = Doctor::when($request->clinic, function ($query) use ($request) {
+                return $query->whereHas('clinic', function ($subquery) use ($request) {
+                    $subquery->where('clinic_id', $request->clinic);
+                });
+            })->with('profile')->get();
+        }
+
         return view('doctors.index', [
             'doctors' => $doctors,
         ]);
@@ -37,10 +42,15 @@ class DoctorController extends Controller
 
     public function show(Doctor $doctor)
     {
-        $profile = Profile::where('profile_id',$doctor->id)->first();
-        
-        return view('doctors.show',[
-            'doctor'=> $doctor,
+        if (auth()->guard('clinic')->check()) {
+            if ($doctor->clinic_id != auth()->user()->id) {
+                abort(404);
+            }
+        }
+        $profile = Profile::where('profile_id', $doctor->id)->first();
+
+        return view('doctors.show', [
+            'doctor' => $doctor,
             'profile' => $profile,
         ]);
     } //end of show
@@ -54,7 +64,7 @@ class DoctorController extends Controller
         } catch (\Exception $e) {
             return redirect()->route('doctors.index')->withErrors(['error' => $e->getMessage()]);
         }
-    }//end of status
+    } //end of status
 
     public function destroy(Doctor $doctor)
     {

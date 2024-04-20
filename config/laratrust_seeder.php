@@ -20,7 +20,7 @@ return [
             'doctors' => 'c,r,u,d',
         ],
         'clinic' => [
-
+            'doctors' => 'c,r,u,d',
         ],
         'pharmacy' => [
 

@@ -66,6 +66,7 @@ class ClinicController extends Controller
             ]);
             $clinic->departments()->attach($request->departments);
 
+
             // Attach each day to the clinic
             $daysIds = $request->days;
 
@@ -90,6 +91,8 @@ class ClinicController extends Controller
                 "owner_phone" => $request->owner_phone,
                 "owner_email" => $request->owner_email,
             ]);
+
+            $clinic->addRole('clinic');
 
             DB::commit();
             session()->flash('add');

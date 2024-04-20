@@ -5,14 +5,12 @@ namespace App\Livewire;
 use App\Livewire\Forms\DoctorForm;
 use App\Models\Clinic\Clinic;
 use App\Models\Department\Department;
-use App\Models\Permission;
 use App\Models\Users\Doctor as UsersDoctor;
 use App\Models\Users\Profile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
 use Illuminate\Support\Str;
-use PhpParser\Node\Expr\Cast\String_;
 
 class Doctor extends Component
 {
@@ -31,11 +29,18 @@ class Doctor extends Component
 
     public function mount()
     {
-        $this->clinics = Clinic::where('status', 1)->get();
+        if (auth()->guard('clinic')->check()) {
+            $this->clinics = Clinic::where('id', auth()->user()->id)->where('status', 1)->first();
+            $this->form->clinic = auth()->user()->id;
+            $this->selectClinic();
+        } else {
+            $this->clinics = Clinic::where('status', 1)->get();
+        }
         $citiesJson = file_get_contents(resource_path('json/cities.json'));
         $this->cities = json_decode($citiesJson, true);
 
         if (request('doctor')) {
+
             $this->doctor = request('doctor');
             $this->editDoctor($this->doctor);
             $this->form->onUpdated = true;
@@ -92,13 +97,12 @@ class Doctor extends Component
 
     public function toggleChecked(string $permission)
     {
-        if(array_key_exists($permission,$this->form->permissions)){
-            if(!$this->form->permissions[$permission]){
+        if (array_key_exists($permission, $this->form->permissions)) {
+            if (!$this->form->permissions[$permission]) {
                 unset($this->form->permissions[$permission]);
                 array_values($this->form->permissions);
             }
         }
-
     }
 
 
@@ -109,7 +113,14 @@ class Doctor extends Component
         $doctor = UsersDoctor::find($doctor);
 
         $form = $this->form;
+
         if ($doctor) {
+
+            if (auth()->guard('clinic')->check()) {
+                if ($doctor->clinic_id != auth()->user()->id) {
+                    abort(404);
+                }
+            }
 
             foreach (config('translatable.locales') as $value) {
                 $form->names[$value] = $doctor->profile->translate($value)->name;
@@ -129,8 +140,7 @@ class Doctor extends Component
             $form->gender = $doctor->profile->gender;
             $form->dob = $doctor->profile->birth_date;
         } else {
-            session()->flash('no-id');
-            redirect()->route('doctors.index');
+            abort(404);
         }
     } //end of edit Doctor
 
@@ -167,7 +177,6 @@ class Doctor extends Component
                         "name" => $this->form->names['en'],
                     ],
                 ]);
-
             } else {
                 $doctor = UsersDoctor::create([
                     "civil_id" => $this->form->civil_id,
