@@ -35,7 +35,7 @@
 			</li>
 			<li class="side-item side-item-category">@lang('sidebar.system_t')</li>
 			@permission('read-departments')
-				<li class="slide">
+				<li class="slide {{ Request::is('departments/*') ? 'is-expanded' : ''}}">
 					<a class="side-menu__item" data-toggle="slide" href="{{ url('/' . $page='#') }}"><svg
 							xmlns="http://www.w3.org/2000/svg" class="side-menu__icon" viewBox="0 0 24 24">
 							<path d="M0 0h24v24H0V0z" fill="none" />

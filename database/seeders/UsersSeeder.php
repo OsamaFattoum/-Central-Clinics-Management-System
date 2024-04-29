@@ -59,7 +59,7 @@ class UsersSeeder extends Seeder
         ]);
         
 
-        $doctor_one->syncPermissions(['25','26']);
+        $doctor_one->syncPermissions(['30','31']);
 
         $doctor_one->addRole('doctor');
 
@@ -69,7 +69,7 @@ class UsersSeeder extends Seeder
             "email" => 'mohammad.salama@gmail.com',
             "password" => Hash::make('password'),
             'clinic_id' => '1',
-            'department_id' => '2',
+            'department_id' => '3',
         ]);
 
         $doctor_two->profile()->create([
@@ -89,7 +89,7 @@ class UsersSeeder extends Seeder
         ]);
         
 
-        $doctor_two->syncPermissions(['30','31','29']);
+        $doctor_two->syncPermissions(['37','38','39','25','26']);
 
         $doctor_two->addRole('doctor');
 

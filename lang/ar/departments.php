@@ -10,6 +10,7 @@ return [
     'description_ar' => 'الوصف بالعربيه',
     'description_en' => 'الوصف بالانجليزيه',
     'related_clinic' => 'العيادات المرتبطة',
+    'related_case_type' => 'الحالات المرتبطة',
     'given_drug' => 'حالة صرف الأدوية',
     'give_drug' => 'يصرف',
     'not_give_drug' => 'لا يصرف',

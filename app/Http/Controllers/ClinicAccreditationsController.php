@@ -30,6 +30,7 @@ class ClinicAccreditationsController extends Controller
             'accreditations' => ClinicAccreditation::where('clinic_id',$clinic->id)->get(),
         ]);
     } //end of index
+    
     public function store(Clinic $clinic,AccreditaionRequest $request)
     {
     

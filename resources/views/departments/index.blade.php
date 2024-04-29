@@ -38,6 +38,7 @@
                                     <th class="pr-2">@lang('departments.description')</th>
                                     <th class="pr-2">@lang('departments.given_drug')</th>
                                     <th class="pr-2">@lang('departments.related_clinic')</th>
+                                    <th class="pr-2">@lang('departments.related_case_type')</th>
                                     <th class="pr-2">@lang('dropdown_op.processes')</th>
                                 </tr>
                             </thead>
@@ -66,6 +67,8 @@
                                     </td>
                                     <td class="pr-2"><a class="btn btn-outline-success btn-sm"
                                         href="{{ route('clinics.index',['department'=>$department->id]) }}">@lang('departments.related_clinic')</a></td>
+                                    <td class="pr-2"><a class="btn btn-outline-info btn-sm"
+                                        href="{{ route('case_types.index',['department'=>$department->id]) }}">@lang('departments.related_case_type')</a></td>
                                     <td class="pr-2">
                                         <div class="dropdown">
                                             <button aria-expanded="false" aria-haspopup="true"

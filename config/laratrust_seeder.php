@@ -16,6 +16,7 @@ return [
             'departments' => 'c,r,u,d',
             'clinics' => 'c,r,u,d',
             'clinics_accreditations' => 'c,r,u,d',
+            'case_type' => 'c,r,u,d',
             'pharmacies' => 'c,r,u,d',
             'doctors' => 'c,r,u,d',
         ],

@@ -68,6 +68,8 @@ class DoctorController extends Controller
 
     public function destroy(Doctor $doctor)
     {
+       
+
         DB::beginTransaction();
         try {
             if ($doctor->image()->exists()) {
@@ -75,7 +77,7 @@ class DoctorController extends Controller
                 $this->deleteImage('uploads', $doctor->image->url, $doctor->id);
             }
             $doctor->delete();
-            $doctor->permissions()->delete();
+            $doctor->removePermissions();
             $doctor->profile()->delete();
             DB::commit();
             session()->flash('delete');
@@ -97,6 +99,7 @@ class DoctorController extends Controller
                     $this->deleteImage('uploads', $doctor->image->url, $doctor->id);
                 }
                 $doctor->profile()->delete();
+                $doctor->removePermissions();
             }
             Doctor::destroy($ids);
             DB::commit();
