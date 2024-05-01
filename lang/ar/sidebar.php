@@ -18,6 +18,9 @@ return [
     'doctors_t' => 'الاطباء',
     'doctors_add_t' => 'إضافة طبيب',
 
+    'patients_t' => 'المرضى',
+    'patients_add_t' => 'إضافة مريض',
+
 
     'all' => 'عرض الكل',
 

@@ -64,7 +64,7 @@ class DoctorForm extends Form
             ];
             $rules['names.en'] = [
                 ...$rules['names.en'],
-                Rule::unique('profile_translations', 'name')->where('locale','en')->ignore($this->doctor_id, 'profile_id'),
+                Rule::unique('profile_translations', 'name')->where('locale','en')->ignore($profile_id, 'profile_id'),
             ];
             $rules['civil_id'] = [
                 ...$rules['civil_id'],

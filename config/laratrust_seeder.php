@@ -19,6 +19,7 @@ return [
             'case_type' => 'c,r,u,d',
             'pharmacies' => 'c,r,u,d',
             'doctors' => 'c,r,u,d',
+            'patients' => 'c,r,u,d',
         ],
         'clinic' => [
             'doctors' => 'c,r,u,d',
@@ -29,6 +30,10 @@ return [
         'doctor' => [
 
         ],
+        'patient' => [
+
+        ],
+        
 
     ],
 

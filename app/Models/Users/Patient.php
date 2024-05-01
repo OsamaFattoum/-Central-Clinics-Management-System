@@ -2,20 +2,18 @@
 
 namespace App\Models\Users;
 
-use App\Models\Clinic\Clinic;
-use App\Models\Department\Department;
+use App\Models\BloodType;
 use App\Models\Image;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Laratrust\Contracts\LaratrustUser;
-use Laratrust\Traits\HasRolesAndPermissions;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Notifications\Notifiable;
+use Laratrust\Traits\HasRolesAndPermissions;
 
-
-class Doctor extends Authenticatable implements  LaratrustUser
+class Patient extends Model
 {
-    use HasFactory,Notifiable, HasRolesAndPermissions;
+    use HasFactory, Notifiable, HasRolesAndPermissions;
 
     protected $guarded = [];
 
@@ -23,19 +21,20 @@ class Doctor extends Authenticatable implements  LaratrustUser
         'password',
         'remember_token',
     ];
-
+    
     protected $appends = ['name','image_path', 'city_name','gender'];
+
 
     //attr
     public function getNameAttribute()
     {
         return $this->profile->name;
     } //end of name
-    
+
     public function getImagePathAttribute()
     {
         $disk = 'uploads/';
-        return $this->image == null ? $disk . 'doctor.png' : $disk . $this->image->url;
+        return $this->image == null ? $disk . 'patient.jpg' : $disk . $this->image->url;
     } //end of getImagePathAttribute
 
     public function getCityNameAttribute()
@@ -53,16 +52,12 @@ class Doctor extends Authenticatable implements  LaratrustUser
         return $this->profile->gender ? __('users.male') : __('users.female');
     } //end of gender
 
+    public function getAgeAttribute()
+    {
+        return  Carbon::parse($this->profile->birth_date)->age;
+    } //end of age
 
     //relation
-    public function clinic(){
-        return $this->belongsTo(Clinic::class);
-    }//end of clinic relation
-
-    public function department(){
-        return $this->belongsTo(Department::class);
-    }//end of clinic relation
-    
     public function image(): MorphOne
     {
         return $this->morphOne(Image::class, 'imageable');
@@ -72,5 +67,10 @@ class Doctor extends Authenticatable implements  LaratrustUser
     {
         return $this->morphOne(Profile::class, 'profile');
     } //end of Profile relation
+
+    public function bloodType()
+    {
+        return $this->belongsTo(BloodType::class);
+    } //end of blood Type relation
 
 }

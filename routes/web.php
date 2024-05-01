@@ -5,6 +5,7 @@ use App\Http\Controllers\ClinicAccreditationsController;
 use App\Http\Controllers\ClinicController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\PatientController;
 use App\Http\Controllers\PharmacyController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -70,6 +71,13 @@ Route::middleware(['auth:admin,clinic,pharmacy,doctor','statusCheck'])->group(fu
         Route::delete('doctors/{doctor}','destroy')->name('doctors.destroy');
         Route::delete('doctors', 'bulk')->name('doctors.bulk');
     });
+
+    
+    Route::resource('patients', PatientController::class);
+    Route::get('patients/{patient}/status', [PatientController::class, 'status'])->name('patients.status');
+    Route::delete('patients', [PatientController::class, 'bulk'])->name('patients.bulk');
+
+
 });
 
 require __DIR__ . '/auth.php';

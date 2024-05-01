@@ -20,13 +20,13 @@ __('sidebar.doctors_t')])
                             <div>
                                 <h5 class="main-profile-name">{{ $profile->translate(app()->getLocale())->name }}</h5>
                                 <p class="main-profile-name-text">{{ $doctor->email }}</p>
-                                <span class="badge op-5 badge-{{ $doctor->status ? 'success' : 'danger' }}">{{ $doctor->status ? __('facility.enabled') : __('facility.not_enabled') }}</span>
+                                <span class="badge op-5 badge-{{ $doctor->status ? 'success' : 'danger' }}">{{ $doctor->status ? __('users.enabled') : __('users.not_enabled') }}</span>
                             </div>
                         </div>
                         <!-- main-profile-bio -->
 
                         <hr class="mg-y-30">
-                        <label class="main-content-label tx-13 mg-b-20">@lang('users.doctor_contact')</label>
+                        <label class="main-content-label tx-13 mg-b-20">@lang('users.contact')</label>
                         <div class="main-profile-social-list">
                             <div class="media">
                                 <div class="media-icon bg-primary-transparent text-primary">

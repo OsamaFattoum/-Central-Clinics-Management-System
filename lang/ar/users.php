@@ -29,7 +29,7 @@ return [
     'title_owner_info' => 'معلومات المالك',
     'owner_name' => 'الاسم',
     'edit_image' => 'تعديل الصورة',
-    'doctor_contact' => 'معلومات التواصل',
+    'contact' => 'معلومات التواصل',
 
     'status' => 'الحالة',
     'enabled' => 'مفعل',

@@ -52,6 +52,10 @@ return [
             'driver' => 'session',
             'provider' => 'doctors',
         ],
+        'patient' => [
+            'driver' => 'session',
+            'provider' => 'patients',
+        ],
     ],
 
     /*
@@ -87,6 +91,10 @@ return [
         'doctors' => [
             'driver' => 'eloquent',
             'model' => env('AUTH_MODEL_DOCTOR', App\Models\Users\Doctor::class),
+        ],
+        'patients' => [
+            'driver' => 'eloquent',
+            'model' => env('AUTH_MODEL_PATIENT', App\Models\Users\Patient::class),
         ],
     ],
 
@@ -130,6 +138,12 @@ return [
         ],
         'doctors' => [
             'provider' => 'doctors',
+            'table' => env('AUTH_PASSWORD_RESET_TOKEN_TABLE', 'password_reset_tokens'),
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+        'patients' => [
+            'provider' => 'patients',
             'table' => env('AUTH_PASSWORD_RESET_TOKEN_TABLE', 'password_reset_tokens'),
             'expire' => 60,
             'throttle' => 60,

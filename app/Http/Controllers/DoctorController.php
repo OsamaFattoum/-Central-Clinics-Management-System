@@ -47,7 +47,7 @@ class DoctorController extends Controller
                 abort(404);
             }
         }
-        $profile = Profile::where('profile_id', $doctor->id)->first();
+        $profile = Profile::where('profile_id', $doctor->id)->where('profile_type',Doctor::class)->first();
 
         return view('doctors.show', [
             'doctor' => $doctor,

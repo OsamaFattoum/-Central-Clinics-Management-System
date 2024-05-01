@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Models\Admin;
+use App\Models\BloodType;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -15,7 +16,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
        
-        $this->call([LaratrustSeeder::class,DepartmentSeeder::class, DaysSeeder::class, FacilitySeeder::class,UsersSeeder::class]);
+        $this->call([LaratrustSeeder::class,DepartmentSeeder::class, DaysSeeder::class, FacilitySeeder::class,BloodTypeSeeder::class,UsersSeeder::class]);
    
      
     }
