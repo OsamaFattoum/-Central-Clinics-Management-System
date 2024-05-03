@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Admin;
 use App\Models\Users\Doctor;
+use App\Models\Users\Patient;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -15,24 +16,13 @@ class UsersSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->createAdmin();
-        $this->createDoctor();
+        $this->createDoctors();
+        $this->createPatients();
     } //end of run
 
-    private function createAdmin()
-    {
-        $admin = Admin::create([
-            'name' => 'Manger System',
-            'email' => 'admin@app.com',
-            'password' => bcrypt('password'),
-            'phone' => '+962775314544',
-        ]);
+  
 
-        $admin->addRole('admin');
-    } //end of create admin
-
-
-    private function createDoctor()
+    private function createDoctors()
     {
         $doctor_one = Doctor::create([
             "civil_id" => '9991061159',
@@ -95,6 +85,68 @@ class UsersSeeder extends Seeder
 
 
 
-    } //end of create doctor
+    } //end of create doctors
+
+    private function createPatients()
+    {
+
+        $patient_one = Patient::create([
+            "civil_id" => '9991061159',
+            "email" => 'husam.salama@gmail.com',
+            "password" => Hash::make('password'),
+            'blood_type_id' => '1',
+        ]);
+
+        $patient_one->profile()->create([
+            "ar" => [
+                "name" => 'حسام سلامة',
+            ],
+            "en" => [
+                "name" => 'husam salama',
+            ],
+            'gender' => '1',
+            'birth_date' => '1983-09-09',
+            'phone' => '+962775314544',
+            'city' => '2',
+            'address' => 'Zarqa/new Zarqa',
+            'profile_id' => $patient_one->id,
+            'profile_type' => Patient::class,
+        ]);
+        
+
+
+        $patient_one->addRole('patient');
+
+        //patient two
+        $patient_two = Patient::create([
+            "civil_id" => '9991061155',
+            "email" => 'mohammad.islam@gmail.com',
+            "password" => Hash::make('password'),
+            'blood_type_id' => '3',
+        ]);
+
+        $patient_two->profile()->create([
+            "ar" => [
+                "name" => 'محمد اسلام',
+            ],
+            "en" => [
+                "name" => 'mohammad islam',
+            ],
+            'gender' => '1',
+            'birth_date' => '1983-09-09',
+            'phone' => '+962775314544',
+            'city' => '2',
+            'address' => 'Zarqa/new Zarqa',
+            'profile_id' => $patient_two->id,
+            'profile_type' => Patient::class,
+        ]);
+        
+
+
+        $patient_two->addRole('patient');
+
+
+
+    } //end of create patients
 
 }

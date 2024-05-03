@@ -34,7 +34,7 @@
                                                 name="select_all"><span></span></label>
                                     </th>
                                     <th class="pr-2">@lang('patients.name_patient')</th>
-                                    <th class="pr-2">@lang('users.email')</th>
+                                    <th class="pr-2">@lang('users.civil_id')</th>
                                     <th class="pr-2">@lang('users.phone')</th>
                                     <th class="pr-2">@lang('users.gender')</th>
                                     <th class="pr-2">@lang('users.city')</th>
@@ -53,7 +53,8 @@
                                     </td>
                                     <td class="pr-2"><a href="{{ route('patients.show',$patient->id) }}">{{
                                             $patient->profile->name }}</a></td>
-                                    <td class="pr-2">{{ $patient->email }}</td>
+
+                                    <td class="pr-2">{{ $patient->civil_id }}</td>
                                     <td class="pr-2">{{ $patient->profile->phone }}</td>
                                     <td class="pr-2">{{ $patient->gender }}</td>
                                     <td class="pr-2">{{ $patient->city_name }}</td>

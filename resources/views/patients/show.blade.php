@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('css')
+<!-- Interenal Accordion Css -->
+<link href="{{URL::asset('assets/plugins/accordion/accordion.css')}}" rel="stylesheet" />
+@endsection
 
 @include('components.breadcrumb',['pervPage' => $profile->translate(app()->getLocale())->name , 'currentPage' =>
 __('sidebar.patients_t')])
@@ -7,7 +11,7 @@ __('sidebar.patients_t')])
 @section('content')
 
 <div class="row row-sm">
-    <div class="col-lg-4">
+    <div class="col-lg-3">
         <div class="card mg-b-20">
             <div class="card-body">
                 <div class="pl-0">
@@ -57,8 +61,7 @@ __('sidebar.patients_t')])
             </div>
         </div>
     </div>
-    <div class="col-lg-8">
-
+    <div class="col-lg-9">
         <div class="card">
             <div class="card-body">
                 <div class="row">
@@ -101,18 +104,62 @@ __('sidebar.patients_t')])
                     </div>
 
                 </div>
-                <hr>
 
 
             </div>
 
         </div>
+        <div class="card overflow-hidden">
+            <div class="card-header pb-0">
+                <h3 class="card-title">معلومات السجل</h3>
+                <p class="text-muted card-sub-title mb-0">تحتوي على معلومات السجل الطبي للمريض.</p>
+            </div>
+            <div class="card-body">
+                <div class="panel-group1" id="accordion11">
+                    @foreach ($departments as $index => $department)
+                    @if (auth()->user()->hasPermission('create-'.$department->scientific_name))
+                    <a href="" class="btn btn-dark mb-2">@lang('patients.add_record')</a>
+                    @endif
+                    <div class="panel panel-default  mb-4">
+                        <div class="panel-heading1 bg-primary ">
+                            <h4 class="panel-title1">
+                                <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion11"
+                                    href="#collapseFour{{ $index }}" aria-expanded="false">{{ $department->name }}</a>
+                            </h4>
+                        </div>
+                        <div id="collapseFour{{ $index }}" class="panel-collapse collapse" role="tabpanel"
+                            aria-expanded="false">
+                            <div class="panel-body border">
+                                <p>{{ $department->description }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+
+<div class="row">
+
+</div>
+
+
+
 </div>
 
 </div>
 <!-- Container closed -->
 </div>
 <!-- main-content closed -->
+@endsection
+
+@section('js')
+
+<!--- Internal Accordion Js -->
+<script src="{{URL::asset('assets/plugins/accordion/accordion.min.js')}}"></script>
+<script src="{{URL::asset('assets/js/accordion.js')}}"></script>
+
 @endsection

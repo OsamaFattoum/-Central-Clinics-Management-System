@@ -15,9 +15,22 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-       
+        $admin = $this->createAdmin();
         $this->call([LaratrustSeeder::class,DepartmentSeeder::class, DaysSeeder::class, FacilitySeeder::class,BloodTypeSeeder::class,UsersSeeder::class]);
    
-     
+        $admin->addRole('admin');
     }
+
+    private function createAdmin()
+    {
+        $admin = Admin::create([
+            'name' => 'Manger System',
+            'email' => 'admin@app.com',
+            'password' => bcrypt('password'),
+            'phone' => '+962775314544',
+        ]);
+
+        return $admin;
+    } //end of create admin
+
 }

@@ -1,7 +1,7 @@
 <div class="row">
     <div class="form-group col-lg-6">
         <label for="address">@lang('facility.address')<span class="tx-danger">*</span></label>
-        <input id="address" type="text" name="address" 
+        <input  id="address" type="text" name="address" 
             value="{{ old('address',isset($clinic) ? $clinic->facilityProfile->address : '') }}"
             class="form-control @error('address') parsley-error @enderror">
         @include('components.input-error',['input'=> 'address'])

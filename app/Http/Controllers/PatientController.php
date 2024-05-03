@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PatientRequest;
 use App\Models\BloodType;
+use App\Models\Department\Department;
 use App\Models\Users\Patient;
 use App\Models\Users\Profile;
 use Illuminate\Http\Request;
@@ -88,6 +89,7 @@ class PatientController extends Controller
         $profile = Profile::where('profile_id', $patient->id)->where('profile_type',Patient::class)->first();
 
         return view('patients.show', [
+            'departments' => Department::all(),
             'patient' => $patient,
             'profile' => $profile,
         ]);

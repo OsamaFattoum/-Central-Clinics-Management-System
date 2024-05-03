@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Admin;
 use App\Models\Department\Department;
 use Illuminate\Database\Seeder;
 
@@ -53,13 +54,14 @@ class DepartmentSeeder extends Seeder
             $department = Department::create($departmentData);
         
             foreach (config('laratrust_seeder.permissions_map') as $map) {
-               $per =  \App\Models\Permission::firstOrCreate([
+               $per[] =  \App\Models\Permission::firstOrCreate([
                     'name' => $map . '-' . $department->scientific_name,
                     'display_name' => ucfirst($map) . ' ' . ucfirst($department->scientific_name),
                     'description' => ucfirst($map) . ' ' . ucfirst($department->scientific_name),
-                ]);
+                ])->name;
                 $this->command->info('Creating Permission to ' . $map . ' for ' . $department->scientific_name);
             }
+            Admin::findOrFail(1)->syncPermissions($per);
         }
         
     }
