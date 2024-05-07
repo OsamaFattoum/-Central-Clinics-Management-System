@@ -17,9 +17,9 @@ use Illuminate\Notifications\Notifiable;
 use Laratrust\Contracts\LaratrustUser;
 use Laratrust\Traits\HasRolesAndPermissions;
 
-class Clinic extends Authenticatable implements ContractsTranslatable , LaratrustUser
+class Clinic extends Authenticatable implements ContractsTranslatable, LaratrustUser
 {
-    use HasFactory, Translatable, Notifiable,HasRolesAndPermissions;
+    use HasFactory, Translatable, Notifiable, HasRolesAndPermissions;
 
     public $translatedAttributes = ['name', 'description'];
 
@@ -44,13 +44,21 @@ class Clinic extends Authenticatable implements ContractsTranslatable , Laratrus
         $open_hours = Carbon::parse($this->facilityProfile->open_hours);
         $close_hours = Carbon::parse($this->facilityProfile->close_hours);
         $thisTime = Carbon::now();
-        if ($close_hours->lt($open_hours)) {
-            return  $thisTime->gt($open_hours) || $thisTime->lt($close_hours) ? 1 : 0;
-        } else {
-
-            return $thisTime->between($open_hours, $close_hours) ? 1 : 0;
+        $open_days = [];
+        foreach ($this->facilityDays as $day) {
+            $open_days[] = $day->day->translate('en')->day;
         }
+        $isTodayOpen = in_array($thisTime->englishDayOfWeek, $open_days);
 
+        if ($isTodayOpen) {
+            if ($close_hours->lt($open_hours)) {
+                return  $thisTime->gt($open_hours) || $thisTime->lt($close_hours) ? 1 : 0;
+            } else {
+
+                return $thisTime->between($open_hours, $close_hours) ? 1 : 0;
+            }
+        }
+        return 0;
     } //end of checkOpenStatus
 
     public function openStatusLabel()
@@ -70,9 +78,10 @@ class Clinic extends Authenticatable implements ContractsTranslatable , Laratrus
     } //end of city name
 
     //relation
-    public function doctors(){
+    public function doctors()
+    {
         return $this->hasMany(Doctor::class);
-    }//end of doctors relation
+    } //end of doctors relation
     public function image(): MorphOne
     {
         return $this->morphOne(Image::class, 'imageable');

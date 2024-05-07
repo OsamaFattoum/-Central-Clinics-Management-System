@@ -3,6 +3,7 @@
 namespace App\Models\Case;
 
 use App\Models\Department\Department;
+use App\Models\Record\Record;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Astrotomic\Translatable\Contracts\Translatable as ContractsTranslatable;
@@ -24,5 +25,10 @@ class CaseType extends Model implements ContractsTranslatable
     {
         return $this->belongsTo(Department::class);
     } //end of department relation
+
+    public function records()
+    {
+        return $this->hasMany(Record::class);
+    } //end of records relation
 
 }

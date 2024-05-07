@@ -25,7 +25,7 @@
 
 @endsection
 
-@include('components.breadcrumb',['pervPage' => __('sidebar.clinics_t') , 'currentPage' => __('sidebar.clinics_add_t')])
+@include('components.breadcrumb',['route' => route('clinics.index'),'pervPage' => __('sidebar.clinics_t') , 'currentPage' => __('sidebar.clinics_add_t')])
 
 @section('content')
 

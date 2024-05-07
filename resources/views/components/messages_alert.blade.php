@@ -1,5 +1,5 @@
 
-@if (Request::is('departments') || Request::is('*/accreditations') || Request::is('*/case_types'))
+@if (Request::is('departments') || Request::is('*/accreditations') || Request::is('*/case_types') || Request::is('*/records'))
 @if (count($errors) > 0)
 <div class="alert alert-danger">
     <button aria-label="Close" class="close" data-dismiss="alert" type="button">
@@ -85,6 +85,17 @@
 </script>
 @endif
 
+@if (session()->has('no-case_type'))
+<script>
+    window.onload = function() {
+                notif({
+                    msg: "{{ __('messages.no-case_type') }}",
+                    type: "dark"
+                });
+            }
+
+</script>
+@endif
 
 @if (session()->has('edit'))
 <script>

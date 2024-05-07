@@ -20,7 +20,7 @@
 
 @endsection
 
-@include('components.breadcrumb',['pervPage' => __('sidebar.pharmacies_t') , 'currentPage' => __('sidebar.pharmacies_add_t')])
+@include('components.breadcrumb',['route' => route('pharmacies.index'),'pervPage' => __('sidebar.pharmacies_t') , 'currentPage' => __('sidebar.pharmacies_add_t')])
 
 @section('content')
 

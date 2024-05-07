@@ -66,5 +66,6 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'macChecker' => \App\Http\Middleware\MacCheckerMiddleware::class,
         'statusCheck' => \App\Http\Middleware\StatusCheckMiddleware::class,
+        'checkCaseType' => \App\Http\Middleware\CheckHasCaseType::class,
     ];
 }

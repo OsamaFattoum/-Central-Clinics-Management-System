@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 
-@include('components.breadcrumb',['pervPage' => $pharmacy->translate(app()->getLocale())->name , 'currentPage' =>
+@include('components.breadcrumb',['route' => route('pharmacies.index'),'pervPage' => $pharmacy->translate(app()->getLocale())->name , 'currentPage' =>
 __('sidebar.pharmacies_t')])
 
 @section('content')

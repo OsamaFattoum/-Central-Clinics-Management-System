@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 
-@include('components.breadcrumb',['pervPage' => $clinic->translate(app()->getLocale())->name , 'currentPage' =>
+@include('components.breadcrumb',['route' => route('clinics.index'),'pervPage' => $clinic->translate(app()->getLocale())->name , 'currentPage' =>
 __('sidebar.clinics_t')])
 
 @section('content')

@@ -8,6 +8,7 @@ use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\PharmacyController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RecordController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -76,6 +77,11 @@ Route::middleware(['auth:admin,clinic,pharmacy,doctor','statusCheck'])->group(fu
     Route::resource('patients', PatientController::class);
     Route::get('patients/{patient}/status', [PatientController::class, 'status'])->name('patients.status');
     Route::delete('patients', [PatientController::class, 'bulk'])->name('patients.bulk');
+
+    Route::prefix('patients/{patient}/department/{department}')->group(function () {
+        Route::resource('records', RecordController::class)->except(['create','edit','show']);
+        Route::delete('records', [RecordController::class, 'bulk'])->name('records.bulk');
+    });
 
 
 });

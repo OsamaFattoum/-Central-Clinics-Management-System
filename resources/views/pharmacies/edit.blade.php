@@ -21,7 +21,7 @@
 
 @endsection
 
-@include('components.breadcrumb',['pervPage' => __('sidebar.pharmacies_t') , 'currentPage' => $pharmacy->translate(app()->getLocale())->name])
+@include('components.breadcrumb',['route' => route('pharmacies.index'),'pervPage' => __('sidebar.pharmacies_t') , 'currentPage' => $pharmacy->translate(app()->getLocale())->name])
 
 @section('content')
 

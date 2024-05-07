@@ -5,11 +5,11 @@
 <link href="{{URL::asset('assets/plugins/accordion/accordion.css')}}" rel="stylesheet" />
 @endsection
 
-@include('components.breadcrumb',['pervPage' => $profile->translate(app()->getLocale())->name , 'currentPage' =>
+@include('components.breadcrumb',['route' => route('patients.index'),'pervPage' => $profile->translate(app()->getLocale())->name , 'currentPage' =>
 __('sidebar.patients_t')])
 
 @section('content')
-
+@include('components.messages_alert')
 <div class="row row-sm">
     <div class="col-lg-3">
         <div class="card mg-b-20">
@@ -111,15 +111,12 @@ __('sidebar.patients_t')])
         </div>
         <div class="card overflow-hidden">
             <div class="card-header pb-0">
-                <h3 class="card-title">معلومات السجل</h3>
-                <p class="text-muted card-sub-title mb-0">تحتوي على معلومات السجل الطبي للمريض.</p>
+                <h3 class="card-title">@lang('patients.record_title')</h3>
+                <p class="text-muted card-sub-title mb-0">@lang('patients.record_p')</p>
             </div>
             <div class="card-body">
                 <div class="panel-group1" id="accordion11">
                     @foreach ($departments as $index => $department)
-                    @if (auth()->user()->hasPermission('create-'.$department->scientific_name))
-                    <a href="" class="btn btn-dark mb-2">@lang('patients.add_record')</a>
-                    @endif
                     <div class="panel panel-default  mb-4">
                         <div class="panel-heading1 bg-primary ">
                             <h4 class="panel-title1">
@@ -129,8 +126,61 @@ __('sidebar.patients_t')])
                         </div>
                         <div id="collapseFour{{ $index }}" class="panel-collapse collapse" role="tabpanel"
                             aria-expanded="false">
-                            <div class="panel-body border">
-                                <p>{{ $department->description }}</p>
+                            <div class="panel-body border p-7">
+                                @isset($records[$department->id])
+
+
+                                @if(!$records[$department->id]->isEmpty())
+                                <div class="table-responsive">
+                                    <table class="table table-bordered mg-b-0 text-md-nowrap">
+                                        <thead>
+                                            <tr>
+                                                <th class="pr-2">@lang('records.case_type')</th>
+                                                <th class="pr-2">@lang('records.value')</th>
+                                                <th class="pr-2">@lang('records.measurement_unit')</th>
+                                                <th class="pr-2">@lang('records.result')</th>
+                                                <th class="pr-2">@lang('records.reference_range')</th>
+                                                <th class="pr-2">@lang('records.date')</th>
+                                                <th class="pr-2">@lang('records.time')</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            @foreach ($records[$department->id] as $record)
+                                            <tr>
+                                                <td class="pr-2">{{ $record->caseType->name }}</td>
+                                                <td class="pr-2">
+                                                    @include('components.description_data_table',['description'=>$record->value,'id'=>$record->id])
+                                                </td>
+                                                <td class="pr-2">{{ $record->measurement_unit }}</td>
+
+                                                <td class="pr-2">
+                                                    <span
+                                                        class="badge badge-{{$record->result == 0 || $record->result == 3 ? 'danger' : 'success'}}">{{$record->result_value}}</span>
+                                                </td>
+
+                                                <td class="pr-2">{{ $record->reference_range }}</td>
+                                                <td class="pr-2">{{ $record->date }}</td>
+                                                <td class="pr-2">{{ $record->created_at->format('h:iA') }}</td>
+                                            </tr>
+                                            @include('components.desc',['id'=>$record->id,'name' =>
+                                            $record->caseType->name,'desc'=>$record->value])
+                                            @endforeach
+                                        </tbody>
+
+                                    </table>
+                                </div>
+                                @else
+                                <h6 class="text-center">@lang('records.no_records')</h6>
+                                @endif
+                                @else
+                                <h6 class="text-center">@lang('records.no_records')</h6>
+
+                                @endisset
+                            </div>
+                            <div class="panel-footer border">
+                                <a href="{{ route('records.index',['patient'=>$patient->id,'department'=>$department->id]) }}"
+                                    class="text text-primary">@lang('modal.show_more')</a>
                             </div>
                         </div>
                     </div>
@@ -140,10 +190,6 @@ __('sidebar.patients_t')])
             </div>
         </div>
     </div>
-</div>
-
-<div class="row">
-
 </div>
 
 

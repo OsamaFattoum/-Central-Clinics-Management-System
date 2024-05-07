@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\PatientRequest;
 use App\Models\BloodType;
 use App\Models\Department\Department;
+use App\Models\Record\Record;
 use App\Models\Users\Patient;
 use App\Models\Users\Profile;
 use Illuminate\Http\Request;
@@ -83,12 +84,40 @@ class PatientController extends Controller
         }
     } //end of store
 
+    public function getLatestRecordsByDepartment(Patient $patient)
+    {
+        // Retrieve the latest 6 records per department grouped by department ID
+        $latestRecordsByDepartment = [];
+
+        // Retrieve unique department IDs
+        $departmentIds = Record::select('department_id')
+            ->distinct()
+            ->pluck('department_id');
+            
+
+        // Iterate through each department ID
+        foreach ($departmentIds as $departmentId) {
+            // Retrieve the latest 6 records for the current department
+            $latestRecords = Record::where('department_id', $departmentId)->where('patient_id',$patient->id)
+                ->latest() // Order by latest records first
+                ->limit(6) // Limit to 6 records per department
+                ->get();
+            
+            // Add the latest records to the grouped array under the department ID key
+            $latestRecordsByDepartment[$departmentId] = $latestRecords;
+        }
+
+        return $latestRecordsByDepartment;
+    }
+
+
     public function show(Patient $patient)
     {
-        
+    
         $profile = Profile::where('profile_id', $patient->id)->where('profile_type',Patient::class)->first();
 
         return view('patients.show', [
+            'records' => $this->getLatestRecordsByDepartment($patient),
             'departments' => Department::all(),
             'patient' => $patient,
             'profile' => $profile,

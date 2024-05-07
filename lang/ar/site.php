@@ -10,4 +10,6 @@ return [
     //auth
     'caption_welcome' => 'مرحبا بعودتك',
 
+    'back' => 'رجوع',
+
 ];

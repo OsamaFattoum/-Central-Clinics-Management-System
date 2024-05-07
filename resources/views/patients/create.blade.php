@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 
-@include('components.breadcrumb',['pervPage' => __('sidebar.patients_t') , 'currentPage' => __('sidebar.patients_add_t')])
+@include('components.breadcrumb',['route' => route('patients.index'),'pervPage' => __('sidebar.patients_t') , 'currentPage' => __('sidebar.patients_add_t')])
 
 @section('content')
 

@@ -4,7 +4,7 @@
 @include('layouts.table-head')
 @endsection
 
-@include('components.breadcrumb',['pervPage' => $clinic->translate(app()->getLocale())->name , 'currentPage' => __('clinic_accreditations.accreditions')])
+@include('components.breadcrumb',['route' => route('clinics.index'),'pervPage' => $clinic->translate(app()->getLocale())->name , 'currentPage' => __('clinic_accreditations.accreditions')])
 
 @section('content')
 @include('components.messages_alert')

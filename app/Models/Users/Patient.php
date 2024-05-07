@@ -4,6 +4,7 @@ namespace App\Models\Users;
 
 use App\Models\BloodType;
 use App\Models\Image;
+use App\Models\Record\Record;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -72,5 +73,10 @@ class Patient extends Model
     {
         return $this->belongsTo(BloodType::class);
     } //end of blood Type relation
+
+    public function records()
+    {
+        return $this->hasMany(Record::class);
+    } //end of records relation
 
 }

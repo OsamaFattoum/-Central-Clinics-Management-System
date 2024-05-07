@@ -29,7 +29,7 @@
 
 @endsection
 
-@include('components.breadcrumb',['pervPage' => __('sidebar.clinics_t') , 'currentPage' => $clinic->translate(app()->getLocale())->name])
+@include('components.breadcrumb',['route' => route('clinics.index'),'pervPage' => __('sidebar.clinics_t') , 'currentPage' => $clinic->translate(app()->getLocale())->name])
 
 @section('content')
 

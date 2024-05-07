@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 
-@include('components.breadcrumb',['pervPage' => $profile->translate(app()->getLocale())->name , 'currentPage' =>
+@include('components.breadcrumb',['route' => route('doctors.index'),'pervPage' => $profile->translate(app()->getLocale())->name , 'currentPage' =>
 __('sidebar.doctors_t')])
 
 @section('content')
