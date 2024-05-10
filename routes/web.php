@@ -5,6 +5,7 @@ use App\Http\Controllers\ClinicAccreditationsController;
 use App\Http\Controllers\ClinicController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\MedicationController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\PharmacyController;
 use App\Http\Controllers\ProfileController;
@@ -81,6 +82,12 @@ Route::middleware(['auth:admin,clinic,pharmacy,doctor','statusCheck'])->group(fu
     Route::prefix('patients/{patient}/department/{department}')->group(function () {
         Route::resource('records', RecordController::class)->except(['create','edit','show']);
         Route::delete('records', [RecordController::class, 'bulk'])->name('records.bulk');
+
+        Route::prefix('records/{record}')->group(function (){
+            Route::resource('medications', MedicationController::class)->except(['create','edit','show']);
+            Route::delete('medications', [MedicationController::class, 'bulk'])->name('medications.bulk');
+        });
+
     });
 
 

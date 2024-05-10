@@ -14,29 +14,26 @@ class Record extends Model
 
     protected $guarded = [];
 
-    protected $appends = ['result_value','reference_range','measurement_unit','date'];
+    protected $appends = ['result_value', 'reference_range', 'measurement_unit', 'date'];
 
 
 
     //attr
     public function getMeasurementUnitAttribute()
-    {  
-        
-        return is_null($this->attributes['measurement_unit']) ? __('records.no_value') : $this->attributes['measurement_unit'];
+    {
 
-    }//end of measurement unit
+        return is_null($this->attributes['measurement_unit']) ? __('records.no_value') : $this->attributes['measurement_unit'];
+    } //end of measurement unit
 
     public function getReferenceRangeAttribute()
-    {  
+    {
         return is_null($this->attributes['reference_range']) ? __('records.no_value') : $this->attributes['reference_range'];
-
-    }//end of measurement unit
+    } //end of measurement unit
 
     public function getDateAttribute()
-    {  
+    {
         return $this->created_at->format('Y-m-d');
-
-    }//end of date 
+    } //end of date 
 
     public function getResultValueAttribute()
     {
@@ -71,5 +68,12 @@ class Record extends Model
     {
         return $this->belongsTo(CaseType::class);
     } //end of caseType relation
+
+    public function medications()
+    {
+        return $this->hasMany(Medication::class);
+    } //end of medications relation
+
+
 
 }
