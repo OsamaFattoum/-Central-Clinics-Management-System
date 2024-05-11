@@ -13,7 +13,7 @@
 @section('content')
 				<!-- row -->
 				<div class="row">
-						<h1>Clinic Index</h1>
+						<h1>Patient Index</h1>
 				</div>
 				<!-- row closed -->
 			</div>

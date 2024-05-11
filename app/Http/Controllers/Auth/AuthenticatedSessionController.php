@@ -28,6 +28,11 @@ class AuthenticatedSessionController extends Controller
         return view('auth.doctor-login');
     } //end of login doctor
 
+    public function loginPatient()
+    {
+        return view('auth.patient-login');
+    } //end of login patient
+
 
     public function store(LoginRequest $request): RedirectResponse
     {

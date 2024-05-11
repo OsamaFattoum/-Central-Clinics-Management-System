@@ -29,7 +29,7 @@ Route::get('/', function () {
 
 
 
-Route::middleware(['auth:admin,clinic,pharmacy,doctor','statusCheck'])->group(function () {
+Route::middleware(['auth:admin,clinic,pharmacy,doctor,patient','statusCheck'])->group(function () {
 
     Route::get('/dashboard', function () {
         return view('dashboard');

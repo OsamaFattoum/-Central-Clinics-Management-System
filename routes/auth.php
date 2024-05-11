@@ -11,15 +11,12 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware('guest:admin,clinic,pharmacy,doctor')->group(function () {
-    // Route::get('register', [RegisteredUserController::class, 'create'])
-    //             ->name('register');
-
-    // Route::post('register', [RegisteredUserController::class, 'store']);
+Route::middleware('guest:admin,clinic,pharmacy,doctor,patient')->group(function () {
 
     Route::get('admin/login', [AuthenticatedSessionController::class, 'loginAdmin'])->name('admin.login')->middleware('macChecker');
     Route::get('facility/login', [AuthenticatedSessionController::class, 'loginFacility'])->name('facility.login');
     Route::get('doctor/login', [AuthenticatedSessionController::class, 'loginDoctor'])->name('doctor.login');
+    Route::get('login', [AuthenticatedSessionController::class, 'loginPatient'])->name('patient.login');
 
     Route::post('login', [AuthenticatedSessionController::class, 'store'])->name('login');
 
@@ -36,7 +33,7 @@ Route::middleware('guest:admin,clinic,pharmacy,doctor')->group(function () {
     //             ->name('password.store');
 });
 
-Route::middleware('auth:admin,clinic,pharmacy,doctor')->group(function () {
+Route::middleware('auth:admin,clinic,pharmacy,doctor,patient')->group(function () {
     // Route::get('verify-email', EmailVerificationPromptController::class)
     //             ->name('verification.notice');
 
