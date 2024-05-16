@@ -5,7 +5,8 @@
 <link href="{{URL::asset('assets/plugins/accordion/accordion.css')}}" rel="stylesheet" />
 @endsection
 
-@include('components.breadcrumb',['route' => route('patients.index'),'pervPage' => $profile->translate(app()->getLocale())->name , 'currentPage' =>
+@include('components.breadcrumb',['route' => route('patients.index'),'pervPage' =>
+$profile->translate(app()->getLocale())->name , 'currentPage' =>
 __('sidebar.patients_t')])
 
 @section('content')
@@ -62,6 +63,71 @@ __('sidebar.patients_t')])
         </div>
     </div>
     <div class="col-lg-9">
+        <div class="row row-sm">
+            <div class="col-sm-12 col-xl-4 col-lg-12 col-md-12">
+                <div class="card bg-whi">
+                    <a class="tx-dark" href="{{ route('medications.index',['patient'=>$patient->id]) }}">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="icon1 mt-2 text-center">
+                                        <i class="las la-pills tx-40"></i>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="mt-0 text-center">
+                                        <span>@lang('patients.medications')</span>
+                                        <h2>{{ $medications }}</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-sm-12 col-xl-4 col-lg-12 col-md-12">
+                <div class="card bg-whi">
+                    <a class="tx-dark" href="{{ route('medications.index',['patient'=>$patient,'taken'=> 0]) }}">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="icon1 mt-2 text-center">
+                                        <i class="las la-capsules tx-40"></i>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="mt-0 text-center">
+                                        <span>@lang('patients.medications_taken')</span>
+                                        <h2>{{ $medications_undispensed }}</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-sm-12 col-xl-4 col-lg-12 col-md-12">
+                <div class="card bg-whi">
+                    <a class="tx-dark" href="">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="icon1 mt-2 text-center">
+                                        <i class="las la-calendar tx-40"></i>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="mt-0 text-center">
+                                        <span>@lang('patients.appointments')</span>
+                                        <h2>50</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
         <div class="card">
             <div class="card-body">
                 <div class="row">
@@ -104,11 +170,15 @@ __('sidebar.patients_t')])
                     </div>
 
                 </div>
-
-
             </div>
 
         </div>
+
+    </div>
+</div>
+
+<div class="row row-sm">
+    <div class="col-lg-12">
         <div class="card overflow-hidden">
             <div class="card-header pb-0">
                 <h3 class="card-title">@lang('patients.record_title')</h3>
@@ -116,15 +186,16 @@ __('sidebar.patients_t')])
             </div>
             <div class="card-body">
                 <div class="panel-group1" id="accordion11">
-                    @foreach ($departments as $index => $department)
+                    @foreach ($departments as  $department)
+                    @permission('read-' . $department->scientific_name)
                     <div class="panel panel-default  mb-4">
                         <div class="panel-heading1 bg-primary ">
                             <h4 class="panel-title1">
                                 <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion11"
-                                    href="#collapseFour{{ $index }}" aria-expanded="false">{{ $department->name }}</a>
+                                    href="#collapseFour{{ $department->id }}" aria-expanded="false">{{ $department->name }}</a>
                             </h4>
                         </div>
-                        <div id="collapseFour{{ $index }}" class="panel-collapse collapse" role="tabpanel"
+                        <div id="collapseFour{{ $department->id }}" class="panel-collapse collapse" role="tabpanel"
                             aria-expanded="false">
                             <div class="panel-body border p-7">
                                 @isset($records[$department->id])
@@ -184,6 +255,7 @@ __('sidebar.patients_t')])
                             </div>
                         </div>
                     </div>
+                    @endpermission
                     @endforeach
 
                 </div>
@@ -193,8 +265,6 @@ __('sidebar.patients_t')])
 </div>
 
 
-
-</div>
 
 </div>
 <!-- Container closed -->

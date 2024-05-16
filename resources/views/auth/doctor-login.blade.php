@@ -39,12 +39,12 @@
                                             @csrf
                                             <input type="hidden" name="type" value="doctor">
                                             <div class="form-group">
-                                                <label for="civil_id">@lang('users.civil_id')</label>
-                                                <input class="form-control @error('civil_id') parsley-error @enderror"
-                                                    placeholder="{{ __('users.placeholder_civil_id') }}"
-                                                    type="text" name="civil_id" id="civil_id"
-                                                    value="{{ old('civil_id') }}">
-                                                @include('components.input-error',['input' => 'civil_id'])
+                                                <label for="job_number">@lang('doctors.job_number')</label>
+                                                <input class="form-control @error('job_number') parsley-error @enderror"
+                                                    placeholder="{{ __('doctors.placeholder_job_number') }}"
+                                                    type="text" name="job_number" id="job_number"
+                                                    value="{{ old('job_number') }}">
+                                                @include('components.input-error',['input' => 'job_number'])
                                             </div>
                                             <div class="form-group">
                                                 <label for="doctor_password">@lang('users.password')</label>

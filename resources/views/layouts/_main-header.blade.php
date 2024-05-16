@@ -20,7 +20,7 @@
 			
 			<div class="nav nav-item  navbar-nav-right ml-auto">
 				
-			
+{{-- 			
 				<div class="dropdown nav-item main-header-notification">
 					<a class="new nav-link" href="#">
 						<svg xmlns="http://www.w3.org/2000/svg" class="header-icon-svgs" viewBox="0 0 24 24" fill="none"
@@ -117,7 +117,7 @@
 							<a href="">VIEW ALL</a>
 						</div>
 					</div>
-				</div>
+				</div> --}}
 				
 				<div class="dropdown main-profile-menu nav nav-item nav-link">
 					<a class="profile-user d-flex" href=""><img alt=""

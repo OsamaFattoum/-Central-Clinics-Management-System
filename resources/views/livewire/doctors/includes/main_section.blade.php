@@ -12,19 +12,41 @@
 
 </div>
 <div class="row">
+    {{-- Job Number --}}
+    <div class="control-group form-group col-lg-6">
+        <label for="job_number">@lang('doctors.job_number')<span class="tx-danger">*</span></label>
+        @if ($updateMode)
+            @auth('clinic')
+                <input type="text" id="job_number" value="{{ $form->job_number }}"
+                    class="form-control @error('form.job_number') parsley-error @enderror" readonly>
+                @include('components.input-error',['input'=> 'form.job_number'])
+            @else
+                @include('livewire.doctors.includes._job_input')
+            @endauth
+        @else
+            @include('livewire.doctors.includes._job_input')
+        @endif
+      
+    </div>
+    {{-- End Job Number --}}
+    {{-- Civil ID --}}
     <div class="control-group form-group col-lg-6">
         <label for="civil_input">@lang('users.civil_id')<span class="tx-danger">*</span></label>
-        <input id="civil_input" type="text" wire:model='form.civil_id'
-            class="form-control @error('form.civil_id') parsley-error @enderror">
-        @include('components.input-error',['input'=> 'form.civil_id'])
+        @if ($updateMode)
+            @auth('clinic')
+                <input type="text" id="civil_id" value="{{ $form->civil_id }}"
+                    class="form-control @error('form.civil_id') parsley-error @enderror" readonly>
+                @include('components.input-error',['input'=> 'form.civil_id'])
+            @else
+                @include('livewire.doctors.includes._civil_input')
+            @endauth
+        @else
+            @include('livewire.doctors.includes._civil_input')
+        @endif
     </div>
-    <div class="control-group form-group col-lg-6">
-        <label for="email">@lang('users.email')<span class="tx-danger">*</span></label>
-        <input id="email" type="email" wire:model='form.email'
-            class="form-control @error('form.email') parsley-error @enderror">
-        @include('components.input-error',['input'=> 'form.email'])
-    </div>
+    {{-- End Civil ID --}}
 </div>
+
 @if (!$updateMode)
 <div class="row">
     <div class="control-group form-group col-lg-6">
@@ -40,10 +62,10 @@
         @include('components.input-error',['input'=> 'form.password_confirmation'])
     </div>
 </div>
-
 @endif
 
 <div class="row">
+    {{-- Select Clinic --}}
     <div class="form-group col-lg-6">
         <label for="clinics">@lang('users.clinics')<span class="tx-danger">*</span></label>
         @auth('clinic')
@@ -62,27 +84,28 @@
         @include('components.input-error',['input'=> 'form.clinic','is_select'=>true])
         @endauth
     </div>
-
+    {{-- End Select Clinic --}}
+    {{-- Select Department --}}
     <div class="form-group col-lg-6">
         <label for="departments">@lang('users.departments')<span class="tx-danger">*</span></label>
-
-        @if ($selectedClinic)
-        <select wire:model.live="form.department" id="departments" wire:change='selectDepartment'
-            class="form-control @error('form.department') custom-select2-border @enderror"
-             dir="{{ config('app.locale') == 'ar' ? 'rtl' : 'ltr'  }}">
-            <option value="">@lang('site.select_package_placeholder')</option>
-            @foreach ($departments as $department)
-            <option value="{{ $department->id }}">{{ $department->name }}</option>
-            @endforeach
-        </select>
-        @else
-        <input type="text" class="form-control" readonly placeholder="{{ __('site.select_package_placeholder') }}">
-        @endif
-        @include('components.input-error',['input'=> 'form.department','is_select'=>true])
+            @if ($updateMode)
+                @auth('clinic')
+                    <input type="text" id="departments" value="{{ $departments->where('id',$form->department)->first()->name }}"
+                    class="form-control @error('form.department') parsley-error @enderror" readonly>
+                    @include('components.input-error',['input'=> 'form.department'])
+                @else
+                    @include('livewire.doctors.includes._select_department')
+                @endauth
+            @else
+                @include('livewire.doctors.includes._select_department')
+            @endif
     </div>
+    {{-- End Select Department --}}
 </div>
-@if ($selectedDepartment)
 
+
+@if ($selectedDepartment)
+{{-- Select Permissons --}}
 <label>@lang('users.permissions')<span class="tx-danger">*</span></label>
 @error('form.permissions')
 <div class="alert alert-danger">{{ $message }}</div>
@@ -93,11 +116,14 @@
             <div class="tabs-menu1">
                 <!-- Tabs -->
                 <ul class="nav panel-tabs main-nav-line">
-                    <li class="nav-item"><a href="#tab1" class="nav-link active" data-toggle="tab">{{
+                    <li class="nav-item"><a href="#tab1" wire:click='selectTab(1)'
+                            class="nav-link {{ $activeTab == 1 ? 'active' : ''}}" data-toggle="tab">{{
                             $selectedDepartment->name }}</a>
                     </li>
                     @if ($selectedDepartment->status)
-                    <li class="nav-item"><a href="#tab2" class="nav-link" data-toggle="tab">@lang('doctors.drugs')</a>
+                    <li class="nav-item"><a href="#tab2" wire:click='selectTab(2)'
+                            class="nav-link {{ $activeTab == 2 ? 'active' : ''}}"
+                            data-toggle="tab">@lang('doctors.medications')</a>
                     </li>
                     @endif
 
@@ -107,28 +133,34 @@
         </div>
         <div class="panel-body tabs-menu-body main-content-body-right border-top-0 border">
             <div class="tab-content">
-                <div class="tab-pane active" id="tab1">
+                <div class="tab-pane {{ $activeTab == 1 ? 'active' : ''}}" id="tab1">
                     <div class="d-flex">
                         @foreach (config('laratrust_seeder.permissions_map') as $map)
+                        @if ($map != 'delete')
                         <label class="ckbox mt-2 mb-2 mx-2">
                             <input wire:key='{{$map}}-{{$selectedDepartment->scientific_name}}' type="checkbox"
                                 wire:click="toggleChecked('{{$map}}-{{$selectedDepartment->scientific_name}}')"
-                                wire:model='form.permissions.{{$map . '-' . $selectedDepartment->scientific_name }}'
+                                wire:model='form.permissions.{{$map . '-' . $selectedDepartment->scientific_name
+                            }}'
                             id="{{$selectedDepartment->scientific_name .
                             $map}}">
                             <span>@lang('doctors.'. $map)</span>
                         </label>
+                        @endif
                         @endforeach
                     </div>
                 </div>
                 @if ($selectedDepartment->status)
-                <div class="tab-pane" id="tab2">
+                <div class="tab-pane {{ $activeTab == 2 ? 'active' : ''}}" id="tab2">
                     <div class="d-flex">
                         @foreach (config('laratrust_seeder.permissions_map') as $map)
-                        <label for="drug{{$map}}" class="ckbox mt-2 mb-2 mx-2">
-                            <input wire:key='{{$map}}-drug' wire:click="toggleChecked('{{$map}}-drug')"
-                                wire:model='form.permissions.{{$map . '-drug'}}' id="drug{{$map}}"
+
+                        @if ($map != 'delete')
+                        <label for="medications{{$map}}" class="ckbox mt-2 mb-2 mx-2">
+                            <input wire:key='{{$map}}-medications' wire:click="toggleChecked('{{$map}}-medications')"
+                                wire:model='form.permissions.{{$map . '-medications'}}' id="medications{{$map}}"
                                 type="checkbox"><span>@lang('doctors.'. $map)</span></label>
+                        @endif
                         @endforeach
                     </div>
                 </div>
@@ -138,4 +170,25 @@
         </div>
     </div>
 </div>
+{{-- End Select Permissons --}}
+
+
+{{-- Select Related Department --}}
+<label>@lang('doctors.related_departments')</label>
+<div class="form-group">
+    <div class="d-flex">
+        @foreach ($allDepartments as $department)
+        @if ($selectedDepartment->name != $department->name)
+        <label class="ckbox mt-2 mb-2 mx-2">
+            <input wire:key='read-{{ $department->scientific_name }}' wire:model='form.permissions.{{'read' . '-' .
+                $department->scientific_name }}'
+            wire:click="toggleChecked('read-{{ $department->scientific_name }}')" type="checkbox">
+            <span>{{ $department->name }}</span>
+        </label>
+        @endif
+
+        @endforeach
+    </div>
+</div>
+{{-- End Select Related Department --}}
 @endif

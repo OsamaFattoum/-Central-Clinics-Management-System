@@ -16,11 +16,15 @@
                 <div class="card-header pb-0">
                     <div class="d-flex justify-content-between">
                         <div class="">
+                            @permission('read-doctors')
                             <a href="{{route('doctors.manage')}}" class="btn btn-primary">
                                 @lang('doctors.btn_create_doctor')
                             </a>
+                            @endpermission
+                            @permission('delete-doctors')
                             <button type="button" class="btn btn-danger"
                                 id="btn_delete_all">@lang('delete.btn_delete_selected_data')</button>
+                            @endpermission
                         </div>
                         <i class="mdi mdi-dots-horizontal text-gray"></i>
                     </div>
@@ -34,7 +38,7 @@
                                                 name="select_all"><span></span></label>
                                     </th>
                                     <th class="pr-2">@lang('doctors.name_doctor')</th>
-                                    <th class="pr-2">@lang('users.email')</th>
+                                    <th class="pr-2">@lang('doctors.job_number')</th>
                                     <th class="pr-2">@lang('users.phone')</th>
                                     <th class="pr-2">@lang('users.gender')</th>
                                     <th class="pr-2">@lang('users.city')</th>
@@ -54,11 +58,12 @@
                                     </td>
                                     <td class="pr-2"><a href="{{ route('doctors.show',$doctor->id) }}">{{
                                             $doctor->profile->name }}</a></td>
-                                    <td class="pr-2">{{ $doctor->email }}</td>
+                                    <td class="pr-2">{{ $doctor->job_number }}</td>
                                     <td class="pr-2">{{ $doctor->profile->phone }}</td>
                                     <td class="pr-2">{{ $doctor->gender }}</td>
                                     <td class="pr-2">{{ $doctor->city_name }}</td>
-                                    <td class="pr-2"><span class="badge badge-info">{{ $doctor->clinic->name }}</span></td>
+                                    <td class="pr-2"><span class="badge badge-info">{{ $doctor->clinic->name }}</span>
+                                    </td>
                                     <td class="pr-2">
                                         <span class="badge badge-{{ $doctor->status ? 'success' : 'danger' }}">{{
                                             $doctor->status ? __('users.enabled') : __('users.not_enabled')}}
@@ -71,18 +76,23 @@
                                                 type="button">@lang('dropdown_op.processes')<i
                                                     class="fas fa-caret-down mx-1"></i></button>
                                             <div class="dropdown-menu tx-13">
+                                                @permission('update-doctors')
                                                 <a class="dropdown-item"
                                                     href="{{route('doctors.manage',$doctor->id)}}"><i
                                                         style="color: #0ba360"
                                                         class="text-success ti-pencil-alt"></i>&nbsp;&nbsp;@lang('dropdown_op.drop_down_edit')</a>
+                                                @endpermission
+                                                @permission('delete-doctors')
                                                 <a class="dropdown-item"
                                                     href="{{route('doctors.status',$doctor->id)}}"><i
                                                         class="text-warning ti-back-right"></i>&nbsp;&nbsp;@lang('dropdown_op.drop_down_status')</a>
+                                                @endpermission
+                                                @permission('delete-doctors')
 
                                                 <a class="dropdown-item" href="#" data-toggle="modal"
                                                     data-target="#delete{{$doctor->id}}"><i
                                                         class="text-danger  ti-trash"></i>&nbsp;&nbsp;@lang('dropdown_op.drop_down_delete')</a>
-
+                                                @endpermission
                                             </div>
                                         </div>
 

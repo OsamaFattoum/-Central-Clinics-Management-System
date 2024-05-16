@@ -18,7 +18,7 @@ class DerpartmentRequest extends FormRequest
     {
         $rules =  [
             'ar.name' => ['required','string','min:5','max:100','unique:department_translations,name,NULL,id,locale,ar'],
-            'en.name' => ['required','string','min:5','max:100','unique:department_translations,name,NULL,id,locale,en'],
+            'en.name' => ['required','string','different:ar.name','min:5','max:100','unique:department_translations,name,NULL,id,locale,en'],
             'scientific_name' => ['required', 'string', 'max:30'],
             'status' => ['required', 'in:0,1'],
         ];
@@ -53,6 +53,7 @@ class DerpartmentRequest extends FormRequest
             'en.name.max' => __('departments.name.en.max'),
             'ar.name.unique' => __('departments.name.ar.unique'),
             'en.name.unique' => __('departments.name.en.unique'),
+            'en.name.different' => __('departments.name.en.different'),
             'scientific_name.required' => __('departments.scientific_name.required'),
             'scientific_name.string' => __('departments.scientific_name.string'),
             'scientific_name.max' => __('departments.scientific_name.max'),

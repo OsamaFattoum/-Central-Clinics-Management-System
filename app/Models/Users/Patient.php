@@ -4,6 +4,7 @@ namespace App\Models\Users;
 
 use App\Models\BloodType;
 use App\Models\Image;
+use App\Models\Record\Medication;
 use App\Models\Record\Record;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -80,5 +81,10 @@ class Patient extends Authenticatable implements  LaratrustUser
     {
         return $this->hasMany(Record::class);
     } //end of records relation
+
+    public function medications()
+    {
+        return $this->hasMany(Medication::class);
+    } //end of medications relation
 
 }

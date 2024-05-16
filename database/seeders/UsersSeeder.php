@@ -26,6 +26,7 @@ class UsersSeeder extends Seeder
     {
         $doctor_one = Doctor::create([
             "civil_id" => '9991061159',
+            "job_number" => 'GP-2022-52369',
             "email" => 'khaled.salama@gmail.com',
             "password" => Hash::make('password'),
             'clinic_id' => '1',
@@ -49,13 +50,14 @@ class UsersSeeder extends Seeder
         ]);
         
 
-        $doctor_one->syncPermissions(['30','31']);
+        $doctor_one->syncPermissions(['37','38','42']);
 
         $doctor_one->addRole('doctor');
 
         //doctor two
         $doctor_two = Doctor::create([
             "civil_id" => '9991061155',
+            "job_number" => 'GP-2024-25897',
             "email" => 'mohammad.salama@gmail.com',
             "password" => Hash::make('password'),
             'clinic_id' => '1',
@@ -79,7 +81,7 @@ class UsersSeeder extends Seeder
         ]);
         
 
-        $doctor_two->syncPermissions(['37','38','39','25','26']);
+        $doctor_two->syncPermissions(['46','47','42']);
 
         $doctor_two->addRole('doctor');
 

@@ -14,7 +14,9 @@ __('sidebar.doctors_t')])
                     <div class="main-profile-overview">
                         <div class="main-img-user profile-user bd bd-1">
                             <img alt="" src="{{URL::asset($doctor->image_path)}}">
+                            @permission('update-doctors')
                             <a class="fas fa-edit profile-edit" href="{{ route('doctors.manage',$doctor->id) }}"></a>
+                            @endpermission
                         </div>
                         <div class="d-flex justify-content-between mg-b-20">
                             <div>

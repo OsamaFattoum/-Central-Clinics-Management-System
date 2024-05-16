@@ -32,6 +32,10 @@ class LoginRequest extends FormRequest
                 ];
                 break;
             case 'doctor':
+                $rules =  [
+                    'job_number' => ['required', 'string', 'min:9', 'max:13'],
+                ];
+                break;
             case 'patient':
                 $rules =  [
                     'civil_id' => ['required', 'string', 'min:10', 'max:10'],
@@ -83,6 +87,8 @@ class LoginRequest extends FormRequest
                 $key = 'number';
                 break;
             case 'doctor':
+                $key = 'job_number';
+                break;
             case 'patient':
                 $key = 'civil_id';
                 break;
@@ -104,6 +110,8 @@ class LoginRequest extends FormRequest
                 return $this->only('number', 'password');
                 break;
             case 'doctor':
+                return $this->only('job_number', 'password');
+                break;
             case 'patient':
                 return $this->only('civil_id', 'password');
                 break;

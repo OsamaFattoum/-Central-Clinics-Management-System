@@ -18,6 +18,10 @@ return [
 
    'add_record' => 'اضافة لسجل',
 
+   'medications' => 'جميع الادوية',
+   'medications_taken' => 'الادوية الفعالة',
+   'appointments' => 'المواعيد',
+
 
    
 

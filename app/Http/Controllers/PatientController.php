@@ -121,6 +121,8 @@ class PatientController extends Controller
             'departments' => Department::all(),
             'patient' => $patient,
             'profile' => $profile,
+            'medications' => $patient->medications()->count(),
+            'medications_undispensed' => $patient->medications()->where('medication_taken',0)->count()
         ]);
     } //end of show
 
@@ -180,7 +182,7 @@ class PatientController extends Controller
         try {
             $patient->update(['status' => !$patient->status]);
             session()->flash('change_status');
-            return redirect()->route('patients.index');
+            return redirect()->route('patients.index',['s' => $patient->civil_id]);
         } catch (\Exception $e) {
             return redirect()->route('patients.index')->withErrors(['error' => $e->getMessage()]);
         }

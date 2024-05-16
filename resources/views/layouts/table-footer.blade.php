@@ -1,3 +1,4 @@
+
 <!-- Internal Data tables -->
 <script src="{{URL::asset('assets/plugins/datatable/js/jquery.dataTables.js')}}"></script>
 <script src="{{URL::asset('assets/plugins/datatable/js/dataTables.bootstrap4.js')}}"></script>
@@ -5,11 +6,17 @@
 <script src="{{URL::asset('assets/plugins/datatable/js/dataTables.responsive.min.js')}}"></script>
 <script src="{{URL::asset('assets/plugins/datatable/js/responsive.bootstrap4.min.js')}}"></script>
 
+
 <!--Internal  Datatable js -->
 <script>
     let targets = @json($targetsNotOrdered);
+    let searching = @json(isset($searching) ? $searching : true);
+    let lengthChange = @json(isset($lengthChange) ? $lengthChange : true);
+  
     $('#example1').DataTable({
-       
+        pagingType: 'full_numbers',
+        lengthChange: lengthChange,
+        searching: searching,
 		language: {         
             "emptyTable": "{{ __('data_table.emptyTable') }}",
             "info": "{{ __('data_table.info') }}",
@@ -34,7 +41,7 @@
 		},
         columnDefs: [ { orderable: false,targets:targets}],
         order: [["{{ $orderIndex }}", 'asc']]
-      
+     
 	});
 </script>
 

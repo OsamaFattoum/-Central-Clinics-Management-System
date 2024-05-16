@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Admin;
+use App\Models\Case\CaseType;
 use App\Models\Department\Department;
 use Illuminate\Database\Seeder;
 
@@ -50,6 +51,7 @@ class DepartmentSeeder extends Seeder
             ],
         ];
         
+        $per = [];
         foreach ($departments as $departmentData) {
             $department = Department::create($departmentData);
         
@@ -61,7 +63,72 @@ class DepartmentSeeder extends Seeder
                 ])->name;
                 $this->command->info('Creating Permission to ' . $map . ' for ' . $department->scientific_name);
             }
-            Admin::findOrFail(1)->syncPermissions($per);
+            
+        }
+
+
+        Admin::findOrFail(1)->syncPermissions($per);
+
+        $caseTypes = [
+            [
+                'ar' => [
+                    'name' => 'عظام',
+                ],
+                'en' => [
+                    'name' => 'Bones',
+                ],
+                'department_id' => '3',
+            ],
+            [
+                'ar' => [
+                    'name' => 'اسنان',
+                ],
+                'en' => [
+                    'name' => 'teeth',
+                ],
+                'department_id' => '3',
+            ],
+            [
+                'ar' => [
+                    'name' => 'الموجات فوق الصوتية',
+                ],
+                'en' => [
+                    'name' => 'Ultrasonic',
+                ],
+                'department_id' => '1',
+            ],
+            [
+                'ar' => [
+                    'name' => 'الأشعة بالرنين المغناطيسي',
+                ],
+                'en' => [
+                    'name' => 'M.R.I',
+                ],
+                'department_id' => '1',
+            ],
+            [
+                'ar' => [
+                    'name' => 'حساسية الجلد',
+                ],
+                'en' => [
+                    'name' => 'Skin Allergy',
+                ],
+                'department_id' => '2',
+            ],
+            [
+                'ar' => [
+                    'name' => 'حساسية الدم',
+                ],
+                'en' => [
+                    'name' => 'blood Allergy',
+                ],
+                'department_id' => '2',
+            ],
+            
+        ];
+
+        foreach ($caseTypes as $caseType) {
+            CaseType::create($caseType);
         }
         
     }

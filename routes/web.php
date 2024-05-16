@@ -29,7 +29,7 @@ Route::get('/', function () {
 
 
 
-Route::middleware(['auth:admin,clinic,pharmacy,doctor,patient','statusCheck'])->group(function () {
+Route::middleware(['auth:admin,clinic,pharmacy,doctor,patient', 'statusCheck'])->group(function () {
 
     Route::get('/dashboard', function () {
         return view('dashboard');
@@ -64,33 +64,31 @@ Route::middleware(['auth:admin,clinic,pharmacy,doctor,patient','statusCheck'])->
     Route::delete('pharmacies', [PharmacyController::class, 'bulk'])->name('pharmacies.bulk');
 
 
-    
+
     Route::controller(DoctorController::class)->group(function () {
-        Route::get('doctors','index')->name('doctors.index');
+        Route::get('doctors', 'index')->name('doctors.index');
         Route::get('doctors/manage/{doctor?}', 'manage')->name('doctors.manage');
-        Route::get('doctors/{doctor}','show')->name('doctors.show');
+        Route::get('doctors/{doctor}', 'show')->name('doctors.show');
         Route::get('doctors/{doctor}/status', 'status')->name('doctors.status');
-        Route::delete('doctors/{doctor}','destroy')->name('doctors.destroy');
+        Route::delete('doctors/{doctor}', 'destroy')->name('doctors.destroy');
         Route::delete('doctors', 'bulk')->name('doctors.bulk');
     });
 
-    
+
     Route::resource('patients', PatientController::class);
     Route::get('patients/{patient}/status', [PatientController::class, 'status'])->name('patients.status');
     Route::delete('patients', [PatientController::class, 'bulk'])->name('patients.bulk');
 
-    Route::prefix('patients/{patient}/department/{department}')->group(function () {
-        Route::resource('records', RecordController::class)->except(['create','edit','show']);
-        Route::delete('records', [RecordController::class, 'bulk'])->name('records.bulk');
 
-        Route::prefix('records/{record}')->group(function (){
-            Route::resource('medications', MedicationController::class)->except(['create','edit','show']);
-            Route::delete('medications', [MedicationController::class, 'bulk'])->name('medications.bulk');
-        });
-
+    Route::prefix('patients/{patient}')->group(function () {
+        Route::resource('medications', MedicationController::class)->except(['create', 'edit', 'show']);
+        Route::delete('medications', [MedicationController::class, 'bulk'])->name('medications.bulk');
     });
 
-
+    Route::prefix('patients/{patient}/department/{department}')->group(function () {
+        Route::resource('records', RecordController::class)->except(['create', 'edit', 'show']);
+        Route::delete('records', [RecordController::class, 'bulk'])->name('records.bulk');
+    });
 });
 
 require __DIR__ . '/auth.php';

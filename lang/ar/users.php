@@ -35,6 +35,7 @@ return [
     'enabled' => 'مفعل',
     'not_enabled' => 'غير فعال',
 
+    'placeholder_search_patient' => 'بحث عن طريق الرقم الوطني',
 
     //users auth
     'sub_caption_welcome' => 'سجل دخولك واستعد لمعاينة مرضاك.',

@@ -3,6 +3,7 @@
 namespace App\Models\Case;
 
 use App\Models\Department\Department;
+use App\Models\Record\Medication;
 use App\Models\Record\Record;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -30,5 +31,10 @@ class CaseType extends Model implements ContractsTranslatable
     {
         return $this->hasMany(Record::class);
     } //end of records relation
+
+    public function medications()
+    {
+        return $this->hasMany(Medication::class);
+    } //end of medications relation
 
 }

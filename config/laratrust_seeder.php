@@ -20,15 +20,17 @@ return [
             'pharmacies' => 'c,r,u,d',
             'doctors' => 'c,r,u,d',
             'patients' => 'c,r,u,d',
+            'records' => 'c,r,u,d',
+            'medications' => 'c,r,u,d',
         ],
         'clinic' => [
-            'doctors' => 'c,r,u,d',
+            'doctors' => 'c,r,u',
         ],
         'pharmacy' => [
 
         ],
         'doctor' => [
-
+            'patients' => 'c,r',
         ],
         'patient' => [
 
@@ -43,4 +45,6 @@ return [
         'u' => 'update',
         'd' => 'delete',
     ],
+
+
 ];

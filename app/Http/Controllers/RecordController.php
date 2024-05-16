@@ -15,6 +15,11 @@ class RecordController extends Controller
 
     public function __construct()
     {
+        $this->middleware(['permission:read-records'])->only(['index']);
+        $this->middleware(['permission:create-records'])->only(['store']);
+        $this->middleware(['permission:update-records'])->only(['update']);
+        $this->middleware(['permission:delete-records'])->only(['destroy','bulk']);
+
         $this->middleware('checkCaseType');
     }//end of construct
 

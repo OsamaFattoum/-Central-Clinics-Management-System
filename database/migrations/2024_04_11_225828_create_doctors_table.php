@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('department_id')->references('id')->on('departments')->cascadeOnDelete();
             $table->string('email')->unique();
             $table->string('civil_id',10)->unique();
+            $table->string('job_number',13)->unique();
             $table->string('password');
             $table->boolean('status')->default(1);
             $table->timestamps();

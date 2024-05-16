@@ -71,14 +71,6 @@ class LaratrustSeeder extends Seeder
             }
         }
 
-
-        foreach (config('laratrust_seeder.permissions_map') as $value) {
-            \App\Models\Permission::firstOrCreate([
-                'name' => $value . '-' . 'drug',
-                'display_name' => ucfirst($value) . ' ' . ucfirst('drug'),
-                'description' => ucfirst($value) . ' ' . ucfirst('drug'),
-            ]);
-        }
     }
 
     /**

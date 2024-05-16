@@ -12,12 +12,14 @@ class DoctorForm extends Form
     #[Validate]
     public $names = [];
     public $civil_id = '';
+    public $job_number = '';
     public $email = '';
     public $password = '';
     public $password_confirmation = '';
     public $clinic = '';
     public $department = '';
     public $permissions = [];
+    
 
     public $address = '';
     public $city = '';
@@ -35,6 +37,7 @@ class DoctorForm extends Form
             'names.ar' => ['required', 'string', 'min:5', 'max:100', 'unique:profile_translations,name,NULL,id,locale,ar'],
             'names.en' => ['required', 'string', 'min:5', 'max:100', 'unique:profile_translations,name,NULL,id,locale,en'],
             'civil_id' => ['required', 'regex:[^\d+$]', 'string', 'min:10', 'max:10', 'unique:doctors,civil_id'],
+            'job_number' => ['required', 'regex:[^[A-Z]{2}-\d{4}-\d{5}$]', 'string', 'min:9', 'max:13', 'unique:doctors,job_number'],
             'email' => ['required', 'email', 'unique:doctors,email'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'password_confirmation' => ['required', 'string'],
@@ -56,6 +59,7 @@ class DoctorForm extends Form
             array_pop($rules['names.ar']);
             array_pop($rules['names.en']);
             array_pop($rules['civil_id']);
+            array_pop($rules['job_number']);
             array_pop($rules['email']);
 
             $rules['names.ar'] = [
@@ -69,6 +73,10 @@ class DoctorForm extends Form
             $rules['civil_id'] = [
                 ...$rules['civil_id'],
                 Rule::unique('doctors', 'civil_id')->ignore($this->doctor_id, 'id'),
+            ];
+            $rules['job_number'] = [
+                ...$rules['job_number'],
+                Rule::unique('doctors', 'job_number')->ignore($this->doctor_id, 'id'),
             ];
             $rules['email'] = [
                 ...$rules['email'],

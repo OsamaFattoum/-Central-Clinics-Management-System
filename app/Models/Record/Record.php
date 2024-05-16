@@ -69,10 +69,7 @@ class Record extends Model
         return $this->belongsTo(CaseType::class);
     } //end of caseType relation
 
-    public function medications()
-    {
-        return $this->hasMany(Medication::class);
-    } //end of medications relation
+
 
 
 

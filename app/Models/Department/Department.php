@@ -4,6 +4,7 @@ namespace App\Models\Department;
 
 use App\Models\Case\CaseType;
 use App\Models\Clinic\Clinic;
+use App\Models\Record\Medication;
 use App\Models\Record\Record;
 use Astrotomic\Translatable\Translatable;
 use Astrotomic\Translatable\Contracts\Translatable as ContractsTranslatable;
@@ -32,4 +33,9 @@ class Department extends Model implements ContractsTranslatable
     {
         return $this->hasMany(Record::class);
     } //end of records relation
+
+    public function medications()
+    {
+        return $this->hasMany(Medication::class);
+    } //end of medications relation
 }
