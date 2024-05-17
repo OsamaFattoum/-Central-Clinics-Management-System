@@ -22,6 +22,7 @@ return [
             'patients' => 'c,r,u,d',
             'records' => 'c,r,u,d',
             'medications' => 'c,r,u,d',
+            'appointments' => 'c,r,u,d',
         ],
         'clinic' => [
             'doctors' => 'c,r,u',

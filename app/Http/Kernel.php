@@ -69,5 +69,6 @@ class Kernel extends HttpKernel
         'checkCaseType' => \App\Http\Middleware\CheckHasCaseType::class,
         'checkEditable' => \App\Http\Middleware\CheckEditable::class,
 
+
     ];
 }

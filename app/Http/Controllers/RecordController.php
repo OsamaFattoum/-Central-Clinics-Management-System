@@ -9,19 +9,23 @@ use App\Models\Record\Record;
 use App\Models\Users\Patient;
 use App\Models\Users\Profile;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RecordController extends Controller
 {
 
-    public function __construct()
+    public function __construct(Request $request)
     {
-        $this->middleware(['permission:read-records'])->only(['index']);
-        $this->middleware(['permission:create-records'])->only(['store']);
-        $this->middleware(['permission:update-records'])->only(['update']);
-        $this->middleware(['permission:delete-records'])->only(['destroy','bulk']);
+        $department = Department::findOrFail($request->department);
 
+        if ($department) {
+            $this->middleware(['permission:read-' . $department->scientific_name])->only(['index']);
+            $this->middleware(['permission:create-' . $department->scientific_name])->only(['store']);
+            $this->middleware(['permission:update-' . $department->scientific_name,'checkEditable:record'])->only(['update']);
+            $this->middleware(['permission:delete-' . $department->scientific_name])->only(['destroy', 'bulk']);
+        }
         $this->middleware('checkCaseType');
-    }//end of construct
+    } //end of construct
 
     public function index(Patient $patient, Department $department)
     {
@@ -81,17 +85,18 @@ class RecordController extends Controller
                 ->withErrors(['error' => $e->getMessage()]);
         }
     } //end of destroy
-    
-    public function bulk(Patient $patient, Department $department,Request $request)
+
+    public function bulk(Patient $patient, Department $department, Request $request)
     {
         $ids = explode(',', $request->delete_select_id);
-      
+
         try {
             Record::destroy($ids);
             session()->flash('delete');
             return redirect()->route('records.index', ['patient' => $patient->id, 'department' => $department->id]);
         } catch (\Exception $e) {
             return redirect()->route('records.index', ['patient' => $patient->id, 'department' => $department->id])
-            ->withErrors(['error' => $e->getMessage()]);        }
+                ->withErrors(['error' => $e->getMessage()]);
+        }
     } //end of bulk
 }

@@ -64,6 +64,7 @@ __('sidebar.patients_t')])
     </div>
     <div class="col-lg-9">
         <div class="row row-sm">
+            @permission('read-medications')
             <div class="col-sm-12 col-xl-4 col-lg-12 col-md-12">
                 <div class="card bg-whi">
                     <a class="tx-dark" href="{{ route('medications.index',['patient'=>$patient->id]) }}">
@@ -85,6 +86,8 @@ __('sidebar.patients_t')])
                     </a>
                 </div>
             </div>
+            @endpermission
+            @permission('read-medications')
             <div class="col-sm-12 col-xl-4 col-lg-12 col-md-12">
                 <div class="card bg-whi">
                     <a class="tx-dark" href="{{ route('medications.index',['patient'=>$patient,'taken'=> 0]) }}">
@@ -106,6 +109,8 @@ __('sidebar.patients_t')])
                     </a>
                 </div>
             </div>
+            @endpermission
+            @permission('read-appointments')
             <div class="col-sm-12 col-xl-4 col-lg-12 col-md-12">
                 <div class="card bg-whi">
                     <a class="tx-dark" href="">
@@ -127,6 +132,7 @@ __('sidebar.patients_t')])
                     </a>
                 </div>
             </div>
+            @endpermission
         </div>
         <div class="card">
             <div class="card-body">
@@ -250,6 +256,7 @@ __('sidebar.patients_t')])
                                 @endisset
                             </div>
                             <div class="panel-footer border">
+                               
                                 <a href="{{ route('records.index',['patient'=>$patient->id,'department'=>$department->id]) }}"
                                     class="text text-primary">@lang('modal.show_more')</a>
                             </div>

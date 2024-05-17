@@ -14,14 +14,17 @@ class CheckEditable
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next,string $typeRequest = ''): Response
+    public function handle(Request $request, Closure $next, string $typeRequest = ''): Response
     {
-        $model = empty($typeRequest) ? abort(403) : $request->route($typeRequest);
-    
-        // Check if model was created more than 5 minutes ago
-        if (Carbon::parse($model->created_at)->addMinutes(5)->isPast()) {
-            abort(403);
+        if (!auth()->guard('admin')->check()) {
+            $model = empty($typeRequest) ? abort(403) : $request->route($typeRequest);
+
+            // Check if model was created more than 5 minutes ago
+            if (Carbon::parse($model->created_at)->addMinutes(5)->isPast()) {
+                abort(403);
+            }
         }
+
 
         return $next($request);
     }

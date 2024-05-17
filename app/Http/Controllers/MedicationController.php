@@ -13,14 +13,9 @@ class MedicationController extends Controller
 {
         public function __construct()
         {
-            $update_middleware = ['permission:update-medications'];
-            if(auth()->guard()->name != 'admin'){
-                $update_middleware[] = 'checkEditable:medication';
-            }
-
             $this->middleware(['permission:read-medications'])->only(['index']);
             $this->middleware(['permission:create-medications'])->only(['store']);
-            $this->middleware($update_middleware)->only(['update']);
+            $this->middleware(['permission:update-medications','checkEditable:medication'])->only(['update']);
             $this->middleware(['permission:delete-medications'])->only(['destroy', 'bulk']);
         } //end of construct
 
