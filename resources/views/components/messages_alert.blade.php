@@ -26,29 +26,8 @@
 
 </script>
 @endif
-@if (session()->has('archive'))
-<script>
-    window.onload = function() {
-                notif({
-                    msg: "The data has been archived successfully",
-                    type: "success"
-                });
-            }
 
-</script>
-@endif
 
-@if (session()->has('unArchive'))
-<script>
-    window.onload = function() {
-                notif({
-                    msg: "The data has been UnArchived successfully",
-                    type: "success"
-                });
-            }
-
-</script>
-@endif
 @if (session()->has('change_status'))
 <script>
     window.onload = function() {
@@ -60,6 +39,7 @@
 
 </script>
 @endif
+
 @if (session()->has('status_unathorized'))
 <script>
     window.onload = function() {
@@ -73,17 +53,6 @@
 @endif
 
 
-@if (session()->has('no-product'))
-<script>
-    window.onload = function() {
-                notif({
-                    msg: "You must added at least one Product",
-                    type: "dark"
-                });
-            }
-
-</script>
-@endif
 
 @if (session()->has('no-case_type'))
 <script>

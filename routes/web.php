@@ -35,11 +35,9 @@ Route::middleware(['auth:admin,clinic,pharmacy,doctor,patient', 'statusCheck'])-
         return view('dashboard');
     })->name('dashboard');
 
-    Route::name('admin.')->group(function () {
-        Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-        Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-        Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    });
+    Route::get('profile', [ProfileController::class, 'index'])->name('profile');
+
+    Route::put('profile', [ProfileController::class, 'update'])->name('profile.update');
 
     Route::resource('departments', DepartmentController::class)->except(['create', 'show', 'edit']);
     Route::delete('departments', [DepartmentController::class, 'bulk'])->name('departments.bulk');

@@ -5,7 +5,6 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Models\Admin;
-use App\Models\BloodType;
 use App\Models\Users\Patient;
 use App\Models\Users\Profile;
 use Illuminate\Database\Seeder;
@@ -22,7 +21,7 @@ class DatabaseSeeder extends Seeder
         $admin->addRole('admin');
 
 
-        Patient::factory()->count(200)->create()->each(function ($patient) {
+        Patient::factory()->count(50)->create()->each(function ($patient) {
             $patient->profile()->save(Profile::factory()->create([
                 'profile_type' => get_class($patient),
                 'profile_id' => $patient->id
@@ -33,10 +32,10 @@ class DatabaseSeeder extends Seeder
     private function createAdmin()
     {
         $admin = Admin::create([
-            'name' => 'Manger System',
+            'name' => 'Manager System',
             'email' => 'admin@app.com',
+            'phone' => '0775314544',
             'password' => bcrypt('password'),
-            'phone' => '+962775314544',
         ]);
 
         return $admin;

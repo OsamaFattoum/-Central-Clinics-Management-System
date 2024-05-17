@@ -132,7 +132,7 @@
 								</div>
 							</div>
 						</div>
-						<a class="dropdown-item" href="{{ route('admin.profile.edit') }}"><i class="bx bx-user-circle"></i>@lang('header.l_profile')</a>
+						<a class="dropdown-item" href="{{ route('profile') }}"><i class="bx bx-user-circle"></i>@lang('header.l_profile')</a>
 						
 						<a class="dropdown-item"
 							onclick="event.preventDefault();document.getElementById('logoutForm').submit()"

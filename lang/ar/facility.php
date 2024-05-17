@@ -22,7 +22,6 @@ return [
     'phone' => 'رقم الهاتف',
     'open_hours' => 'وقت بدء الدوام',
     'close_hours' => 'وقت الاغلاق',
-    'image_note' => 'صيغة الملف المطلوبه',
 
     'title_owner_info' => 'معلومات المالك',
     'owner_name' => 'الاسم',

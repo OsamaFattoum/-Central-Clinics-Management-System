@@ -23,6 +23,7 @@ class Admin extends Authenticatable implements LaratrustUser
         'name',
         'email',
         'password',
+        'phone',
     ];
 
     /**
