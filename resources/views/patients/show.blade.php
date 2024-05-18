@@ -113,7 +113,7 @@ __('sidebar.patients_t')])
             @permission('read-appointments')
             <div class="col-sm-12 col-xl-4 col-lg-12 col-md-12">
                 <div class="card bg-whi">
-                    <a class="tx-dark" href="">
+                    <a class="tx-dark" href="{{ route('appointments.index',['patient'=>$patient->id]) }}">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-6">
@@ -124,7 +124,7 @@ __('sidebar.patients_t')])
                                 <div class="col-6">
                                     <div class="mt-0 text-center">
                                         <span>@lang('patients.appointments')</span>
-                                        <h2>50</h2>
+                                        <h2>{{ $appointments }}</h2>
                                     </div>
                                 </div>
                             </div>

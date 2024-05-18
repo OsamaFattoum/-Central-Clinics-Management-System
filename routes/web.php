@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\CaseTypeController;
 use App\Http\Controllers\ClinicAccreditationsController;
 use App\Http\Controllers\ClinicController;
@@ -81,6 +82,11 @@ Route::middleware(['auth:admin,clinic,pharmacy,doctor,patient', 'statusCheck'])-
     Route::prefix('patients/{patient}')->group(function () {
         Route::resource('medications', MedicationController::class)->except(['create', 'edit', 'show']);
         Route::delete('medications', [MedicationController::class, 'bulk'])->name('medications.bulk');
+
+        Route::resource('appointments', AppointmentController::class)->except(['create', 'edit', 'show']);
+        Route::delete('appointments', [AppointmentController::class, 'bulk'])->name('appointments.bulk');
+
+
     });
 
     Route::prefix('patients/{patient}/department/{department}')->group(function () {

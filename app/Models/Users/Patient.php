@@ -2,6 +2,7 @@
 
 namespace App\Models\Users;
 
+use App\Models\Appointment;
 use App\Models\BloodType;
 use App\Models\Image;
 use App\Models\Record\Medication;
@@ -86,5 +87,10 @@ class Patient extends Authenticatable implements  LaratrustUser
     {
         return $this->hasMany(Medication::class);
     } //end of medications relation
+
+    public function appointments()
+    {
+        return $this->hasMany(Appointment::class);
+    } //end of appointments relation
 
 }

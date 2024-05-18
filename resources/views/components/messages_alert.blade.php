@@ -1,5 +1,5 @@
 
-@if (Request::is('departments') || Request::is('*/accreditations') || Request::is('*/case_types') || Request::is('*/records') || Request::is('*/medications'))
+@if (!Request::is('*/login') || !Request::is('profile') )
 @if (count($errors) > 0)
 <div class="alert alert-danger">
     <button aria-label="Close" class="close" data-dismiss="alert" type="button">

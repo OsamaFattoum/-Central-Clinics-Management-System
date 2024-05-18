@@ -42,12 +42,23 @@ class Pharmacy extends Authenticatable implements ContractsTranslatable,Laratrus
         $open_hours = Carbon::parse($this->facilityProfile->open_hours);
         $close_hours = Carbon::parse($this->facilityProfile->close_hours);
         $thisTime = Carbon::now();
-        if ($close_hours->lt($open_hours)) {
-            return  $thisTime->gt($open_hours) || $thisTime->lt($close_hours) ? 1 : 0;
-        } else {
+        $open_days = [];
 
-            return $thisTime->between($open_hours, $close_hours) ? 1 : 0;
+        foreach ($this->facilityDays as $day) {
+            $open_days[] = $day->day->translate('en')->day;
         }
+        
+        $isTodayOpen = in_array($thisTime->englishDayOfWeek, $open_days);
+
+        if ($isTodayOpen) {
+            if ($close_hours->lt($open_hours)) {
+                return  $thisTime->gt($open_hours) || $thisTime->lt($close_hours) ? 1 : 0;
+            } else {
+
+                return $thisTime->between($open_hours, $close_hours) ? 1 : 0;
+            }
+        }
+        return 0;
     } //end of checkOpenStatus
 
     public function openStatusLabel()

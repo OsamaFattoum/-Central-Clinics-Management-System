@@ -2,6 +2,7 @@
 
 namespace App\Models\Users;
 
+use App\Models\Appointment;
 use App\Models\Clinic\Clinic;
 use App\Models\Department\Department;
 use App\Models\Image;
@@ -72,5 +73,10 @@ class Doctor extends Authenticatable implements  LaratrustUser
     {
         return $this->morphOne(Profile::class, 'profile');
     } //end of Profile relation
+
+    public function appointments()
+    {
+        return $this->hasMany(Appointment::class);
+    } //end of appointments relation
 
 }

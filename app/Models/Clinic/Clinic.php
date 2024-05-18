@@ -2,6 +2,7 @@
 
 namespace App\Models\Clinic;
 
+use App\Models\Appointment;
 use App\Models\Department\Department;
 use App\Models\Facility\FacilityProfile;
 use App\Models\Facility\FacilityDay;
@@ -39,15 +40,21 @@ class Clinic extends Authenticatable implements ContractsTranslatable, Laratrust
         return $this->image == null ? $disk . 'clinic.png' : $disk . $this->image->url;
     } //end of getImagePathAttribute
 
-    public function checkOpenStatus()
+    public function checkOpenStatus($date=null,$time=null)
     {
         $open_hours = Carbon::parse($this->facilityProfile->open_hours);
         $close_hours = Carbon::parse($this->facilityProfile->close_hours);
-        $thisTime = Carbon::now();
+        if(is_null($date) && is_null($time)){
+            $thisTime = Carbon::now();
+        }else{
+            $thisTime = Carbon::parse($date . ' ' . $time);
+        }
         $open_days = [];
+
         foreach ($this->facilityDays as $day) {
             $open_days[] = $day->day->translate('en')->day;
         }
+        
         $isTodayOpen = in_array($thisTime->englishDayOfWeek, $open_days);
 
         if ($isTodayOpen) {
@@ -60,6 +67,7 @@ class Clinic extends Authenticatable implements ContractsTranslatable, Laratrust
         }
         return 0;
     } //end of checkOpenStatus
+
 
     public function openStatusLabel()
     {
@@ -106,4 +114,9 @@ class Clinic extends Authenticatable implements ContractsTranslatable, Laratrust
     {
         return $this->morphOne(FacilityProfile::class, 'facility');
     } //end of facilityProfile relation
+
+    public function appointments()
+    {
+        return $this->hasMany(Appointment::class);
+    } //end of appointments relation
 }

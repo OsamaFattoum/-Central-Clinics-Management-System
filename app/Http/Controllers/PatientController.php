@@ -121,6 +121,7 @@ class PatientController extends Controller
             'departments' => Department::all(),
             'patient' => $patient,
             'profile' => $profile,
+            'appointments' => $patient->appointments()->count(),
             'medications' => $patient->medications()->count(),
             'medications_undispensed' => $patient->medications()->where('medication_taken',0)->count()
         ]);
