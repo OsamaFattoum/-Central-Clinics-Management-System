@@ -183,12 +183,10 @@ a {
     color: #858b90;
     transition: all 0.2s ease-in-out;
     
-
-   
 }
 
-.custom-dropdown .dropdown-menu a:last-child {
-    border-bottom: none;
+.custom-dropdown .dropdown-menu a:last-of-type {
+    border-bottom: none  !important;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
 }

@@ -6,10 +6,10 @@
                 class="img-fluid">
         </a>
         <div class="d-flex align-items-center">
-            <a href="" class="nav-link btn btn-outline-info btn-lang">
+            {{-- <a href="" class="nav-link btn btn-outline-info btn-lang">
                 <button type="button" class="btn btn-outline-info btn-lang"><span
                         class="fw-bold text-btn-lang">EN</span></button>
-            </a>
+            </a> --}}
             @if (isset($guardName) && auth()->guard($guardName)->check())
             <div class="dropdown custom-dropdown">
                 <a href="#" data-toggle="dropdown" class="d-flex align-items-center dropdown-link text-left"
@@ -19,13 +19,12 @@
                     </div>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a href="{{ route('dashboard') }}" class="dropdown-item"><i class="fa fa-circle-user"></i><span class="mx-2">الملف الشخصي</span></a>
-                    <a href="#" class="dropdown-item"><i class="fa fa-address-book"></i><span class="mx-2">اتصل بنا</span></a>
-                    <a href="#" class="dropdown-item"><i class="fa fa-headset"></i><span class="mx-2">الدعم والمساعدة</span></a>
+                    <a href="{{ route('dashboard') }}" class="dropdown-item"><i class="fa fa-circle-user"></i><span class="mx-2">@lang('site.personal_account')</span></a>
+                    {{-- <a href="" class="dropdown-item"><i class="fa fa-address-book"></i><span class="mx-2">@lang('site.call_us')</span></a>
+                    <a href="" class="dropdown-item"><i class="fa fa-headset"></i><span class="mx-2">@lang('site.support')</span></a> --}}
                     <a href="#" class="dropdown-item"
                         onclick="event.preventDefault();document.getElementById('logoutForm').submit()"
-                        href="{{ route('logout') }}"><i class="fa fa-sign-out"></i><span class="mx-2">تسجيل
-                            الخروج</span></a>
+                        href="{{ route('logout') }}"><i class="fa fa-sign-out"></i><span class="mx-2">@lang('site.logout')</span></a>
                     <form action="{{route('logout')}}" method="POST" id="logoutForm" style="display: none">
                         @csrf
                         <input type="hidden" name="guard" value="{{ $guardName }}">
