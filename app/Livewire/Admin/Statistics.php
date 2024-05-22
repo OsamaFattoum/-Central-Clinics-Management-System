@@ -13,8 +13,11 @@ use Livewire\Component;
 
 class Statistics extends Component
 {
-    private function BoxStatistics(): array
+
+
+    private function statistics(): array
     {
+        sleep(5);
         // Appointments By Status
         $appointmentsByStatus = Appointment::select('status', DB::raw('count(*) as total'))
             ->groupBy('status')
@@ -79,6 +82,6 @@ class Statistics extends Component
 
     public function render()
     {
-        return view('livewire.admin.statistics', $this->BoxStatistics());
+        return view('livewire.admin.statistics', $this->statistics());
     }
 }

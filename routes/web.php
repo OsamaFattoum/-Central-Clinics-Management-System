@@ -93,6 +93,8 @@ Route::middleware(['auth:admin,clinic,pharmacy,doctor,patient', 'statusCheck'])-
         Route::resource('records', RecordController::class)->except(['create', 'edit', 'show']);
         Route::delete('records', [RecordController::class, 'bulk'])->name('records.bulk');
     });
+
+
 });
 
 require __DIR__ . '/auth.php';

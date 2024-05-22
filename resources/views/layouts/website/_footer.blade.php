@@ -17,7 +17,11 @@
     </div>
     <div class="d-flex justify-content-center mb-5 mt-lg-0 mt-5">
         <div id="footer-links">
+            @if (isset($guardName) && auth()->guard($guardName)->check())
+            <a class="mx-1" href="{{ route('dashboard') }}">@lang('site.personal_account')</a>
+            @else
             <a class="mx-1" href="{{ route('patient.login') }}">@lang('site.login')</a>
+            @endif
             {{-- <a class="mx-2" href="">اتصل بنا</a>
             <a class="mx-2" href="">الدعم و المساعدة</a> --}}
             <a class="mx-1" href="#about-us-link">@lang('site.about_us')</a>

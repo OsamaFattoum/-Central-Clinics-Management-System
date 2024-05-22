@@ -1,5 +1,6 @@
 
-@if (!Request::is('*/login') || !Request::is('profile') )
+@if (!Request::is('*/login') && !Request::is('profile') )
+
 @if (count($errors) > 0)
 <div class="alert alert-danger">
     <button aria-label="Close" class="close" data-dismiss="alert" type="button">

@@ -50,7 +50,7 @@ class LoginRequest extends FormRequest
             ...$rules,
             'password' => ['required', 'string','min:8'],
         ];
- 
+
         return $rules;
     }//end of rules
 
@@ -58,7 +58,6 @@ class LoginRequest extends FormRequest
     
     public function authenticate(): void
     {
-        
         $this->ensureIsNotRateLimited();
 
         if (!auth($this->type)->attempt($this->getCredentialsForUserType($this->type),$this->remember)) {
@@ -92,9 +91,6 @@ class LoginRequest extends FormRequest
             case 'patient':
                 $key = 'civil_id';
                 break;
-            default:
-                $key =  'civil_id';
-                break;
         };
         return $key;
     } //end of checkerKey
@@ -113,9 +109,6 @@ class LoginRequest extends FormRequest
                 return $this->only('job_number', 'password');
                 break;
             case 'patient':
-                return $this->only('civil_id', 'password');
-                break;
-            default:
                 return $this->only('civil_id', 'password');
                 break;
         }

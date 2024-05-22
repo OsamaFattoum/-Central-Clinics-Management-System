@@ -1,4 +1,4 @@
-$(function () {
+    $(function () {
     const loader = document.querySelector(".loader-wrapper");
     const content = document.querySelector(".content");
 

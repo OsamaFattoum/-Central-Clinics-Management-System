@@ -5,7 +5,7 @@
 <!-- Icons css -->
 <link href="{{URL::asset('assets/css/icons.css')}}" rel="stylesheet">
 <!--  Custom Scroll bar-->
-<link href="{{URL::asset('assets/plugins/mscrollbar/jquery.mCustomScrollbar.css')}}" rel="stylesheet"/>
+<link href="{{URL::asset('assets/plugins/mscrollbar/jquery.mCustomScrollbar.min.css')}}" rel="stylesheet"/>
 <!--  Sidebar css -->
 <link href="{{URL::asset('assets/plugins/sidebar/sidebar.css')}}" rel="stylesheet">
 {{-- notify --}}
