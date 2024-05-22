@@ -36,16 +36,15 @@ class AuthenticatedSessionController extends Controller
 
     public function store(LoginRequest $request): RedirectResponse
     {
-        
+
         $request->authenticate();
 
         $request->session()->regenerate();
-      
-        return redirect()->intended(route('dashboard', absolute: false));
-        
-    }//end of store
 
-  
+        return redirect()->intended(route('dashboard', absolute: false));
+    } //end of store
+
+
     public function destroy(Request $request): RedirectResponse
     {
         Auth::guard($request->guard)->logout();
@@ -54,6 +53,19 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
-    }//end of destroy
+        switch ($request->guard) {
+            case 'admin':
+                return redirect()->route('admin.login');
+            case 'clinic':
+            case 'pharmacy':
+                return redirect()->route('facility.login');
+                break;
+            case 'doctor':
+                return redirect()->route('doctor.login');
+                break;
+            case 'patient':
+                return redirect()->route('patient.login');
+                break;
+        }
+    } //end of destroy
 }
