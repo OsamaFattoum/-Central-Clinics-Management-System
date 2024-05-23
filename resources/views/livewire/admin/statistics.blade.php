@@ -16,7 +16,7 @@
                                 <div wire:loading.class.remove='d-none'
                                     class="spinner-grow text-white spinner-grow-sm d-none" role="status">
                                 </div>
-                                <h2 wire:loading.class='d-none' class="text-white mb-0">{{ $departmentCount }}</h2>
+                                <h2 wire:loading.class='d-none' class="text-white mb-0 counter">{{ $departmentCount }}</h2>
                             </div>
                         </div>
                     </div>
@@ -38,7 +38,7 @@
                                 <div wire:loading.class.remove='d-none'
                                     class="spinner-grow text-white spinner-grow-sm d-none" role="status">
                                 </div>
-                                <h2 wire:loading.class='d-none' class="text-white mb-0">{{ $clinicsCount }}</h2>
+                                <h2 wire:loading.class='d-none' class="text-white mb-0 counter">{{ $clinicsCount }}</h2>
                             </div>
                         </div>
                     </div>
@@ -60,7 +60,7 @@
                                 <div wire:loading.class.remove='d-none'
                                     class="spinner-grow text-white spinner-grow-sm d-none" role="status">
                                 </div>
-                                <h2 wire:loading.class='d-none' class="text-white mb-0">{{ $doctorsCount }}</h2>
+                                <h2 wire:loading.class='d-none' class="text-white mb-0 counter">{{ $doctorsCount }}</h2>
                             </div>
                         </div>
                     </div>
@@ -82,7 +82,7 @@
                                 <div wire:loading.class.remove='d-none'
                                     class="spinner-grow text-white spinner-grow-sm d-none" role="status">
                                 </div>
-                                <h2 wire:loading.class='d-none' class="text-white mb-0">{{ $patientsCount }}</h2>
+                                <h2 wire:loading.class='d-none' class="text-white mb-0 counter">{{ $patientsCount }}</h2>
                             </div>
                         </div>
                     </div>
@@ -183,10 +183,18 @@
 @push('charts')
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script src="{{URL::asset('assets/plugins/counters/waypoints.min.js')}}"></script>
+<script src="{{URL::asset('assets/plugins/counters/counterup.min.js')}}"></script>
+
+{{-- counter --}}
+<script>
+	$('.counter').countUp();
+</script>
+
 {{-- new Patient Total Chart --}}
 <script>
     const ctx = document.getElementById('newPatientChart');
-  
     new Chart(ctx, {
       type: 'line',
       data: {
@@ -221,20 +229,18 @@
                 labels: @json($doctorDepartmentLabels),
                 datasets: [{
                     label: @json(__('charts.title_doctors_chart')),
-                    data: @json($appointmentStatusData),
+                    data: @json($doctorDepartmentData),
                     backgroundColor: 'rgba(153, 102, 255, 0.2)',
                 borderColor: 'rgba(153, 102, 255, 1)',
                     borderWidth: 1
                 }]
             },
             options: {
-           
             responsive: true,
             plugins: {
                 legend: {
                     position: 'top',
-                },
-                
+                },  
             }
             },
     });
@@ -348,4 +354,5 @@
             },
     });
 </script>
+
 @endpush

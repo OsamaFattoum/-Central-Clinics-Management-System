@@ -17,7 +17,6 @@ class Statistics extends Component
 
     private function statistics(): array
     {
-        sleep(5);
         // Appointments By Status
         $appointmentsByStatus = Appointment::select('status', DB::raw('count(*) as total'))
             ->groupBy('status')
@@ -36,6 +35,7 @@ class Statistics extends Component
             ->join('department_translations', 'departments.id', '=', 'department_translations.department_id')->where('locale', app()->getLocale())
             ->groupBy('department_translations.name')
             ->get();
+       
 
         // Patients' Blood Type Distribution
         $bloodTypeDistribution = Patient::select('blood_types.name as blood_type_name', DB::raw('count(*) as total'))
@@ -55,6 +55,7 @@ class Statistics extends Component
 
         $doctorDepartmentLabels = $doctorsPerDepartment->pluck('department_name');
         $doctorDepartmentData = $doctorsPerDepartment->pluck('total');
+
 
         $bloodTypeLabels = $bloodTypeDistribution->pluck('blood_type_name');
         $bloodTypeData = $bloodTypeDistribution->pluck('total');

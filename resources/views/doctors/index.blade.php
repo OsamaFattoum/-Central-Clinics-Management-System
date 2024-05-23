@@ -124,5 +124,5 @@
 @endsection
 
 @section('js')
-@include('layouts.table-footer',['orderIndex'=>1,'targetsNotOrdered' => [0,2,3,7]])
+@include('layouts.table-footer',['orderIndex'=>1,'targetsNotOrdered' => [0,2,3,8]])
 @endsection
