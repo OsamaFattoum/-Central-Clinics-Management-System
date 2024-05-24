@@ -26,6 +26,7 @@ return [
         ],
         'clinic' => [
             'doctors' => 'c,r,u',
+            'clinics_accreditations' => 'r',
         ],
         'pharmacy' => [
 

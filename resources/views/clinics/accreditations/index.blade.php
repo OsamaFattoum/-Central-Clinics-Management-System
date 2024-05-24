@@ -4,7 +4,7 @@
 @include('layouts.table-head')
 @endsection
 
-@include('components.breadcrumb',['route' => route('clinics.index'),'pervPage' => $clinic->translate(app()->getLocale())->name , 'currentPage' => __('clinic_accreditations.accreditions')])
+@include('components.breadcrumb',['route' => auth()->guard('clinic')->check() ? route('dashboard') : route('clinics.index'),'pervPage' => $clinic->translate(app()->getLocale())->name , 'currentPage' => __('clinic_accreditations.accreditions')])
 
 @section('content')
 @include('components.messages_alert')
@@ -16,12 +16,16 @@
                 <div class="card-header pb-0">
                     <div class="d-flex justify-content-between">
                         <div class="">
+                            @permission('create-clinics_accreditations')
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#create">
                                 @lang('clinic_accreditations.btn_create_accredition')
                             </button>
+                            @endpermission
+                            @permission('delete-clinics_accreditations')
                             <button type="button" class="btn btn-danger"
                                 id="btn_delete_all">@lang('delete.btn_delete_selected_data')</button>
-                        </div>
+                            @endpermission
+                            </div>
                         <i class="mdi mdi-dots-horizontal text-gray"></i>
                     </div>
                 </div>
@@ -50,27 +54,39 @@
                                     <td class="pr-2">{{ $accreditation->name }}</td>
                                     <td class="pr-2">{{ $accreditation->created_at->diffForHumans()}}</td>
                                     <td class="pr-2">
+                                        @if (Auth::user()->hasPermission('update-clinics_accreditations') ||
+                                        Auth::user()->hasPermission('delete-clinics_accreditations') )
+
                                         <div class="dropdown">
                                             <button aria-expanded="false" aria-haspopup="true"
                                                 class="btn ripple btn-outline-primary btn-sm" data-toggle="dropdown"
                                                 type="button">@lang('dropdown_op.processes')<i
                                                     class="fas fa-caret-down mx-1"></i></button>
                                             <div class="dropdown-menu tx-13">
+                                                @permission('update-clinics_accreditations')
                                                 <a class="dropdown-item" href="#" data-toggle="modal"
                                                 data-target="#edit{{ $accreditation->id }}"><i style="color: #0ba360"
                                                     class="text-success ti-pencil-alt"></i>&nbsp;&nbsp;@lang('dropdown_op.drop_down_edit')</a>
-                                                <a class="dropdown-item" href="#" data-toggle="modal"
+                                                @endpermission
+                                                @permission('delete-clinics_accreditations')
+                                                    <a class="dropdown-item" href="#" data-toggle="modal"
                                                     data-target="#delete{{$accreditation->id}}"><i
                                                         class="text-danger  ti-trash"></i>&nbsp;&nbsp;@lang('dropdown_op.drop_down_delete')</a>
-
+                                                @endpermission
                                             </div>
                                         </div>
-
+                                        @else
+                                        <span class="text-center">-</span>
+                                        @endif
                                     </td>
+                                    @permission('update-clinics_accreditations')
                                     @include('clinics.accreditations._edit')
+                                    @endpermission
+                                    @permission('delete-clinics_accreditations')
                                     @include('clinics.accreditations._delete',['id'=>$accreditation->id,'name' =>
                                     $accreditation->name,'route'=>'accreditations','parameters'=>[$clinic->id,$accreditation->id]])
-                                </tr>
+                                    @endpermission    
+                            </tr>
                                 @endforeach
                             </tbody>
 
@@ -82,8 +98,12 @@
         <!--/div-->
     </div>
 </div>
+@permission('create-clinics_accreditations')
 @include('clinics.accreditations._create')
+@endpermission
+@permission('delete-clinics_accreditations')
 @include('clinics.accreditations._delete_select',['route' => 'accreditations','clinicId'=>$clinic->id])
+@endpermission
 </div>
 <!-- Container closed -->
 </div>

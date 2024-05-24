@@ -1,7 +1,7 @@
 <div>
     <!-- Box Count -->
     <div class="row row-sm">
-        <div class="col-lg-4 col-xl-4 col-md-6 col-12">
+        <div class="col-lg-6 col-xl-3 col-md-6 col-12">
             <div class="card bg-primary-gradient text-white ">
                 <div class="card-body">
                     <div class="row">
@@ -24,7 +24,7 @@
             </div>
         </div>
     
-        <div class="col-lg-4 col-xl-4 col-md-6 col-12">
+        <div class="col-lg-6 col-xl-3 col-md-6 col-12">
             <div class="card bg-info-gradient text-white ">
                 <div class="card-body">
                     <div class="row">
@@ -46,7 +46,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-4 col-xl-4 col-md-6 col-12">
+        <div class="col-lg-6 col-xl-3 col-md-6 col-12">
             <div class="card bg-teal text-white ">
                 <div class="card-body">
                     <div class="row">
@@ -67,6 +67,30 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="col-lg-6 col-xl-3 col-md-6 col-12">
+            <a class="tx-dark" href="{{route('accreditations.index',auth()->user()->id)}}">
+            <div class="card bg-purple-gradient text-white ">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="icon1 mt-2 text-center">
+                                <i class="fa fa-book-open tx-40"></i>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="mt-0 text-center">
+                                <span class="text-white d-block">@lang('clinic_accreditations.accreditions')</span>
+                                <div wire:loading.class.remove='d-none'
+                                    class="spinner-grow text-white spinner-grow-sm d-none" role="status">
+                                </div>
+                                <h2 wire:loading.class='d-none' class="text-white mb-0 counter">{{ $accreditationsCount }}</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </a>
         </div>
     </div>
     <!-- End Box Count -->

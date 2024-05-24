@@ -16,7 +16,7 @@
                 <div class="modal-body">
                     <h5>@lang('delete.p_delete')</h5>
                     <input type="hidden" id="delete_select_id" name="delete_select_id" value=''>
-                    @isset($fromProduct)
+                   
                  
                 </div>
                 <div class="modal-footer">

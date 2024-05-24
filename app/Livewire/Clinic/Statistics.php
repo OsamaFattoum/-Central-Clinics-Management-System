@@ -4,6 +4,7 @@ namespace App\Livewire\Clinic;
 
 use App\Models\Appointment;
 use App\Models\Clinic\Clinic;
+use App\Models\Clinic\ClinicAccreditation;
 use App\Models\Department\Department;
 use App\Models\Users\Doctor;
 use Illuminate\Support\Facades\DB;
@@ -44,10 +45,13 @@ class Statistics extends Component
 
         $departmentCount = Clinic::where('id', auth()->user()->id)->withCount('departments')->first()->departments_count;
 
+
+
         return [
             'departmentCount' => $departmentCount,
             'doctorsCount' => Doctor::where('clinic_id', auth()->user()->id)->count(),
             'appointmentsCount' => Appointment::where('clinic_id', auth()->user()->id)->count(),
+            'accreditationsCount' => ClinicAccreditation::where('clinic_id', auth()->user()->id)->count(),
             'appointmentStatusLabels' => $appointmentStatusLabels,
             'appointmentStatusData' => $appointmentStatusData,
             'doctorDepartmentLabels' => $doctorDepartmentLabels,
