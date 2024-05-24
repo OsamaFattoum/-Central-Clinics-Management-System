@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Casts\TimeCast;
 use App\Models\Clinic\Clinic;
 use App\Models\Department\Department;
 use App\Models\Users\Doctor;
@@ -17,6 +18,10 @@ class Appointment extends Model
     protected $guarded = [];
 
     protected $appends = ['status_value'];
+
+    protected $casts = [
+        'time' => TimeCast::class,
+    ];
 
 
     //attr

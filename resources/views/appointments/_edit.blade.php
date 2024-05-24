@@ -18,7 +18,7 @@
                     <div class="row">
                         <div class="form-group col-lg-6">
                             <label for="date">@lang('appointments.date')</label>
-                            <input id="date" type="date" name="date" value="{{ $appointment->date }}" class="form-control">
+                            <input id="date" type="date" name="date" value="{{ $appointment->date }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  class="form-control">
                         </div>
                         <div class="form-group col-lg-6">
                             <label for="time">@lang('appointments.time')</label>

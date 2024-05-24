@@ -25,7 +25,7 @@ class AppointmentRequest extends FormRequest
             'clinic' => ['required', 'exists:clinics,id'],
             'department' => ['required', 'exists:departments,id'],
             'doctor' => ['required', 'exists:doctors,id'],
-            'date' => ['required','date'],
+            'date' => ['required','date_format:Y-m-d','after_or_equal:today'],
             'time' => ['required','date_format:H:i'],
             'notes' => ['nullable','string'],
         ];
