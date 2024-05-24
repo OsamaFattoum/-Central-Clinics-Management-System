@@ -14,6 +14,12 @@ return [
     'search' => 'بحث',
 
 
+    //calendar
+    'today' => 'اليوم',
+    'month' => 'شهر',
+    'day' => 'يوم',
+    'all-day' => 'طوال اليوم',
+
 
     //website 
     'personal_account' => 'الملف الشخصي',

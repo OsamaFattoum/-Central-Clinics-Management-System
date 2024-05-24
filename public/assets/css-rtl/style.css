@@ -21121,6 +21121,10 @@ pre {
   border-bottom: 1px solid #e2e8f5;
 }
 
+.fc-event-custom {
+  cursor: pointer;
+}
+
 .card-dashboard-table-six .table-responsive {
   width: calc(100vw - 42px);
 }

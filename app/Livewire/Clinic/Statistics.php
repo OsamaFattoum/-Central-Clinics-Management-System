@@ -42,10 +42,7 @@ class Statistics extends Component
         $doctorDepartmentLabels = $doctorsPerDepartment->pluck('department_name');
         $doctorDepartmentData = $doctorsPerDepartment->pluck('total');
 
-        $departmentCount = Department::with('clinics',function($query){
-            return $query->where('clinics.id',auth()->user()->id);
-        })->count();
-
+        $departmentCount = Clinic::where('id', auth()->user()->id)->withCount('departments')->first()->departments_count;
 
         return [
             'departmentCount' => $departmentCount,

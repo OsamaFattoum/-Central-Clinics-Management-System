@@ -24,6 +24,19 @@
     $(function(){
             var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
+                buttonText:{
+                    today:    @json(__('site.today')),
+                    month:    @json(__('site.month')),
+                    day:      @json(__('site.day')),
+                },
+                views: {
+                    timeGrid: {
+                        allDayText: @json(__('site.all-day'))  // Customize the all-day text
+                    }
+                },
+                eventClassNames: function(arg) {
+                    return ['fc-event-custom']; // Add custom class to all events
+                },
                 initialView: 'dayGridMonth',
                 locale: @json(app()->getLocale()),
                 direction: @json(app()->getLocale() == 'ar' ? 'rtl' : 'ltr'),
