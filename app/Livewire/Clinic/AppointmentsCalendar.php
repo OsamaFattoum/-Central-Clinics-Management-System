@@ -37,7 +37,7 @@ class AppointmentsCalendar extends Component
                 'id' => $appointment->id,
                 'title' => '(' . $appointment->department->name . ') (' . $appointment->doctor->name . ')',
                 'start' => $datetime->toDateTimeString(),
-                'color' => $appointment->status == 1 ? 'green' : ($appointment->status == 0 ? 'gray' : 'red'), // Customize color based on status
+                'color' => $appointment->status == 1 ? 'cayan' : ($appointment->status == 0 ? 'gray' : 'red'), // Customize color based on status
                 'display' => 'block',
             ];
         })->toArray();

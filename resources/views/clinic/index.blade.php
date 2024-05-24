@@ -1,7 +1,9 @@
 @include('components.breadcrumb',['pervPage' => __('sidebar.main_l') ,'currentPage' => ''])
 
 @section('content')
-@include('components.messages_alert')
+
+
+@livewire('clinic.statistics')
 @livewire('clinic.appointments-calendar')
 <!-- row closed -->
 </div>

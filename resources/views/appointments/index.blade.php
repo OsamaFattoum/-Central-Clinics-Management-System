@@ -61,7 +61,7 @@ $patient->name , 'currentPage' => __('appointments.appointments')])
                                     <span class="badge badge-primary">{{$appointment->clinic->name}}</span>
                                 </td>
                                 <td class="pr-2">
-                                    <span class="badge badge-info">{{$appointment->department->name}}</span>
+                                    <span class="badge badge-light">{{$appointment->department->name}}</span>
                                 </td>
                                 <td class="pr-2">
                                     <span class="badge badge-dark">{{$appointment->doctor->name}}</span>
@@ -74,7 +74,7 @@ $patient->name , 'currentPage' => __('appointments.appointments')])
                                 </td>
                                 <td class="pr-2">
                                     <span
-                                        class="badge badge-{{$appointment->status == 0  ? 'secondary' : ($appointment->status == 1 ? 'success' : 'danger')}}">{{$appointment->status_value}}</span>
+                                        class="badge badge-{{$appointment->status == 0  ? 'secondary' : ($appointment->status == 1 ? 'info' : 'danger')}}">{{$appointment->status_value}}</span>
                                 </td>
 
                                 <td class="pr-2">

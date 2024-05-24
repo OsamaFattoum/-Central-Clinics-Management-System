@@ -22,11 +22,9 @@ class AppointmentController extends Controller
 
     public function index(Patient $patient)
     {
-        $profile = Profile::where('profile_id', $patient->id)->where('profile_type', Patient::class)->first();
-
+        
         return view('appointments.index', [
             'appointments' => Appointment::where('patient_id', $patient->id)->get(),
-            'profile' => $profile,
             'patient' => $patient,
         ]);
     } //end of index
