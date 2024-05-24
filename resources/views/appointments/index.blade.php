@@ -23,7 +23,7 @@ $patient->name , 'currentPage' => __('appointments.appointments')])
                         </button>
                         @endpermission
                         @permission('delete-appointments')
-                        <button type="button" class="btn btn-danger" 
+                        <button type="button" class="btn btn-danger"
                             id="btn_delete_all">@lang('delete.btn_delete_selected_data')</button>
                         @endpermission
                     </div>
@@ -79,7 +79,8 @@ $patient->name , 'currentPage' => __('appointments.appointments')])
 
                                 <td class="pr-2">
                                     @if (Auth::user()->hasPermission('update-appointments') ||
-                                    Auth::user()->hasPermission('delete-appointments') )
+                                    Auth::user()->hasPermission('delete-appointments') ||
+                                    Auth::user()->hasPermission('status-appointments'))
                                     <div class="dropdown">
                                         <button aria-expanded="false" aria-haspopup="true"
                                             class="btn ripple btn-outline-primary btn-sm" data-toggle="dropdown"
@@ -90,6 +91,11 @@ $patient->name , 'currentPage' => __('appointments.appointments')])
                                             <a class="dropdown-item" href="#" data-toggle="modal"
                                                 data-target="#edit{{ $appointment->id }}"><i style="color: #0ba360"
                                                     class="text-success ti-pencil-alt"></i>&nbsp;&nbsp;@lang('dropdown_op.drop_down_edit')</a>
+                                            @endpermission
+                                            @permission('status-appointments')
+                                            <a class="dropdown-item" data-toggle="modal"
+                                                data-target="#status{{ $appointment->id }}" href="#"><i
+                                                    class="text-warning ti-back-right"></i>&nbsp;&nbsp;@lang('dropdown_op.drop_down_status')</a>
                                             @endpermission
                                             @permission('delete-appointments')
                                             <a class="dropdown-item" href="#" data-toggle="modal"
@@ -105,6 +111,9 @@ $patient->name , 'currentPage' => __('appointments.appointments')])
 
                                 @permission('update-appointments')
                                 @include('appointments._edit')
+                                @endpermission
+                                @permission('status-appointments')
+                                @include('appointments._status')
                                 @endpermission
                                 @permission('delete-appointments')
                                 @include('appointments._delete',['id'=>$appointment->id,'name' =>

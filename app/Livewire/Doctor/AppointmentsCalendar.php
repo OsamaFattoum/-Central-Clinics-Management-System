@@ -1,19 +1,16 @@
 <?php
 
-namespace App\Livewire\Clinic;
+namespace App\Livewire\Doctor;
 
 use App\Models\Appointment;
 use Carbon\Carbon;
 use Livewire\Component;
-use PDO;
 
 class AppointmentsCalendar extends Component
 {
     public $appointments;
 
     public $appointmentId;
-    public $department;
-    public $doctor;
     public $patient;
     public $date;
     public $time;
@@ -26,24 +23,25 @@ class AppointmentsCalendar extends Component
         $this->loadAppointments();
     }//end of mount
 
+
     public function loadAppointments(){
 
-        $this->appointments = Appointment::with('department', 'patient')
-        ->where('clinic_id', auth()->user()->id) // Adjust the condition as needed
+        $this->appointments = Appointment::with('patient')
+        ->where('doctor_id', auth()->user()->id) // Adjust the condition as needed
         ->get()
         ->map(function ($appointment) {
             $datetimeString = $appointment->date . ' ' . $appointment->time;
             $datetime = Carbon::parse($datetimeString);
             return [
                 'id' => $appointment->id,
-                'title' => '(' . $appointment->department->name . ') (' . $appointment->doctor->name . ')',
+                'title' => '(' . $appointment->patient->name . ')',
                 'start' => $datetime->toDateTimeString(),
                 'color' => $appointment->status == 1 ? 'cayan' : ($appointment->status == 0 ? 'gray' : 'red'), // Customize color based on status
                 'display' => 'block',
             ];
         })->toArray();
+
     }//end of load appointments
-    
 
     public function edit($id)
     {
@@ -51,8 +49,6 @@ class AppointmentsCalendar extends Component
         $appointment = Appointment::findOrFail($id);
 
         $this->appointmentId = $appointment->id;
-        $this->department = $appointment->department->name;
-        $this->doctor = $appointment->doctor->name;
         $this->patient = $appointment->patient->name;
         $this->date = $appointment->date;
         $this->time = $appointment->time;
@@ -80,9 +76,10 @@ class AppointmentsCalendar extends Component
         $this->loadAppointments();
         $this->dispatch('appointmentsRefreshed', $this->appointments);
     }//end of refresh appointments
+    
 
     public function render()
     {
-        return view('livewire.clinic.appointments-calendar');
+        return view('livewire.doctor.appointments-calendar');
     }//end of render
 }

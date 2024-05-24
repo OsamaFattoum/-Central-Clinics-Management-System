@@ -85,6 +85,7 @@ Route::middleware(['auth:admin,clinic,pharmacy,doctor,patient', 'statusCheck'])-
 
         Route::resource('appointments', AppointmentController::class)->except(['create', 'edit', 'show']);
         Route::delete('appointments', [AppointmentController::class, 'bulk'])->name('appointments.bulk');
+        Route::post('appointments/{appointment}/status', [AppointmentController::class, 'status'])->name('appointments.status');
 
 
     });

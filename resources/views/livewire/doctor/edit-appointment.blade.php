@@ -11,15 +11,9 @@
             </div>
             <form wire:submit="updateStatus">
                 <div class="modal-body">
-                    <div class="row">
-                        <div class="form-group col-lg-6">
-                            <label for="department">@lang('appointments.department')</label>
-                            <input type="text" id="department" readonly class="form-control" wire:model="department">
-                        </div>
-                        <div class="form-group col-lg-6">
-                            <label for="doctor">@lang('appointments.doctor')</label>
-                            <input type="text" id="doctor" readonly class="form-control" wire:model="doctor">
-                        </div>
+                    <div class="form-group">
+                        <label for="patient">@lang('patients.name_patient')</label>
+                        <input type="text" id="patient" readonly class="form-control" wire:model="patient">
                     </div>
                     <div class="row">
                         <div class="form-group col-lg-6">
@@ -31,10 +25,7 @@
                             <input type="time" id="time" readonly class="form-control" wire:model="time">
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="patient">@lang('patients.name_patient')</label>
-                        <input type="text" id="patient" readonly class="form-control" wire:model="patient">
-                    </div>
+                   
                     <div class="form-group"  wire:loading.attr='readonly'>
                         <label for="status">@lang('appointments.status')</label>
                         <select id="status" class="form-control" wire:model="status">

@@ -10,13 +10,11 @@
             </div>
         </div>
     </div>
-    @include('livewire.clinic.edit-appointment')
+    @include('livewire.doctor.edit-appointment')
 </div>
 
 
 @section('js')
-
-@stack('charts')
 
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js"></script>
 

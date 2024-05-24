@@ -6,9 +6,7 @@ use App\Http\Requests\AppointmentRequest;
 use App\Models\Appointment;
 use App\Models\Clinic\Clinic;
 use App\Models\Users\Patient;
-use App\Models\Users\Profile;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class AppointmentController extends Controller
 {
@@ -22,9 +20,12 @@ class AppointmentController extends Controller
 
     public function index(Patient $patient)
     {
-        
+        $appointments = Appointment::where('patient_id', $patient->id)->get();
+        if(auth()->guard('doctor')->check()){
+            $appointments = Appointment::where('doctor_id',auth()->user()->id)->where('patient_id', $patient->id)->get();
+        }
         return view('appointments.index', [
-            'appointments' => Appointment::where('patient_id', $patient->id)->get(),
+            'appointments' => $appointments,
             'patient' => $patient,
         ]);
     } //end of index
@@ -57,6 +58,21 @@ class AppointmentController extends Controller
         }
     } //end of store
 
+    public function status(Patient $patient, Appointment $appointment,Request $request)
+    {
+        
+        try {
+            $this->validate($request,[
+                'status' => ['required','in:0,1,2']
+            ]);
+            $appointment->update(['status' => $request->status]);
+            session()->flash('change_status');
+            return redirect()->route('appointments.index',['patient'=> $patient->id]);
+        } catch (\Exception $e) {
+            return redirect()->route('appointments.index',['patient'=> $patient->id])->withErrors(['error' => $e->getMessage()]);
+        }
+    } //end of status
+
     public function update(Patient $patient, Appointment $appointment, AppointmentRequest $request)
     {
         try {
@@ -85,6 +101,8 @@ class AppointmentController extends Controller
             return redirect()->route('appointments.index', ['patient' => $patient->id])->withErrors(['error' => $e->getMessage()]);
         }
     } //end of update
+
+
 
     public function destroy(Patient $patient, Appointment $appointment)
     {

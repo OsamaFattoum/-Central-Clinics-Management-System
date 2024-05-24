@@ -33,6 +33,7 @@ return [
         ],
         'doctor' => [
             'patients' => 'c,r',
+            'appointments' => 'r,s',
         ],
         'patient' => [
 
@@ -46,6 +47,7 @@ return [
         'r' => 'read',
         'u' => 'update',
         'd' => 'delete',
+        's' => 'status',
     ],
 
 
