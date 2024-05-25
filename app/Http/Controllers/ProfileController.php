@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\Day\Day;
+use App\Models\Users\Profile;
 use App\Traits\ImageOperations;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -14,6 +15,7 @@ class ProfileController extends Controller
     use ImageOperations;
     public function index()
     {
+        
         $data = [
             'user' => auth()->user(),
         ];
@@ -26,11 +28,22 @@ class ProfileController extends Controller
             $data['cities'] = $cities;
         }
 
+        if (Auth::guard('doctor')->check()) {
+            $citiesJson = file_get_contents(resource_path('json/cities.json'));
+            $cities = json_decode($citiesJson, true);
+
+            $data['profile'] = Profile::where('profile_id',auth()->user()->id)->where('profile_type',get_class(auth()->user()))->first();
+            $data['cities'] = $cities;
+        }
+
+        
+
         return view('profile', $data);
     } //end of index
 
     public function update(ProfileUpdateRequest $request)
     {
+        
         DB::beginTransaction();
         try {
             $user = $request->user();
@@ -42,6 +55,7 @@ class ProfileController extends Controller
                 $this->verifyAndStoreImage($request, 'image', Str::plural(auth()->guard()->name), 'uploads', $user->id, get_class($user));
             }
             $data = $request->validated();
+
             if (Auth::guard('clinic')->check()) {
 
                 foreach ($user->facilityDays as $facilityDay) {
@@ -67,6 +81,24 @@ class ProfileController extends Controller
                     "owner_name" => $request->owner_name,
                     "owner_phone" => $request->owner_phone,
                     "owner_email" => $request->owner_email,
+                ]);
+                $data = $request->only('email');
+            }
+
+            if(Auth::guard('doctor')->check()){
+               
+                $user->profile()->update([
+                    'phone' => $request->phone,
+                    'city' => $request->city,
+                    'address' => $request->address,
+                ]);
+                Profile::find($user->id)->update([
+                    "ar" => [
+                        "name" => $request->ar['name'],
+                    ],
+                    "en" => [
+                        "name" => $request->en['name'],
+                    ],
                 ]);
                 $data = $request->only('email');
             }

@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Models\Admin;
+use App\Models\Users\Doctor;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -28,7 +29,7 @@ class ProfileUpdateRequest extends FormRequest
             return [
                 'ar.name' => ['required', 'string', 'min:5', 'max:100', Rule::unique('clinic_translations', 'name')->where('locale', 'ar')->ignore($this->user()->id, 'clinic_id')],
                 'en.name' => ['required', 'string', 'min:5', 'max:100', Rule::unique('clinic_translations', 'name')->where('locale', 'en')->ignore($this->user()->id, 'clinic_id')],
-                'email' => ['required', 'email',Rule::unique('clinics', 'email')->ignore($this->user()->id, 'id')],
+                'email' => ['required', 'email', Rule::unique('clinics', 'email')->ignore($this->user()->id, 'id')],
                 'days' => ['required', 'array', 'min:1'],
                 'address' => ['required', 'min:5', 'string'],
                 'city' => ['required', 'in:1,2,3,4,5,6,7,8,9,10,11,12,13'],
@@ -40,6 +41,17 @@ class ProfileUpdateRequest extends FormRequest
                 'owner_name' => ['required', 'min:5', 'max:100', 'string'],
                 'owner_phone' => ['required', 'regex:[^(\+962)?0?(7[789]\d{7}|0(6|2|3|5)\d{7})$]', 'min:6', 'max:15', 'string'],
                 'owner_email' => ['required', 'email'],
+            ];
+        } elseif ($this->type == 'doctor') {
+         
+            $profile_id = Doctor::findOrFail($this->user()->id)->profile->id;
+            return [
+                'ar.name' => ['required', 'string', 'min:5', 'max:100', Rule::unique('profile_translations', 'name')->where('locale', 'ar')->ignore($profile_id, 'profile_id')],
+                'en.name' => ['required', 'string', 'min:5', 'max:100', Rule::unique('profile_translations', 'name')->where('locale', 'en')->ignore($profile_id, 'profile_id')],
+                'email' => ['required', 'email', Rule::unique('doctors', 'email')->ignore($this->user()->id, 'id')],
+                'address' => ['required', 'min:5', 'string'],
+                'city' => ['required', 'in:1,2,3,4,5,6,7,8,9,10,11,12,13'],
+                'phone' => ['required', 'regex:[^(\+962)?0?(7[789]\d{7}|0(6|2|3|5)\d{7})$]', 'min:6', 'max:15', 'string'],
             ];
         }
     }
