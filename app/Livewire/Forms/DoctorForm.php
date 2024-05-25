@@ -3,6 +3,7 @@
 namespace App\Livewire\Forms;
 
 use App\Models\Users\Doctor;
+use App\Rules\UniqueProfileName;
 use Illuminate\Validation\Rule;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
@@ -34,8 +35,8 @@ class DoctorForm extends Form
     public function rules()
     {
         $rules =  [
-            'names.ar' => ['required', 'string', 'min:5', 'max:100', 'unique:profile_translations,name,NULL,id,locale,ar'],
-            'names.en' => ['required', 'string', 'min:5', 'max:100', 'unique:profile_translations,name,NULL,id,locale,en'],
+            'names.ar' => ['required', 'string', 'min:5', 'max:100',new UniqueProfileName(Doctor::class,'ar')],
+            'names.en' => ['required', 'string', 'min:5', 'max:100',new UniqueProfileName(Doctor::class,'en')],
             'civil_id' => ['required', 'regex:[^\d+$]', 'string', 'min:10', 'max:10', 'unique:doctors,civil_id'],
             'job_number' => ['required', 'regex:[^[A-Z]{2}-\d{4}-\d{5}$]', 'string', 'min:9', 'max:13', 'unique:doctors,job_number'],
             'email' => ['required', 'email', 'unique:doctors,email'],
@@ -53,7 +54,6 @@ class DoctorForm extends Form
 
         if($this->onUpdated){
 
-            $profile_id = Doctor::findOrFail($this->doctor_id)->profile->id;
       
             unset($rules['password'], $rules['password_confirmation']);
             array_pop($rules['names.ar']);
@@ -64,11 +64,11 @@ class DoctorForm extends Form
 
             $rules['names.ar'] = [
                 ...$rules['names.ar'],
-                Rule::unique('profile_translations', 'name')->where('locale','ar')->ignore($profile_id, 'profile_id'),
+                new UniqueProfileName(Doctor::class,'ar',$this->doctor_id),
             ];
             $rules['names.en'] = [
                 ...$rules['names.en'],
-                Rule::unique('profile_translations', 'name')->where('locale','en')->ignore($profile_id, 'profile_id'),
+                new UniqueProfileName(Doctor::class,'en',$this->doctor_id),
             ];
             $rules['civil_id'] = [
                 ...$rules['civil_id'],

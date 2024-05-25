@@ -32,7 +32,7 @@ return new class extends Migration
             $table->foreignId('profile_id')->references('id')->on('profiles')->cascadeOnDelete();
 
             // Actual fields you want to translate
-            $table->string('name',100)->unique();
+            $table->string('name',100);
       });
     }
 

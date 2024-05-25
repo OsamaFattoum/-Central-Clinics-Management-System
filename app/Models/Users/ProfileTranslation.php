@@ -14,5 +14,12 @@ class ProfileTranslation extends Model
     public $timestamps = false;
 
 
+    //relation
+    public function profile()
+    {
+        return $this->belongsTo(Profile::class);
+    }//end of profile
+
+
   
 }

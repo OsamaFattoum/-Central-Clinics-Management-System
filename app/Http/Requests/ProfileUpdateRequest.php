@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Models\Admin;
 use App\Models\Users\Doctor;
+use App\Rules\UniqueProfileName;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -44,10 +45,9 @@ class ProfileUpdateRequest extends FormRequest
             ];
         } elseif ($this->type == 'doctor') {
          
-            $profile_id = Doctor::findOrFail($this->user()->id)->profile->id;
             return [
-                'ar.name' => ['required', 'string', 'min:5', 'max:100', Rule::unique('profile_translations', 'name')->where('locale', 'ar')->ignore($profile_id, 'profile_id')],
-                'en.name' => ['required', 'string', 'min:5', 'max:100', Rule::unique('profile_translations', 'name')->where('locale', 'en')->ignore($profile_id, 'profile_id')],
+                'ar.name' => ['required', 'string', 'min:5', 'max:100',new UniqueProfileName(Doctor::class,'ar',$this->user()->id)],
+                'en.name' => ['required', 'string', 'min:5', 'max:100',new UniqueProfileName(Doctor::class,'en',$this->user()->id)],
                 'email' => ['required', 'email', Rule::unique('doctors', 'email')->ignore($this->user()->id, 'id')],
                 'address' => ['required', 'min:5', 'string'],
                 'city' => ['required', 'in:1,2,3,4,5,6,7,8,9,10,11,12,13'],

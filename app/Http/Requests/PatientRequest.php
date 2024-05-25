@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Models\Users\Patient;
+use App\Rules\UniqueProfileName;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -25,8 +26,8 @@ class PatientRequest extends FormRequest
     {
        
         $rules =  [
-            'ar.name' => ['required', 'string', 'min:5', 'max:100', 'unique:profile_translations,name,NULL,id,locale,ar'],
-            'en.name' => ['required', 'string', 'min:5', 'max:100', 'unique:profile_translations,name,NULL,id,locale,en'],
+            'ar.name' => ['required', 'string', 'min:5', 'max:100', new UniqueProfileName(Patient::class,'ar')],
+            'en.name' => ['required', 'string', 'min:5', 'max:100', new UniqueProfileName(Patient::class,'en')],
             'civil_id' => ['required', 'regex:[^\d+$]', 'string', 'min:10', 'max:10', 'unique:doctors,civil_id'],
             'email' => ['required', 'email', 'unique:patients,email'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
@@ -41,7 +42,6 @@ class PatientRequest extends FormRequest
 
         if ($this->getMethod() == 'PUT') {
 
-            $profile_id = Patient::findOrFail($this->patient->id)->profile->id;
 
             unset($rules['password'], $rules['password_confirmation']);
             array_pop($rules['ar.name']);
@@ -52,11 +52,11 @@ class PatientRequest extends FormRequest
 
             $rules['ar.name'] = [
                 ...$rules['ar.name'],
-                Rule::unique('profile_translations', 'name')->where('locale','ar')->ignore($profile_id, 'profile_id'),
+                new UniqueProfileName(Patient::class,'ar',$this->patient->id)
             ];
             $rules['en.name'] = [
                 ...$rules['en.name'],
-                Rule::unique('profile_translations', 'name')->where('locale','en')->ignore($profile_id, 'profile_id'),
+                new UniqueProfileName(Patient::class,'en',$this->patient->id)
             ];
 
             $rules['civil_id'] = [
