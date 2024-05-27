@@ -13,6 +13,7 @@ use Illuminate\Support\Str;
 class ProfileController extends Controller
 {
     use ImageOperations;
+
     public function index()
     {
         
@@ -20,7 +21,7 @@ class ProfileController extends Controller
             'user' => auth()->user(),
         ];
 
-        if (Auth::guard('clinic')->check()) {
+        if (Auth::guard('clinic')->check() || Auth::guard('pharmacy')->check() ) {
             $citiesJson = file_get_contents(resource_path('json/cities.json'));
             $cities = json_decode($citiesJson, true);
 
@@ -56,7 +57,7 @@ class ProfileController extends Controller
             }
             $data = $request->validated();
 
-            if (Auth::guard('clinic')->check()) {
+            if (Auth::guard('clinic')->check() || Auth::guard('pharmacy')->check()) {
 
                 foreach ($user->facilityDays as $facilityDay) {
                     $facilityDay->delete();
@@ -82,7 +83,8 @@ class ProfileController extends Controller
                     "owner_phone" => $request->owner_phone,
                     "owner_email" => $request->owner_email,
                 ]);
-                $data = $request->only('email');
+                $data = $request->only(['email','ar','en']);
+            
             }
 
             if(Auth::guard('doctor')->check()){

@@ -27,6 +27,7 @@ class Statistics extends Component
         $monthlyNewPatients = Patient::select(DB::raw('MONTH(created_at) as month'), DB::raw('count(*) as total'))
             ->whereYear('created_at', Carbon::now()->year)
             ->groupBy(DB::raw('MONTH(created_at)'))
+            ->orderBy(DB::raw('MONTH(created_at)'))
             ->get();
 
         // Doctors Per Department

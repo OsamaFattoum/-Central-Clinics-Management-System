@@ -26,11 +26,21 @@ class ProfileUpdateRequest extends FormRequest
                 'phone' => ['required', 'min:10', 'max:15', 'string', 'regex:[^(\+962)?0?(7[789]\d{7}|0(6|2|3|5)\d{7})$]'],
                 'image' => ['mimes:png,jpg,jpeg', 'max:1024'],
             ];
-        } elseif ($this->type == 'clinic') {
+        } elseif ($this->type == 'clinic' || $this->type == 'pharmacy') {
+            $tableTranslation = 'clinic_translations';
+            $mainTable = 'clinics';
+            $facilityColumnId = 'clinic_id';
+
+            if($this->type == 'pharmacy'){
+                $tableTranslation = 'pharmacy_translations';
+                $mainTable = 'pharmacies';
+                $facilityColumnId = 'pharmacy_id';
+            }
+
             return [
-                'ar.name' => ['required', 'string', 'min:5', 'max:100', Rule::unique('clinic_translations', 'name')->where('locale', 'ar')->ignore($this->user()->id, 'clinic_id')],
-                'en.name' => ['required', 'string', 'min:5', 'max:100', Rule::unique('clinic_translations', 'name')->where('locale', 'en')->ignore($this->user()->id, 'clinic_id')],
-                'email' => ['required', 'email', Rule::unique('clinics', 'email')->ignore($this->user()->id, 'id')],
+                'ar.name' => ['required', 'string', 'min:5', 'max:100', Rule::unique($tableTranslation, 'name')->where('locale', 'ar')->ignore($this->user()->id, $facilityColumnId)],
+                'en.name' => ['required', 'string', 'min:5', 'max:100', Rule::unique($tableTranslation, 'name')->where('locale', 'en')->ignore($this->user()->id,$facilityColumnId)],
+                'email' => ['required', 'email', Rule::unique($mainTable, 'email')->ignore($this->user()->id, 'id')],
                 'days' => ['required', 'array', 'min:1'],
                 'address' => ['required', 'min:5', 'string'],
                 'city' => ['required', 'in:1,2,3,4,5,6,7,8,9,10,11,12,13'],

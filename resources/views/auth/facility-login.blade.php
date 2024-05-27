@@ -39,8 +39,8 @@
                                             <div class="form-group">
                                                 <label for="facility_type">@lang('facility.l_select_type')</label>
                                                 <select name="type" class="form-control select2-no-search" id="facility_type">
-                                                    <option value="clinic">@lang('facility.option_clinic')</option>
-                                                    <option value="pharmacy">@lang('facility.option_pharmacy')</option>
+                                                    <option {{ old('type') == 'clinic' ? 'selected' : '' }} value="clinic">@lang('facility.option_clinic')</option>
+                                                    <option {{ old('type') == 'pharmacy' ? 'selected' : '' }} value="pharmacy">@lang('facility.option_pharmacy')</option>
                                                 </select>
                                             </div>
                                             <div class="form-group">

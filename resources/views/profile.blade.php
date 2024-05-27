@@ -2,7 +2,7 @@
 
 @section('css')
 
-@auth('clinic')
+@if (Auth::guard('clinic')->check() || Auth::guard('pharmacy')->check())	
 <link href="{{URL::asset('assets/plugins/select2/css/select2.min.css')}}" rel="stylesheet">
 
 @error('days')
@@ -12,7 +12,7 @@
 	}
 </style>
 @enderror
-@endauth
+@endif
 
 <link href="{{URL::asset('assets/plugins/fileuploads/css/fileupload.css')}}" rel="stylesheet" type="text/css" />
 
@@ -43,9 +43,11 @@
 });
 </script>
 
-@auth('clinic')
+@if (Auth::guard('clinic')->check() || Auth::guard('pharmacy')->check())	
 <script src="{{URL::asset('assets/plugins/select2/js/select2.min.js')}}"></script>
-
 @include('components.select_multi')
-@endauth
+
+@endif
+
+
 @endsection
