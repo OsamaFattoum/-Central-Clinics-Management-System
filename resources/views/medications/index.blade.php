@@ -80,7 +80,8 @@ $profile->translate(app()->getLocale())->name , 'currentPage' => __('medications
                                     </td>
                                     <td class="pr-2">
                                         @if (Auth::user()->hasPermission('update-medications') ||
-                                        Auth::user()->hasPermission('delete-medications') )
+                                        Auth::user()->hasPermission('delete-medications') ||
+                                        Auth::user()->hasPermission('status-medications'))
 
 
                                         <div class="dropdown">
@@ -90,10 +91,20 @@ $profile->translate(app()->getLocale())->name , 'currentPage' => __('medications
                                                     class="fas fa-caret-down mx-1"></i></button>
                                             <div class="dropdown-menu tx-13">
                                                 @permission('update-medications')
-                                                @if (auth()->guard()->name == 'admin' || !Carbon\Carbon::parse($medication->created_at)->addMinutes(5)->isPast())
+                                                @if (auth()->guard()->name == 'admin' ||
+                                                !Carbon\Carbon::parse($medication->created_at)->addMinutes(5)->isPast())
                                                 <a class="dropdown-item" href="#" data-toggle="modal"
                                                     data-target="#edit{{ $medication->id }}"><i style="color: #0ba360"
                                                         class="text-success ti-pencil-alt"></i>&nbsp;&nbsp;@lang('dropdown_op.drop_down_edit')</a>
+                                                @endif
+                                                @endpermission
+                                                @permission('status-medications')
+                                                @if (!$medication->medication_taken)
+                                                @if(!Carbon\Carbon::parse($medication->created_at)->addMonth(3)->isPast())
+                                                <a class="dropdown-item" data-toggle="modal"
+                                                    data-target="#status{{ $medication->id }}" href="#"><i
+                                                        class="text-warning ti-back-right"></i>&nbsp;&nbsp;@lang('dropdown_op.drop_down_status_medication')</a>
+                                                @endif
                                                 @endif
                                                 @endpermission
                                                 @permission('delete-medications')
@@ -109,8 +120,16 @@ $profile->translate(app()->getLocale())->name , 'currentPage' => __('medications
                                     </td>
 
                                     @permission('update-medications')
-                                    @if (auth()->guard()->name == 'admin' || !Carbon\Carbon::parse($medication->created_at)->addMinutes(5)->isPast())
+                                    @if (auth()->guard()->name == 'admin' ||
+                                    !Carbon\Carbon::parse($medication->created_at)->addMinutes(5)->isPast())
                                     @include('medications._edit')
+                                    @endif
+                                    @endpermission
+                                    @permission('status-medications')
+                                    @if (!$medication->medication_taken)
+                                    @if(!Carbon\Carbon::parse($medication->created_at)->addMonth(3)->isPast())
+                                    @include('medications._status')
+                                    @endif
                                     @endif
                                     @endpermission
                                     @permission('delete-medications')

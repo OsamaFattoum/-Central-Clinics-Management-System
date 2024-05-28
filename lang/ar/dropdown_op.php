@@ -7,4 +7,5 @@ return [
     'drop_down_password' => 'تغير كلمة المرور',
     'drop_down_status' => 'تغير الحالة',
     'drop_down_delete' => 'حذف البيانات',
+    'drop_down_status_medication' => 'حالة صرف الدواء',
 ];

@@ -20,7 +20,6 @@ return [
             'pharmacies' => 'c,r,u,d',
             'doctors' => 'c,r,u,d',
             'patients' => 'c,r,u,d',
-            'records' => 'c,r,u,d',
             'medications' => 'c,r,u,d',
             'appointments' => 'c,r,u,d',
         ],
@@ -29,16 +28,15 @@ return [
             'clinics_accreditations' => 'r',
         ],
         'pharmacy' => [
-
+            'patients' => 'r',
+            'medications' => 'r,s',
         ],
         'doctor' => [
             'patients' => 'c,r',
             'appointments' => 'r,s',
         ],
-        'patient' => [
+        'patient' => [],
 
-        ],
-        
 
     ],
 

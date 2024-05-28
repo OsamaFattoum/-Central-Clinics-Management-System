@@ -31,6 +31,7 @@ class UniqueCaseTypeName implements ValidationRule
         $query = CaseType::where('department_id', $this->departmentId)
             ->whereHas('translations', function ($query) use ($value) {
                 $query->where('name', $value);
+            
                 $query->where('locale', $this->locale);
             });
 

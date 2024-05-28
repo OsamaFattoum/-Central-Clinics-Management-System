@@ -61,7 +61,7 @@ class AppointmentController extends Controller
 
     public function status(Patient $patient, Appointment $appointment,Request $request)
     {
-        
+      
         try {
             $this->validate($request,[
                 'status' => ['required','in:0,1,2']

@@ -16,15 +16,17 @@ class RecordController extends Controller
 
     public function __construct(Request $request)
     {
-        $department = Department::findOrFail($request->department);
+        if ($request->department) {
+            $department = Department::findOrFail($request->department);
 
-        if ($department) {
-            $this->middleware(['permission:read-' . $department->scientific_name])->only(['index']);
-            $this->middleware(['permission:create-' . $department->scientific_name])->only(['store']);
-            $this->middleware(['permission:update-' . $department->scientific_name,'checkEditable:record'])->only(['update']);
-            $this->middleware(['permission:delete-' . $department->scientific_name])->only(['destroy', 'bulk']);
+            if ($department) {
+                $this->middleware(['permission:read-' . $department->scientific_name])->only(['index']);
+                $this->middleware(['permission:create-' . $department->scientific_name])->only(['store']);
+                $this->middleware(['permission:update-' . $department->scientific_name, 'checkEditable:record'])->only(['update']);
+                $this->middleware(['permission:delete-' . $department->scientific_name])->only(['destroy', 'bulk']);
+            }
+            $this->middleware('checkCaseType');
         }
-        $this->middleware('checkCaseType');
     } //end of construct
 
     public function index(Patient $patient, Department $department)

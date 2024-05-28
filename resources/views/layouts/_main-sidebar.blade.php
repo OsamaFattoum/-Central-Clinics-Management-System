@@ -33,7 +33,7 @@
 							d="M3 13h8V3H3v10zm2-8h4v6H5V5zm8 16h8V11h-8v10zm2-8h4v6h-4v-6zM13 3v6h8V3h-8zm6 4h-4V5h4v2zM3 21h8v-6H3v6zm2-4h4v2H5v-2z" />
 					</svg><span class="side-menu__label">@lang('sidebar.main_l')</span></a>
 			</li>
-			@if (!auth()->guard('pharmacy') && !auth()->guard('patient'))
+			@if (!auth()->guard('pharmacy')->check() && !auth()->guard('patient')->check())
 			<li class="side-item side-item-category">@lang('sidebar.system_t')</li>
 			@endif
 			@permission('read-departments')
@@ -102,6 +102,7 @@
 				</ul>
 			</li>
 			@endpermission
+			@if (!auth()->guard('pharmacy')->check())
 			@permission('read-patients')
 			<li class="slide {{ Request::is('patients/*') ? 'is-expanded' : ''}}">
 				<a class="side-menu__item" data-toggle="slide" href="{{ url('/' . $page='#') }}"><svg
@@ -119,6 +120,7 @@
 				</ul>
 			</li>
 			@endpermission
+			@endif
 
 		</ul>
 	</div>

@@ -8,7 +8,6 @@ use App\Models\Department\Department;
 use App\Models\Permission;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class DepartmentController extends Controller

@@ -11,13 +11,14 @@ use Illuminate\Support\Facades\DB;
 
 class MedicationController extends Controller
 {
-        public function __construct()
-        {
-            $this->middleware(['permission:read-medications'])->only(['index']);
-            $this->middleware(['permission:create-medications'])->only(['store']);
-            $this->middleware(['permission:update-medications','checkEditable:medication'])->only(['update']);
-            $this->middleware(['permission:delete-medications'])->only(['destroy', 'bulk']);
-        } //end of construct
+    public function __construct()
+    {
+        $this->middleware(['permission:read-medications'])->only(['index']);
+        $this->middleware(['permission:create-medications'])->only(['store']);
+        $this->middleware(['permission:update-medications', 'checkEditable:medication'])->only(['update']);
+        $this->middleware(['permission:status-medications','checkEditable:medication'])->only(['status']);
+        $this->middleware(['permission:delete-medications'])->only(['destroy', 'bulk']);
+    } //end of construct
 
 
     public function index(Patient $patient, Request $request)
@@ -50,6 +51,27 @@ class MedicationController extends Controller
             return redirect()->route('medications.index', ['patient' => $patient->id])->withErrors(['error' => $e->getMessage()]);
         }
     } //end of store
+
+    public function status(Patient $patient, Medication $medication, Request $request)
+    {  
+        if($medication->medication_taken){
+            abort(403);
+       }
+        try {
+            $this->validate($request, [
+                'medication_taken' => ['required', 'in:0,1'],
+                'has_alternative' => ['required', 'in:0,1'],
+            ]);
+            $medication->update([
+                'medication_taken' => $request->medication_taken,
+                'has_alternative' => $request->has_alternative,
+            ]);
+            session()->flash('change_status');
+            return redirect()->route('medications.index', ['patient' => $patient->id]);
+        } catch (\Exception $e) {
+            return redirect()->route('medications.index', ['patient' => $patient->id])->withErrors(['error' => $e->getMessage()]);
+        }
+    } //end of status
 
     public function update(Patient $patient, Medication $medication, MedicationRequest $request)
     {

@@ -31,6 +31,7 @@ class CaseTypeController extends Controller
     public function store(Department $department,CaseTypeRequest $request)
     {
         try {
+            
             $department->caseTypes()->create($request->all());
             session()->flash('add');
             return redirect()->route('case_types.index',$department->id);

@@ -27,7 +27,7 @@ return new class extends Migration
             $table->foreignId('case_type_id')->references('id')->on('case_types')->cascadeOnDelete();
 
             // Actual fields you want to translate
-            $table->string('name',100)->unique();
+            $table->string('name',100);
       });
     }
 

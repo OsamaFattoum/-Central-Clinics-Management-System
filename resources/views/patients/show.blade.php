@@ -183,6 +183,7 @@ __('sidebar.patients_t')])
     </div>
 </div>
 
+@if (!auth()->guard('pharmacy')->check())
 <div class="row row-sm">
     <div class="col-lg-12">
         <div class="card overflow-hidden">
@@ -269,7 +270,9 @@ __('sidebar.patients_t')])
             </div>
         </div>
     </div>
-</div>
+</div>  
+@endif
+
 
 
 

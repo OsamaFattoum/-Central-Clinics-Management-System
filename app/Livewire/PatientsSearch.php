@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Users\Patient;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Rule;
 use Livewire\Attributes\Url;
 use Livewire\Component;
@@ -24,20 +25,28 @@ class PatientsSearch extends Component
         ]);
 
         if (!empty($this->searchTerm)) {
-            $this->patients = Patient::where('civil_id', 'like','%' . $this->searchTerm . '%')->get();
-        }else{
+            $guard = Auth::guard('doctor')->check() || Auth::guard('pharmacy')->check();
+
+            $query = Patient::where('civil_id', 'like', '%' . $this->searchTerm . '%');
+
+            if ($guard) {
+                $query->where('status', 1);
+            }
+
+            $this->patients = $query->get();
+        } else {
             $this->reset();
         }
     } //end of search
 
     public function render()
     {
-        
+
         if (request('s')) {
-        
+
             $this->patients = Patient::where('civil_id', 'like', request('s'))->get();
         }
-       
+
         return view('livewire.patients-search');
     } //end of render
 }

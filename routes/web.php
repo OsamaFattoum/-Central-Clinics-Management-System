@@ -80,19 +80,32 @@ Route::middleware(['auth:admin,clinic,pharmacy,doctor,patient', 'statusCheck'])-
 
 
     Route::prefix('patients/{patient}')->group(function () {
-        Route::resource('medications', MedicationController::class)->except(['create', 'edit', 'show']);
-        Route::delete('medications', [MedicationController::class, 'bulk'])->name('medications.bulk');
 
-        Route::resource('appointments', AppointmentController::class)->except(['create', 'edit', 'show']);
-        Route::delete('appointments', [AppointmentController::class, 'bulk'])->name('appointments.bulk');
-        Route::post('appointments/{appointment}/status', [AppointmentController::class, 'status'])->name('appointments.status');
 
+
+        Route::controller(AppointmentController::class)->group(function() {
+            Route::get('appointments', 'index')->name('appointments.index');
+            Route::post('appointments', 'store')->name('appointments.store');
+            Route::put('appointments/{appointment}', 'update')->name('appointments.update');
+            Route::delete('appointments/{appointment}', 'destroy')->name('appointments.destroy');
+            Route::post('appointments/{appointment}/status', 'status')->name('appointments.status');
+            Route::delete('appointments','bulk')->name('appointments.bulk');
+        });
+
+        Route::controller(MedicationController::class)->group(function(){
+            Route::get('medications', 'index')->name('medications.index');
+            Route::post('medications', 'store')->name('medications.store');
+            Route::put('medications/{medication}', 'update')->name('medications.update');
+            Route::delete('medications/{medication}', 'destroy')->name('medications.destroy');
+            Route::patch('medications/{medication}','status')->name('medications.status');
+            Route::delete('medications','bulk')->name('medications.bulk');
+        });
 
     });
 
-    Route::prefix('patients/{patient}/department/{department}')->group(function () {
-        Route::resource('records', RecordController::class)->except(['create', 'edit', 'show']);
-        Route::delete('records', [RecordController::class, 'bulk'])->name('records.bulk');
+    Route::prefix('patients/{patient}/departments/{department}/')->group(function () {
+        Route::resource('/records', RecordController::class)->except(['create', 'edit', 'show']);
+        Route::delete('/records', [RecordController::class, 'bulk'])->name('records.bulk');
     });
 
 
