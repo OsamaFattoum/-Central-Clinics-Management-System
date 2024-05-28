@@ -32,7 +32,8 @@
                                     class="tx-danger">*</span></label>
                             <input {{ $index==0 ? 'autofocus' : '' }} id="profile.name.{{ $local }}" type="text"
                                 value="{{ old($local . '.name', isset($user) ? $profile->translate($local)->name : '') }}"
-                                name="{{ $local }}[name]" class="form-control @error($local.".name") parsley-error @enderror">
+                                name="{{ $local }}[name]" class="form-control @error($local." .name") parsley-error
+                                @enderror">
                             @include('components.input-error',['input'=> $local.".name"])
                         </div>
                         @endforeach

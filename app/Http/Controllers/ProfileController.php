@@ -16,12 +16,12 @@ class ProfileController extends Controller
 
     public function index()
     {
-        
+
         $data = [
             'user' => auth()->user(),
         ];
 
-        if (Auth::guard('clinic')->check() || Auth::guard('pharmacy')->check() ) {
+        if (Auth::guard('clinic')->check() || Auth::guard('pharmacy')->check()) {
             $citiesJson = file_get_contents(resource_path('json/cities.json'));
             $cities = json_decode($citiesJson, true);
 
@@ -33,18 +33,18 @@ class ProfileController extends Controller
             $citiesJson = file_get_contents(resource_path('json/cities.json'));
             $cities = json_decode($citiesJson, true);
 
-            $data['profile'] = Profile::where('profile_id',auth()->user()->id)->where('profile_type',get_class(auth()->user()))->first();
+            $data['profile'] = Profile::where('profile_id', auth()->user()->id)->where('profile_type', get_class(auth()->user()))->first();
             $data['cities'] = $cities;
         }
 
-        
+
 
         return view('profile', $data);
     } //end of index
 
     public function update(ProfileUpdateRequest $request)
     {
-        
+
         DB::beginTransaction();
         try {
             $user = $request->user();
@@ -83,12 +83,11 @@ class ProfileController extends Controller
                     "owner_phone" => $request->owner_phone,
                     "owner_email" => $request->owner_email,
                 ]);
-                $data = $request->only(['email','ar','en']);
-            
+                $data = $request->only(['email', 'ar', 'en']);
             }
 
-            if(Auth::guard('doctor')->check()){
-               
+            if (Auth::guard('doctor')->check()) {
+
                 $user->profile()->update([
                     'phone' => $request->phone,
                     'city' => $request->city,
@@ -105,13 +104,19 @@ class ProfileController extends Controller
                 $data = $request->only('email');
             }
 
-            $user->fill($data);
-            $user->save();
+            if (Auth::guard('patient')->check()) {
+                $user->profile()->update($data);
+            } else {
+                $user->fill($data);
+                $user->save();
+            }
+
 
             DB::commit();
             session()->flash('edit');
             return redirect()->route('profile');
         } catch (\Exception $e) {
+        
             DB::rollback();
             return redirect()->route('profile')->withErrors(['error' => $e->getMessage()]);
         }

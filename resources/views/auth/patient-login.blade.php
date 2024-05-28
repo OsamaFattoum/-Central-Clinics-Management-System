@@ -9,7 +9,8 @@
             <div class="row g-0">
                 <div
                     class="col-md-6 col-lg-6 col-xl-6 bg-gray-100 d-none d-md-flex justify-content-center align-items-center">
-                    <img src="{{ URL::asset('assets/website/images/trans_logo_ar.png') }}" alt="">
+                    <a href="{{ route('welcome') }}"> <img src="{{ URL::asset('assets/website/images/trans_logo_ar.png') }}" alt="">
+                    </a>
                 </div>
                 <div class="col-md-6 col-lg-6 col-xl-6 d-flex justify-content-center align-items-center">
                     <div class="card-body p-md-5 mx-md-4">
@@ -45,8 +46,9 @@
                                         </span>
                                     </div>
                                     <input type="password" name="password" aria-describedby="basic-addon1"
-                                        class="form-control id_password @error('password') parsley-error @enderror" placeholder="">
-                                        @include('components.input-error',['input' => 'password'])
+                                        class="form-control id_password @error('password') parsley-error @enderror"
+                                        placeholder="">
+                                    @include('components.input-error',['input' => 'password'])
 
                                 </div>
                             </div>

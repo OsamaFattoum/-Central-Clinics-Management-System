@@ -18,20 +18,19 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // $admin = $this->createAdmin();
+        $admin = $this->createAdmin();
 
-        // $this->call([LaratrustSeeder::class, DepartmentSeeder::class, DaysSeeder::class, FacilitySeeder::class, BloodTypeSeeder::class, UsersSeeder::class]);
-        $admin = Admin::find(1)->first();
+        $this->call([LaratrustSeeder::class, DepartmentSeeder::class, DaysSeeder::class, FacilitySeeder::class, BloodTypeSeeder::class, UsersSeeder::class]);
         $this->addPermissionToAdmin($admin);
-        // $admin->addRole('admin');
+        $admin->addRole('admin');
 
 
-        // Patient::factory()->count(50)->create()->each(function ($patient) {
-        //     $patient->profile()->save(Profile::factory()->create([
-        //         'profile_type' => get_class($patient),
-        //         'profile_id' => $patient->id
-        //     ]));
-        // });
+        Patient::factory()->count(50)->create()->each(function ($patient) {
+            $patient->profile()->save(Profile::factory()->create([
+                'profile_type' => get_class($patient),
+                'profile_id' => $patient->id
+            ]));
+        });
     }
 
     private function createAdmin()

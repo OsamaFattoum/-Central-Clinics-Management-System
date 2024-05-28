@@ -63,6 +63,12 @@ class ProfileUpdateRequest extends FormRequest
                 'city' => ['required', 'in:1,2,3,4,5,6,7,8,9,10,11,12,13'],
                 'phone' => ['required', 'regex:[^(\+962)?0?(7[789]\d{7}|0(6|2|3|5)\d{7})$]', 'min:6', 'max:15', 'string'],
             ];
+        }elseif($this->type == 'patient'){
+            return [
+                'phone' => ['required', 'regex:[^(\+962)?0?(7[789]\d{7}|0(6|2|3|5)\d{7})$]', 'min:6', 'max:15', 'string'],
+            ];
+        }else{
+            abort(404);
         }
     }
 }
