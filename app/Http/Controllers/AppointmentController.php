@@ -17,6 +17,8 @@ class AppointmentController extends Controller
         $this->middleware(['permission:update-appointments'])->only(['update']);
         $this->middleware(['permission:status-appointments'])->only(['status']);
         $this->middleware(['permission:delete-appointments'])->only(['destroy', 'bulk']);
+        $this->middleware('checkDepartment');
+
     } //end of construct
 
     public function index(Patient $patient)

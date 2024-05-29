@@ -15,6 +15,9 @@ class DoctorController extends Controller
         $this->middleware(['permission:create-doctors'])->only(['manage', 'store']);
         $this->middleware(['permission:update-doctors'])->only(['manage', 'update', 'status']);
         $this->middleware(['permission:delete-doctors'])->only(['destroy', 'bulk']);
+
+        $this->middleware('checkDepartment');
+
     } //end of construct
 
     public function index(Request $request)

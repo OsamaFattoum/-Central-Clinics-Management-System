@@ -9,10 +9,9 @@
             </div>
 
             <form action="{{ route('appointments.store',['patient' => $patient->id]) }}" method="post"
-                autocomplete="off">
+                autocomplete="off" >
                 @csrf
                 <div class="modal-body">
-
                     @livewire('appointment')
                     <div class="row">
                         <div class="form-group col-lg-6">

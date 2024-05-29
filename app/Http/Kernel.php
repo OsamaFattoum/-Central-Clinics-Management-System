@@ -67,6 +67,7 @@ class Kernel extends HttpKernel
         'macChecker' => \App\Http\Middleware\MacCheckerMiddleware::class,
         'statusCheck' => \App\Http\Middleware\StatusCheckMiddleware::class,
         'checkCaseType' => \App\Http\Middleware\CheckHasCaseType::class,
+        'checkDepartment' => \App\Http\Middleware\CheckHasDepartment::class,
         'checkEditable' => \App\Http\Middleware\CheckEditable::class,
 
 

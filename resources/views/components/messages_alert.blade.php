@@ -67,6 +67,18 @@
 </script>
 @endif
 
+@if (session()->has('no-department'))
+<script>
+    window.onload = function() {
+                notif({
+                    msg: "{{ __('messages.no-department') }}",
+                    type: "dark"
+                });
+            }
+
+</script>
+@endif
+
 @if (session()->has('edit'))
 <script>
     window.onload = function() {

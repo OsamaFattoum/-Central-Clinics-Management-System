@@ -18,6 +18,8 @@ class MedicationController extends Controller
         $this->middleware(['permission:update-medications', 'checkEditable:medication'])->only(['update']);
         $this->middleware(['permission:status-medications','checkEditable:medication'])->only(['status']);
         $this->middleware(['permission:delete-medications'])->only(['destroy', 'bulk']);
+        $this->middleware('checkDepartment');
+
     } //end of construct
 
 

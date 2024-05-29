@@ -15,6 +15,7 @@ return [
     'give_drug' => 'يصرف',
     'not_give_drug' => 'لا يصرف',
     'created_at' => 'تاريخ الاضافة',
+    'image' => 'أيقونة القسم',
 
 
     //validation
@@ -32,7 +33,7 @@ return [
     'scientific_name.string' => 'يجب أن يكون الاسم العلمي نصًا.',
     'scientific_name.max' => 'لا يجب أن يتجاوز الاسم العلمي :max أحرف.',
     'status.required' => 'حقل الحالة مطلوب.',
-    'status.in' => 'يجب أن تكون الحالة إما لا يصرف أو يصرف.'
-
+    'status.in' => 'يجب أن تكون الحالة إما لا يصرف أو يصرف.',
+    'image.required' => 'حقل الايقونة مطلوب', 
 
 ];

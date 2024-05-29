@@ -5,6 +5,7 @@ namespace App\Models\Department;
 use App\Models\Appointment;
 use App\Models\Case\CaseType;
 use App\Models\Clinic\Clinic;
+use App\Models\Image;
 use App\Models\Record\Medication;
 use App\Models\Record\Record;
 use App\Models\Users\Doctor;
@@ -12,6 +13,7 @@ use Astrotomic\Translatable\Translatable;
 use Astrotomic\Translatable\Contracts\Translatable as ContractsTranslatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 class Department extends Model implements ContractsTranslatable
 {
@@ -20,6 +22,17 @@ class Department extends Model implements ContractsTranslatable
     public $translatedAttributes = ['name', 'description'];
 
     protected $guarded = [];
+
+    protected $appends = ['image_path'];
+
+
+    //attr
+    public function getImagePathAttribute()
+    {
+        $disk = 'uploads/';
+        return $this->image == null ? $disk . 'department.png' : $disk . $this->image->url;
+    } //end of getImagePathAttribute
+
 
     public function clinics()
     {
@@ -50,4 +63,9 @@ class Department extends Model implements ContractsTranslatable
     {
         return $this->hasMany(Appointment::class);
     } //end of appointments relation
+    
+    public function image(): MorphOne
+    {
+        return $this->morphOne(Image::class, 'imageable');
+    } //end of image relation
 }

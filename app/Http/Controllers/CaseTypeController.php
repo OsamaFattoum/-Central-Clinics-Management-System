@@ -17,6 +17,8 @@ class CaseTypeController extends Controller
         $this->middleware(['permission:create-case_type'])->only(['store']);
         $this->middleware(['permission:update-case_type'])->only(['update']);
         $this->middleware(['permission:delete-case_type'])->only(['destroy','bulk']);
+        $this->middleware('checkDepartment');
+
 
     } //end of construct
 

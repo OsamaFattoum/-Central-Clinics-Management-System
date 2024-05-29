@@ -21,6 +21,7 @@ class DerpartmentRequest extends FormRequest
             'en.name' => ['required','string','different:ar.name','min:5','max:100','unique:department_translations,name,NULL,id,locale,en'],
             'scientific_name' => ['required', 'string', 'max:30'],
             'status' => ['required', 'in:0,1'],
+            'image' => ['required','image','mimes:svg,png','max:1024'],
         ];
 
         if ($this->getMethod() == 'PUT') {
@@ -58,7 +59,11 @@ class DerpartmentRequest extends FormRequest
             'scientific_name.string' => __('departments.scientific_name.string'),
             'scientific_name.max' => __('departments.scientific_name.max'),
             'status.required' => __('departments.status.required'),
-            'status.in' => __('departments.status.in')
+            'status.in' => __('departments.status.in'),
+            'image.required' => __('departments.image.required'),
+            'image.image' => __('departments.image.image'),
+            'image.mimes' => __('departments.image.mimes'),
+            'image.max' => __('departments.image.max'),
         ];
     }//end of messages
 }

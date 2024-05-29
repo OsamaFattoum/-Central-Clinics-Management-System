@@ -18,6 +18,7 @@ class ClinicAccreditationsController extends Controller
         $this->middleware(['permission:create-clinics_accreditations'])->only(['store']);
         $this->middleware(['permission:update-clinics_accreditations'])->only(['update']);
         $this->middleware(['permission:delete-clinics_accreditations'])->only(['destroy','bulk']);
+        $this->middleware('checkDepartment');
 
     } //end of construct
 

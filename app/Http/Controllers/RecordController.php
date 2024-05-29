@@ -26,6 +26,8 @@ class RecordController extends Controller
                 $this->middleware(['permission:delete-' . $department->scientific_name])->only(['destroy', 'bulk']);
             }
             $this->middleware('checkCaseType');
+            $this->middleware('checkDepartment');
+
         }
     } //end of construct
 

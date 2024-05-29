@@ -20,6 +20,8 @@ class ClinicController extends Controller
         $this->middleware(['permission:update-clinics'])->only(['edit','update','status']);
         $this->middleware(['permission:delete-clinics'])->only(['destroy','bulk']);
 
+        $this->middleware('checkDepartment');
+
     } //end of construct
 
     public function index(Request $request)

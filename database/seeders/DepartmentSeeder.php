@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Admin;
 use App\Models\Case\CaseType;
 use App\Models\Department\Department;
+use App\Models\Image;
 use Illuminate\Database\Seeder;
 
 class DepartmentSeeder extends Seeder
@@ -50,9 +51,15 @@ class DepartmentSeeder extends Seeder
                 'scientific_name' => 'surgery',
             ],
         ];
+
+        $images = [
+            '21578EdaLTNKNBedEVTDQl3aBRWhKLCKTVOgfx4H.png',
+            '21578EdaLTNKNBedEVTDQl3aBRWhKLCKTVOgfx4O.png',
+            '21578EdaLTNKNBedEVTDQl3aBRWhKLCKTVOgfx4W.png',
+        ];
         
         $per = [];
-        foreach ($departments as $departmentData) {
+        foreach ($departments as $index => $departmentData) {
             $department = Department::create($departmentData);
         
             foreach (config('laratrust_seeder.permissions_map') as $map) {
@@ -63,6 +70,12 @@ class DepartmentSeeder extends Seeder
                 ])->name;
                 $this->command->info('Creating Permission to ' . $map . ' for ' . $department->scientific_name);
             }
+
+            Image::create([
+                'url' => 'departments/' . $images[$index], 
+                'imageable_id' => $department->id,
+                'imageable_type' => Department::class,
+            ]);
             
         }
 
