@@ -33,7 +33,7 @@ return [
         ],
         'doctor' => [
             'patients' => 'c,r',
-            'appointments' => 'r,s',
+            'appointments' => 'r,s,c',
         ],
         'patient' => [],
 

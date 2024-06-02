@@ -24,6 +24,11 @@ return [
     'in_date' => 'بتاريخ',
     'no_records' => 'لا توجد سجلات متاحة',
 
+    'start_date_gt_end_date' => 'التاريخ الاول يجب ان يكون اقل من التاريخ الثاني',
+    'start_date' => 'من تاريخ',
+    'end_date' => 'الى تاريخ',
+    
+
     //validation
     'case_type.required' =>  'حقل الحالة مطلوب.',
     'case_type.exists' => 'قيمة الحالة غير صحيحة.',

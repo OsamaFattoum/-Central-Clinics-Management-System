@@ -12,7 +12,13 @@
                 autocomplete="off" >
                 @csrf
                 <div class="modal-body">
+                    @auth('doctor')
+                     <input type="hidden" name="clinic" value="{{ auth()->user()->clinic->id }}">
+                     <input type="hidden" name="department" value="{{ auth()->user()->department->id }}">
+                     <input type="hidden" name="doctor" value="{{ auth()->user()->id }}">
+                    @else
                     @livewire('appointment')
+                    @endauth
                     <div class="row">
                         <div class="form-group col-lg-6">
                             <label for="date">@lang('appointments.date')</label>

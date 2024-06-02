@@ -39,6 +39,7 @@ class MedicationController extends Controller
     public function store(Patient $patient, MedicationRequest $request)
     {
 
+   
         try {
             $data = $request->except('department', 'case_type');
             $data['patient_id'] = $patient->id;

@@ -136,7 +136,7 @@
                 <div class="tab-pane {{ $activeTab == 1 ? 'active' : ''}}" id="tab1">
                     <div class="d-flex">
                         @foreach (config('laratrust_seeder.permissions_map') as $map)
-                        @if ($map != 'delete' && $map != 'status')
+                        @if ($map != 'delete' && $map != 'status' && $map != 'read')
                         <label class="ckbox mt-2 mb-2 mx-2">
                             <input wire:key='{{$map}}-{{$selectedDepartment->scientific_name}}' type="checkbox"
                                 wire:click="toggleChecked('{{$map}}-{{$selectedDepartment->scientific_name}}')"
@@ -155,7 +155,7 @@
                     <div class="d-flex">
                         @foreach (config('laratrust_seeder.permissions_map') as $map)
 
-                        @if ($map != 'delete' && $map != 'status')
+                        @if ($map != 'delete' && $map != 'status' && $map != 'read')
                         <label for="medications{{$map}}" class="ckbox mt-2 mb-2 mx-2">
                             <input wire:key='{{$map}}-medications' wire:click="toggleChecked('{{$map}}-medications')"
                                 wire:model='form.permissions.{{$map . '-medications'}}' id="medications{{$map}}"

@@ -23,6 +23,8 @@ return [
    'appointments' => 'المواعيد',
 
 
+   'text_last_record' => 'عرض اخر نتائج سجلات قسم',
+
    
 
 ];

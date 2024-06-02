@@ -33,7 +33,7 @@ class Doctor extends Component
 
     public function mount()
     {
-     
+
         $this->allDepartments = Department::all();
         if (auth()->guard('clinic')->check()) {
             $this->clinics = Clinic::where('id', auth()->user()->id)->where('status', 1)->first();
@@ -52,8 +52,6 @@ class Doctor extends Component
             $this->form->onUpdated = true;
             $this->form->doctor_id = $this->doctor;
         }
-
-        
     } //end of mount
 
 
@@ -76,13 +74,26 @@ class Doctor extends Component
         $this->reset('activeTab');
         if ($this->form->department) {
             $this->form->reset('permissions');
-            if($this->updateMode){
-                if(!auth()->guard('clinic')->check()){
+            if ($this->updateMode) {
+                if (!auth()->guard('clinic')->check()) {
                     $this->selectedDepartment = Department::findOrFail($this->form->department);
+                    if ($this->selectedDepartment->status) {
+                        $this->form->permissions['read-medications'] = true;
+                    }
+                    $this->form->permissions['read-' . $this->selectedDepartment->scientific_name] = true;
+        
                 }
-            }else{
+
+            } else {
+
                 $this->selectedDepartment = Department::findOrFail($this->form->department);
+                if ($this->selectedDepartment->status) {
+                    $this->form->permissions['read-medications'] = true;
+                }
+                $this->form->permissions['read-' . $this->selectedDepartment->scientific_name] = true;
+    
             }
+
         } else {
             $this->form->reset('permissions', 'department');
             $this->reset('selectedDepartment');
@@ -112,19 +123,35 @@ class Doctor extends Component
 
     public function toggleChecked(string $permission)
     {
-       
+
         if (array_key_exists($permission, $this->form->permissions)) {
             if (!$this->form->permissions[$permission]) {
                 unset($this->form->permissions[$permission]);
                 array_values($this->form->permissions);
             }
         }
-    }//end of toggleChecked
+    } //end of toggleChecked
+
+    public function getDoctorPermissionsByDepartment(UsersDoctor $doctor)
+    {
+        $allPermissions = $doctor->allPermissions();
+
+        $rolesPermissions = collect();
+        foreach ($doctor->roles as $role) {
+            $rolesPermissions = $rolesPermissions->merge($role->permissions);
+        }
+
+        $userSpecificPermissions = $allPermissions->diff($rolesPermissions);
+
+        return $userSpecificPermissions->pluck('name');
+    } // end of get doctor permissions by department
 
 
-    public function selectTab(int $index){
+
+    public function selectTab(int $index)
+    {
         $this->activeTab = $index;
-    }//end of selectTab
+    } //end of selectTab
 
 
     public function editDoctor(String $doctor)
@@ -153,8 +180,9 @@ class Doctor extends Component
             $this->selectClinic();
             $form->department = $doctor->department_id;
             $this->selectDepartment();
-            foreach ($doctor->allPermissions() as $permission) {
-                $form->permissions[$permission->name] = true;
+
+            foreach ($this->getDoctorPermissionsByDepartment($doctor) as $permission) {
+                $form->permissions[$permission] = true;
             }
             $form->address = $doctor->profile->address;
             $form->city = $doctor->profile->city;
@@ -166,9 +194,10 @@ class Doctor extends Component
         }
     } //end of edit Doctor
 
+
     public function save()
     {
-   
+
         DB::beginTransaction();
         $this->form->validate();
         try {
@@ -206,7 +235,7 @@ class Doctor extends Component
                     ],
                 ]);
             } else {
-                $data =[
+                $data = [
                     "civil_id" => $this->form->civil_id,
                     "job_number" => $this->form->job_number,
                     "email" => $this->form->email,
@@ -214,7 +243,7 @@ class Doctor extends Component
                     'clinic_id' => $this->form->clinic,
                     'department_id' => $this->form->department,
                 ];
-                if(auth()->guard('clinic')->check()){
+                if (auth()->guard('clinic')->check()) {
                     $data['status'] = false;
                 }
                 $doctor = UsersDoctor::create($data);
@@ -234,7 +263,7 @@ class Doctor extends Component
                     'profile_id' => $doctor->id,
                     'profile_type' => UsersDoctor::class,
                 ];
-             
+
                 $doctor->profile()->create($data_profile);
                 $doctor->addRole('doctor');
             }

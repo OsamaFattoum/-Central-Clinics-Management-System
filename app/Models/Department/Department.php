@@ -27,6 +27,8 @@ class Department extends Model implements ContractsTranslatable
 
 
     //attr
+
+
     public function getImagePathAttribute()
     {
         $disk = 'uploads/';

@@ -1,6 +1,10 @@
 <div class="row">
     <div class="form-group col-lg-6">
         <label for="departments">@lang('medications.departments')<span class="tx-danger">*</span></label>
+        @auth('doctor')
+            <input type="text" class="form-control" readonly value="{{ $departments }}">
+            <input type="hidden" name="department" wire:model='department'>
+        @else
         <select wire:model='department' id="departments" class="form-control" name="department" wire:change='selectDepartment'>
             <option value="">@lang('site.select_package_placeholder')</option>
             @foreach ($departments as $department)
@@ -8,6 +12,7 @@
                 }}">{{ $department->name }}</option>
             @endforeach
         </select>
+        @endauth
     </div>
     <div class="form-group col-lg-6">
         <label for="case_type">@lang('medications.case_type')<span class="tx-danger">*</span></label>

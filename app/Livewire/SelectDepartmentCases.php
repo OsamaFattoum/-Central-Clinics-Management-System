@@ -17,7 +17,14 @@ class SelectDepartmentCases extends Component
 
     public function mount()
     {
-        $this->departments = Department::where('status',1)->get();
+        if(auth()->guard('doctor')->check()){
+            $this->departments = auth()->user()->department->name;
+            $this->department = auth()->user()->department->id;
+            $this->selectDepartment();
+        }else{
+
+            $this->departments = Department::where('status',1)->get();
+        }
 
         if($this->selectedDepartment){
             $this->selectDepartment();

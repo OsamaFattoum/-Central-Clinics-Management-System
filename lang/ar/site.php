@@ -12,6 +12,11 @@ return [
     'back' => 'رجوع',
 
     'search' => 'بحث',
+    
+    'show' => 'عرض',
+
+    'in_department' => 'في قسم',
+
 
 
     //calendar

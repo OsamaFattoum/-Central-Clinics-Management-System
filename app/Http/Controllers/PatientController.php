@@ -117,8 +117,6 @@ class PatientController extends Controller
     public function show(Patient $patient)
     {
     
-        $profile = Profile::where('profile_id', $patient->id)->where('profile_type',Patient::class)->first();
-
         $appointments = $patient->appointments()->count();
         if(auth()->guard('doctor')->check()){
             $appointments = $patient->appointments()->where('doctor_id',auth()->user()->id)->count();
@@ -128,7 +126,6 @@ class PatientController extends Controller
             'records' => $this->getLatestRecordsByDepartment($patient),
             'departments' => Department::all(),
             'patient' => $patient,
-            'profile' => $profile,
             'appointments' => $appointments,
             'medications' => $patient->medications()->count(),
             'medications_undispensed' => $patient->medications()->where('medication_taken',0)->count()

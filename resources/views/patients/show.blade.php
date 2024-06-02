@@ -6,7 +6,7 @@
 @endsection
 
 @include('components.breadcrumb',['route' => route('patients.index'),'pervPage' =>
-$profile->translate(app()->getLocale())->name , 'currentPage' =>
+$patient->name , 'currentPage' =>
 __('sidebar.patients_t')])
 
 @section('content')
@@ -23,7 +23,7 @@ __('sidebar.patients_t')])
                         </div>
                         <div class="d-flex justify-content-between mg-b-20">
                             <div>
-                                <h5 class="main-profile-name">{{ $profile->translate(app()->getLocale())->name }}</h5>
+                                <h5 class="main-profile-name">{{ $patient->name }}</h5>
                                 <p class="main-profile-name-text">{{ $patient->email }}</p>
                                 <span class="badge op-5 badge-{{ $patient->status ? 'success' : 'danger' }}">{{
                                     $patient->status ? __('users.enabled') : __('users.not_enabled') }}</span>

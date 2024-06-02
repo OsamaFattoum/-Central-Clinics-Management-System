@@ -28,6 +28,7 @@ class Doctor extends Authenticatable implements  LaratrustUser
     protected $appends = ['name','image_path', 'city_name','gender'];
 
     //attr
+  
     public function getNameAttribute()
     {
         return $this->profile->name;
