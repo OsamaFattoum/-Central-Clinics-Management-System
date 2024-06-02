@@ -9,7 +9,7 @@
 
 @endpush --}}
 
-<div class="">
+<div class="mb-3">
     @if (!$showMoreStatus)
     <div aria-multiselectable="true" class="accordion row" id="accordion2" role="tablist">
         @foreach ($departments as $department)

@@ -41,10 +41,11 @@ class MedicalRecord extends Component
         ]);
 
         try{
-            $startDate = Carbon::parse($validated['startDate']);
-            $endDate = Carbon::parse($validated['endDate']);
+            $startDate = Carbon::parse($validated['startDate'])->startOfDay();
+            $endDate = Carbon::parse($validated['endDate'])->endOfDay();
             
-            if(!$startDate->gt($endDate) && !$startDate->eq($endDate)){
+            
+            if(!$startDate->gt($endDate)){
 
                 $this->recordsSearch = Record::with('caseType')->where('patient_id',auth()->user()->id)->where('department_id',$this->departmentID)->whereBetween('created_at', [$startDate, $endDate])->get(); 
             }else{

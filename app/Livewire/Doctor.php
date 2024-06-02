@@ -79,9 +79,7 @@ class Doctor extends Component
                     $this->selectedDepartment = Department::findOrFail($this->form->department);
                     if ($this->selectedDepartment->status) {
                         $this->form->permissions['read-medications'] = true;
-                    }
-                    $this->form->permissions['read-' . $this->selectedDepartment->scientific_name] = true;
-        
+                    }        
                 }
 
             } else {
@@ -89,9 +87,7 @@ class Doctor extends Component
                 $this->selectedDepartment = Department::findOrFail($this->form->department);
                 if ($this->selectedDepartment->status) {
                     $this->form->permissions['read-medications'] = true;
-                }
-                $this->form->permissions['read-' . $this->selectedDepartment->scientific_name] = true;
-    
+                }    
             }
 
         } else {
@@ -197,7 +193,6 @@ class Doctor extends Component
 
     public function save()
     {
-
         DB::beginTransaction();
         $this->form->validate();
         try {

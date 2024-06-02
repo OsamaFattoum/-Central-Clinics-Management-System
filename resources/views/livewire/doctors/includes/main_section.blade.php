@@ -173,22 +173,4 @@
 {{-- End Select Permissons --}}
 
 
-{{-- Select Related Department --}}
-<label>@lang('doctors.related_departments')</label>
-<div class="form-group">
-    <div class="d-flex">
-        @foreach ($allDepartments as $department)
-        @if ($selectedDepartment->name != $department->name)
-        <label class="ckbox mt-2 mb-2 mx-2">
-            <input wire:key='read-{{ $department->scientific_name }}' wire:model='form.permissions.{{'read' . '-' .
-                $department->scientific_name }}'
-            wire:click="toggleChecked('read-{{ $department->scientific_name }}')" type="checkbox">
-            <span>{{ $department->name }}</span>
-        </label>
-        @endif
-
-        @endforeach
-    </div>
-</div>
-{{-- End Select Related Department --}}
 @endif

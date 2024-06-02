@@ -21,22 +21,24 @@
                         </div>
                         <div class="form-group col-lg-6">
                             <label for="dosage">@lang('medications.dosage')<span class="tx-danger">*</span></label>
-                            <input id="dosage" type="text" value="{{ old('dosage') }}" name="dosage" class="form-control">
+                            <input id="dosage" type="text" value="{{ old('dosage') }}" name="dosage"
+                                class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="instructions">@lang('medications.instructions')<span class="tx-danger">*</span></label>
+                        <label for="instructions">@lang('medications.instructions')<span
+                                class="tx-danger">*</span></label>
                         <textarea style="resize: none" name="instructions" rows="5"
                             class="form-control">{{ old('instructions') }}</textarea>
                     </div>
                 </div>
                 <div class="modal-footer justify-content-between">
-                    <p class="text text-danger">ملاحظة: الرجاء التأكد من البيانات قبل الاضافة</p>
+                    <p class="text text-danger">@lang('modal.chack-data')</p>
 
                     <div class="">
                         <button type="button" class="btn btn-secondary"
-                        data-dismiss="modal">@lang('modal.btn_close')</button>
-                    <button type="submit" class="btn btn-primary">@lang('modal.btn_submit')</button>
+                            data-dismiss="modal">@lang('modal.btn_close')</button>
+                        <button type="submit" class="btn btn-primary">@lang('modal.btn_submit')</button>
 
                     </div>
                 </div>

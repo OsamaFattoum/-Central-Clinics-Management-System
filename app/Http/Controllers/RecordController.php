@@ -20,7 +20,7 @@ class RecordController extends Controller
             $department = Department::findOrFail($request->department);
 
             if ($department) {
-                $this->middleware(['permission:read-' . $department->scientific_name])->only(['index']);
+                $this->middleware(['permission:read-records'])->only(['index']);
                 $this->middleware(['permission:create-' . $department->scientific_name])->only(['store']);
                 $this->middleware(['permission:update-' . $department->scientific_name, 'checkEditable:record'])->only(['update']);
                 $this->middleware(['permission:delete-' . $department->scientific_name])->only(['destroy', 'bulk']);

@@ -194,7 +194,7 @@ __('sidebar.patients_t')])
             <div class="card-body">
                 <div class="panel-group1" id="accordion11">
                     @foreach ($departments as  $department)
-                    @permission('read-' . $department->scientific_name)
+                    @permission('read-records')
                     <div class="panel panel-default  mb-4">
                         <div class="panel-heading1 bg-primary ">
                             <h4 class="panel-title1">

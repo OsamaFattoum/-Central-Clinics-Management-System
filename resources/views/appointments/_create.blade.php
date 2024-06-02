@@ -9,20 +9,21 @@
             </div>
 
             <form action="{{ route('appointments.store',['patient' => $patient->id]) }}" method="post"
-                autocomplete="off" >
+                autocomplete="off">
                 @csrf
                 <div class="modal-body">
                     @auth('doctor')
-                     <input type="hidden" name="clinic" value="{{ auth()->user()->clinic->id }}">
-                     <input type="hidden" name="department" value="{{ auth()->user()->department->id }}">
-                     <input type="hidden" name="doctor" value="{{ auth()->user()->id }}">
+                    <input type="hidden" name="clinic" value="{{ auth()->user()->clinic->id }}">
+                    <input type="hidden" name="department" value="{{ auth()->user()->department->id }}">
+                    <input type="hidden" name="doctor" value="{{ auth()->user()->id }}">
                     @else
                     @livewire('appointment')
                     @endauth
                     <div class="row">
                         <div class="form-group col-lg-6">
                             <label for="date">@lang('appointments.date')</label>
-                            <input id="date" type="date" name="date" value="{{ old('date') }}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="form-control">
+                            <input id="date" type="date" name="date" value="{{ old('date') }}"
+                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="form-control">
                         </div>
                         <div class="form-group col-lg-6">
                             <label for="time">@lang('appointments.time')</label>
@@ -35,14 +36,16 @@
                             class="form-control">{{ old('notes') }}</textarea>
                     </div>
                 </div>
-                    <div class="modal-footer justify-content-between">
+                <div class="modal-footer justify-content-between">
+                    <p class="text text-danger">@lang('modal.chack-data')</p>
+
                     <div class="">
                         <button type="button" class="btn btn-secondary"
-                        data-dismiss="modal">@lang('modal.btn_close')</button>
-                    <button type="submit" class="btn btn-primary">@lang('modal.btn_submit')</button>
+                            data-dismiss="modal">@lang('modal.btn_close')</button>
+                        <button type="submit" class="btn btn-primary">@lang('modal.btn_submit')</button>
 
                     </div>
-                </div> 
+                </div>
             </form>
 
         </div>

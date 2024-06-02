@@ -32,10 +32,14 @@
                         <div class="form-group col-lg-6">
                             <label for="result">@lang('records.result')<span class="tx-danger">*</span></label>
                             <select name="result" id="result" class="form-control">
-                                <option {{ old('result')== 0 ? 'selected' : '' }} value="0">@lang('records.res_abnormal')</option>
-                                <option {{ old('result')== 1 ? 'selected' : '' }} value="1">@lang('records.res_normal')</option>
-                                <option {{ old('result')== 2 ? 'selected' : '' }} value="2">@lang('records.res_positive')</option>
-                                <option {{ old('result')== 3 ? 'selected' : '' }} value="3">@lang('records.res_negative')</option>
+                                <option {{ old('result')==0 ? 'selected' : '' }} value="0">@lang('records.res_abnormal')
+                                </option>
+                                <option {{ old('result')==1 ? 'selected' : '' }} value="1">@lang('records.res_normal')
+                                </option>
+                                <option {{ old('result')==2 ? 'selected' : '' }} value="2">@lang('records.res_positive')
+                                </option>
+                                <option {{ old('result')==3 ? 'selected' : '' }} value="3">@lang('records.res_negative')
+                                </option>
                             </select>
                         </div>
                         <div class="form-group col-lg-6">
@@ -52,10 +56,15 @@
                     </div>
 
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary"
-                        data-dismiss="modal">@lang('modal.btn_close')</button>
-                    <button type="submit" class="btn btn-primary">@lang('modal.btn_submit')</button>
+                <div class="modal-footer justify-content-between">
+                    <p class="text text-danger">@lang('modal.chack-data')</p>
+
+                    <div class="">
+                        <button type="button" class="btn btn-secondary"
+                            data-dismiss="modal">@lang('modal.btn_close')</button>
+                        <button type="submit" class="btn btn-primary">@lang('modal.btn_submit')</button>
+
+                    </div>
                 </div>
             </form>
 

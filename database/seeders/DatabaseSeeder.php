@@ -54,7 +54,9 @@ class DatabaseSeeder extends Seeder
 
         foreach ($departments as $department) {
             foreach (config('laratrust_seeder.permissions_map') as $map) {
-                $permissions[] = Permission::where('name', $map . '-' . $department->scientific_name)->first()->id;
+                if($map != 'read'){
+                    $permissions[] = Permission::where('name', $map . '-' . $department->scientific_name)->first()->id;
+                }
             }
         }
         $admin->syncPermissions($permissions);

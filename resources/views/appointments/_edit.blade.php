@@ -31,10 +31,14 @@
                             class="form-control">{{ $appointment->notes }}</textarea>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary"
-                        data-dismiss="modal">@lang('modal.btn_close')</button>
-                    <button type="submit" class="btn btn-primary">@lang('modal.btn_submit')</button>
+                <div class="modal-footer justify-content-between">
+                    <p class="text text-danger">@lang('modal.chack-data')</p>
+
+                    <div class="">
+                        <button type="button" class="btn btn-secondary"
+                            data-dismiss="modal">@lang('modal.btn_close')</button>
+                        <button type="submit" class="btn btn-primary">@lang('modal.btn_submit')</button>
+                    </div>
                 </div>
             </form>
 
