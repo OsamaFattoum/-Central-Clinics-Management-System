@@ -7,7 +7,6 @@ use Livewire\Form;
 
 class AppointmentForm extends Form
 {
-    #[Validate]
     public $clinic;
     public $department;
     public $doctor;

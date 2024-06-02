@@ -5,6 +5,8 @@ namespace App\Livewire\Patient;
 use App\Livewire\Forms\Patient\AppointmentForm;
 use App\Models\Appointment;
 use App\Models\Clinic\Clinic;
+use App\Models\Department\Department;
+use App\Models\Users\Doctor;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -35,19 +37,20 @@ class AppointmentMedication extends Component
     {
         if ($this->form->clinic) {
             $this->form->reset('department', 'doctor');
+            $this->resetExcept('clinics', 'form');
             $this->departments = Clinic::findOrFail($this->form->clinic)->departments;
             $this->selectedClinic = true;
         } else {
-            $this->resetExcept('clinics', 'form');
             $this->form->reset('clinic', 'department', 'doctor');
+            $this->resetExcept('clinics', 'form');
         }
     } //end of select Clinic
 
     public function selectDepartment()
     {
         if ($this->form->department) {
-            $clinic = Clinic::find($this->form->clinic);
-            $this->doctors = $clinic->departments()->where('departments.id', $this->form->department)->firstOrFail()->doctors;
+            $this->form->reset('doctor');
+            $this->doctors = Doctor::where('clinic_id',$this->form->clinic)->where('department_id',$this->form->department)->get();
             $this->selectedDepartment = true;
         } else {
             $this->reset('doctors', 'selectedDepartment');
