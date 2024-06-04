@@ -8,6 +8,7 @@ use App\Models\Clinic\Clinic;
 use App\Models\Image;
 use App\Models\Record\Medication;
 use App\Models\Record\Record;
+use App\Models\TransferRequest;
 use App\Models\Users\Doctor;
 use Astrotomic\Translatable\Translatable;
 use Astrotomic\Translatable\Contracts\Translatable as ContractsTranslatable;
@@ -70,4 +71,10 @@ class Department extends Model implements ContractsTranslatable
     {
         return $this->morphOne(Image::class, 'imageable');
     } //end of image relation
+
+    
+    public function transferRequests()
+    {
+        return $this->hasMany(TransferRequest::class);
+    } //end of transfer requests relation
 }

@@ -87,21 +87,21 @@ __('sidebar.patients_t')])
                 </div>
             </div>
             @endpermission
-            @permission('read-medications')
+            @permission('read-transfer-requests')
             <div class="col-sm-12 col-xl-4 col-lg-12 col-md-12">
                 <div class="card bg-whi">
-                    <a class="tx-dark" href="{{ route('medications.index',['patient'=>$patient,'taken'=> 0]) }}">
+                    <a class="tx-dark" href="{{ route('transferRequests.index',['patient'=>$patient]) }}">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-6">
                                     <div class="icon1 mt-2 text-center">
-                                        <i class="las la-capsules tx-40"></i>
+                                        <i class="las la-receipt tx-40"></i>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="mt-0 text-center">
-                                        <span>@lang('patients.medications_taken')</span>
-                                        <h2>{{ $medications_undispensed }}</h2>
+                                        <span>@lang('patients.transfer_requests')</span>
+                                        <h2>{{ $transfer_requests }}</h2>
                                     </div>
                                 </div>
                             </div>

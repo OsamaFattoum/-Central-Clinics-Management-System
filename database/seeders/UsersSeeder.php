@@ -50,7 +50,7 @@ class UsersSeeder extends Seeder
         ]);
         
 
-        $doctor_one->syncPermissions(['39']);
+        $doctor_one->syncPermissions(['44']);
 
         $doctor_one->addRole('doctor');
 
@@ -81,7 +81,7 @@ class UsersSeeder extends Seeder
         ]);
         
 
-        $doctor_two->syncPermissions(['29','30','49']);
+        $doctor_two->syncPermissions(['29','30','54']);
 
         $doctor_two->addRole('doctor');
 

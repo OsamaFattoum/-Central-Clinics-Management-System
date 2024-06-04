@@ -22,6 +22,9 @@ return [
    'medications_taken' => 'الادوية الفعالة',
    'appointments' => 'المواعيد',
 
+   'transfer_requests' => 'طلبات التحويل',
+
+
 
    'text_last_record' => 'عرض اخر نتائج سجلات قسم',
 

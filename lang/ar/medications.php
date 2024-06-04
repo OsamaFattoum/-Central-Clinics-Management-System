@@ -10,7 +10,7 @@ return [
 
 
     'name' => 'اسم الدواء',
-    'case_type' => 'الحالة',
+    'case_type' => 'نوع الحالة',
     'dosage' => 'حجم الجرعة',
     'instructions' => 'تعليمات',
     'medication_taken' => 'الحالة',

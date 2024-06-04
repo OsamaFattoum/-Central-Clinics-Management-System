@@ -23,6 +23,7 @@ return [
             'medications' => 'c,r,u,d',
             'appointments' => 'c,r,u,d',
             'records' => 'r',
+            'transfer-requests' => 'r,s,d',
         ],
         'clinic' => [
             'doctors' => 'c,r,u',
@@ -36,6 +37,7 @@ return [
             'records' => 'r',
             'patients' => 'c,r',
             'appointments' => 'r,s,c',
+            'transfer-requests' => 'r,c,s',
         ],
         'patient' => [],
 

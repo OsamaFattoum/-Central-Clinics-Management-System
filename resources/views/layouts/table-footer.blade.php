@@ -40,7 +40,7 @@
             },
 		},
         columnDefs: [ { orderable: false,targets:targets}],
-        order: [["{{ $orderIndex }}", 'asc']]
+        order: [["{{ $orderIndex }}", 'desc']]
      
 	});
 </script>

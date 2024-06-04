@@ -11,6 +11,7 @@ use App\Http\Controllers\PatientController;
 use App\Http\Controllers\PharmacyController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RecordController;
+use App\Http\Controllers\TransferRequestController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -81,8 +82,6 @@ Route::middleware(['auth:admin,clinic,pharmacy,doctor,patient', 'statusCheck'])-
 
     Route::prefix('patients/{patient}')->group(function () {
 
-
-
         Route::controller(AppointmentController::class)->group(function() {
             Route::get('appointments', 'index')->name('appointments.index');
             Route::post('appointments', 'store')->name('appointments.store');
@@ -101,9 +100,13 @@ Route::middleware(['auth:admin,clinic,pharmacy,doctor,patient', 'statusCheck'])-
             Route::delete('medications','bulk')->name('medications.bulk');
         });
 
+        Route::resource('transferRequests',TransferRequestController::class)->only(['index','store','destroy']);
+        Route::get('transferRequests/{transferRequest}/status',[TransferRequestController::class,'status'])->name('transferRequests.status');
+        Route::delete('transferRequests',[TransferRequestController::class,'bulk'])->name('transferRequests.bulk');
+
     });
 
-    Route::prefix('patients/{patient}/departments/{department}/')->group(function () {
+    Route::prefix('patients/{patient}/departments/{department}')->group(function () {
         Route::resource('/records', RecordController::class)->except(['create', 'edit', 'show']);
         Route::delete('/records', [RecordController::class, 'bulk'])->name('records.bulk');
     });

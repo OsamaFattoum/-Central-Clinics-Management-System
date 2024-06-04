@@ -25,14 +25,11 @@ class MedicationController extends Controller
 
     public function index(Patient $patient, Request $request)
     {
-
-        $profile = Profile::where('profile_id', $patient->id)->where('profile_type', Patient::class)->first();
-
         $medications = Medication::when(isset($request->taken), function ($query) use ($request) {
             return $query->where('medication_taken', $request->taken);
         })->with('caseType')->where('patient_id', $patient->id)->get();
 
-        return view('medications.index', compact('medications', 'patient', 'profile'));
+        return view('medications.index', compact('medications', 'patient'));
     } //end of index
 
 

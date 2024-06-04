@@ -5,7 +5,7 @@
 @endsection
 
 @include('components.breadcrumb',['route' => route('patients.show',['patient' => $patient->id]),'pervPage' =>
-$profile->translate(app()->getLocale())->name , 'currentPage' => __('medications.medications')])
+$patient->name , 'currentPage' => __('medications.medications')])
 
 @section('content')
 @include('components.messages_alert')
@@ -26,6 +26,7 @@ $profile->translate(app()->getLocale())->name , 'currentPage' => __('medications
                             <button type="button" class="btn btn-danger"
                                 id="btn_delete_all">@lang('delete.btn_delete_selected_data')</button>
                             @endpermission
+                            <a href="{{ route('medications.index',['patient'=>$patient,'taken'=> 0]) }}" class="btn btn-info">@lang('patients.medications_taken')</a>
                         </div>
                         <i class="mdi mdi-dots-horizontal text-gray"></i>
                     </div>
@@ -163,5 +164,5 @@ $profile->translate(app()->getLocale())->name , 'currentPage' => __('medications
 @endsection
 
 @section('js')
-@include('layouts.table-footer',['orderIndex'=>1,'targetsNotOrdered' => [0,2,3,4,5,6,7,8,9]])
+@include('layouts.table-footer',['orderIndex'=>5,'targetsNotOrdered' => [0,2,3,4,6,8,9]])
 @endsection

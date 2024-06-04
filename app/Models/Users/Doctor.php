@@ -6,6 +6,7 @@ use App\Models\Appointment;
 use App\Models\Clinic\Clinic;
 use App\Models\Department\Department;
 use App\Models\Image;
+use App\Models\TransferRequest;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Laratrust\Contracts\LaratrustUser;
 use Laratrust\Traits\HasRolesAndPermissions;
@@ -79,5 +80,11 @@ class Doctor extends Authenticatable implements  LaratrustUser
     {
         return $this->hasMany(Appointment::class);
     } //end of appointments relation
+
+    
+    public function transferRequests()
+    {
+        return $this->hasMany(TransferRequest::class);
+    } //end of transfer requests relation
 
 }

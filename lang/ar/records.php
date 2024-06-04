@@ -31,7 +31,7 @@ return [
 
     //validation
     'case_type.required' =>  'حقل الحالة مطلوب.',
-    'case_type.exists' => 'قيمة الحالة غير صحيحة.',
+    'case_type.exists' => 'هذه الحالة غير موجودة.',
     'measurement_unit.string' => 'حقل وحدة القياس يجب أن يكون نصاً.',
     'measurement_unit.max' => 'حقل وحدة القياس يجب أن لا يتجاوز 20 حرفاً.',
     'result.required' => 'حقل حالة النتيجة مطلوب.',
