@@ -3,21 +3,17 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">@lang('delete.title_delete') ({{ $name }})</h5>
+                <h5 class="modal-title" id="exampleModalLabel">@lang('delete.title_delete') {{ $name }}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{ route( $route .'.destroy',$id) }}" method="post">
+            <form action="{{ route( $route .'.destroy',isset($parameters) ? $parameters : []) }}" method="post">
                 @method('delete')
                 @csrf
                 <div class="modal-body">
                     <h5>@lang('delete.p_delete')</h5>
-                    @isset($fromProduct)
-                    @if ($fromProduct)
-                    <span class="text-sm text-danger">{{ '*Warning: All invoices related to this product will be deleted!' }}</span>
-                    @endif
-                    @endisset
+                
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">@lang('modal.btn_close')</button>

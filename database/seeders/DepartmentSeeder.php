@@ -22,10 +22,10 @@ class DepartmentSeeder extends Seeder
                     'description' => 'هو جزء أساسي من مرافق الرعاية الصحية الحديثة. وهو مسؤول عن أداء مختلف الإجراءات التصويرية التشخيصية باستخدام الأشعة السينية، وهي شكل من أشكال الإشعاع الكهرومغناطيسي. يُستخدم تصوير الأشعة السينية على نطاق واسع لتصور الهياكل الداخلية للجسم، مما يساعد في تشخيص وعلاج العديد من الحالات الطبية.',
                 ],
                 'en' => [
-                    'name' => 'Department of X-ray',
+                    'name' => 'Radiology',
                     'description' => 'is a vital component of modern healthcare facilities. It is responsible for performing various diagnostic imaging procedures using X-rays, a form of electromagnetic radiation. X-ray imaging is widely used to visualize the internal structures of the body, aiding in the diagnosis and treatment of numerous medical conditions.',
                 ],
-                'scientific_name' => 'x-ray',
+                'scientific_name' => 'radiology',
                 'status' => 0,
             ],
             [
@@ -57,26 +57,28 @@ class DepartmentSeeder extends Seeder
             '21578EdaLTNKNBedEVTDQl3aBRWhKLCKTVOgfx4O.png',
             '21578EdaLTNKNBedEVTDQl3aBRWhKLCKTVOgfx4W.png',
         ];
-        
+
         $per = [];
         foreach ($departments as $index => $departmentData) {
             $department = Department::create($departmentData);
-        
+
             foreach (config('laratrust_seeder.permissions_map') as $map) {
-               $per[] =  \App\Models\Permission::firstOrCreate([
-                    'name' => $map . '-' . $department->scientific_name,
-                    'display_name' => ucfirst($map) . ' ' . ucfirst($department->scientific_name),
-                    'description' => ucfirst($map) . ' ' . ucfirst($department->scientific_name),
-                ])->name;
-                $this->command->info('Creating Permission to ' . $map . ' for ' . $department->scientific_name);
+                if ($map != 'read' && $map != 'status') {
+
+                    $per[] =  \App\Models\Permission::firstOrCreate([
+                        'name' => $map . '-' . $department->scientific_name,
+                        'display_name' => ucfirst($map) . ' ' . ucfirst($department->scientific_name),
+                        'description' => ucfirst($map) . ' ' . ucfirst($department->scientific_name),
+                    ])->name;
+                    $this->command->info('Creating Permission to ' . $map . ' for ' . $department->scientific_name);
+                }
             }
 
             Image::create([
-                'url' => 'departments/' . $images[$index], 
+                'url' => 'departments/' . $images[$index],
                 'imageable_id' => $department->id,
                 'imageable_type' => Department::class,
             ]);
-            
         }
 
 
@@ -137,12 +139,11 @@ class DepartmentSeeder extends Seeder
                 ],
                 'department_id' => '2',
             ],
-            
+
         ];
 
         foreach ($caseTypes as $caseType) {
             CaseType::create($caseType);
         }
-        
     }
 }

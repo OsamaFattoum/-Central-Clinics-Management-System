@@ -36,6 +36,7 @@ class SelectDepartmentCases extends Component
         if ($this->department) {
             $this->caseTypes = CaseType::where('department_id',$this->department)->get();
             $this->selectedDepartment = true;
+           
         } else {
             $this->reset('department','selectedDepartment');
         }

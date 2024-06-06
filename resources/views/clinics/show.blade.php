@@ -186,7 +186,7 @@ __('sidebar.clinics_t')])
                                 \Carbon\Carbon::parse($clinic->facilityProfile->close_hours)->format('h:iA') }}</span>
                         </div>
                         <div class="col-lg-4 mb-lg-0 mb-1">
-                            <h6 class="text-secondary tx-13">@lang('facility.status')</h6>
+                            <h6 class="text-secondary tx-13">@lang('facility.status_open')</h6>
                             <span class="tag tag-{{ $clinic->checkOpenStatus() ? 'green' : 'red' }} tx-11">{{
                                 $clinic->openStatusLabel() }}</span>
                         </div>

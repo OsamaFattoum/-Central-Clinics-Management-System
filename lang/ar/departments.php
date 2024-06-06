@@ -11,9 +11,9 @@ return [
     'description_en' => 'الوصف بالانجليزيه',
     'related_clinic' => 'العيادات المرتبطة',
     'related_case_type' => 'الحالات المرتبطة',
-    'given_drug' => 'حالة صرف الأدوية',
-    'give_drug' => 'يصرف',
-    'not_give_drug' => 'لا يصرف',
+    'given_drug' => 'وصف الادوية',
+    'give_drug' => 'يصف',
+    'not_give_drug' => 'لا يصف',
     'created_at' => 'تاريخ الاضافة',
     'image' => 'أيقونة القسم',
 
@@ -33,7 +33,7 @@ return [
     'scientific_name.string' => 'يجب أن يكون الاسم العلمي نصًا.',
     'scientific_name.max' => 'لا يجب أن يتجاوز الاسم العلمي :max أحرف.',
     'status.required' => 'حقل الحالة مطلوب.',
-    'status.in' => 'يجب أن تكون الحالة إما لا يصرف أو يصرف.',
+    'status.in' => 'يجب أن تكون الحالة إما يصف أو لا يصف.',
     'image.required' => 'حقل الايقونة مطلوب', 
 
 ];

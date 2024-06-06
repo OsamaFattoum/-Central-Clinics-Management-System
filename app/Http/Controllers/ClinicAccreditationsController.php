@@ -75,7 +75,7 @@ class ClinicAccreditationsController extends Controller
         DB::beginTransaction();
         try {
             foreach ($ids as $id) {
-                $clinic->accreditations()->delete($id);
+                $clinic->accreditations()->where('clinic_accreditations.id',$id)->delete();
             }
             DB::commit();
             session()->flash('delete');

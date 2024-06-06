@@ -44,20 +44,24 @@ class DepartmentController extends Controller
             $permissions = [];
 
             $data = $request->except('image');
+
             $department = Department::create($data);
-            
-            if ($request->hasFile('image')) { 
-                $this->verifyAndStoreImage($request, 'image','departments', 'uploads',$department->id,Department::class);
-            }
-            foreach (config('laratrust_seeder.permissions_map') as $map) {
-                $permissions[] = Permission::firstOrCreate([
-                    'name' => $map . '-' . $department->scientific_name,
-                    'display_name' => ucfirst($map) . ' ' . ucfirst($department->scientific_name),
-                    'description' => ucfirst($map) . ' ' . ucfirst($department->scientific_name),
-                ])->name;
+
+            if ($request->hasFile('image')) {
+                $this->verifyAndStoreImage($request, 'image', 'departments', 'uploads', $department->id, Department::class);
             }
 
-           Admin::find(auth()->user()->id)->syncPermissions($permissions);
+            foreach (config('laratrust_seeder.permissions_map') as $map) {
+                if ($map != 'read' && $map != 'status') {
+                    $permissions[] = Permission::firstOrCreate([
+                        'name' => $map . '-' . $department->scientific_name,
+                        'display_name' => ucfirst($map) . ' ' . ucfirst($department->scientific_name),
+                        'description' => ucfirst($map) . ' ' . ucfirst($department->scientific_name),
+                    ])->name;
+                }
+            }
+
+            Admin::find(auth()->user()->id)->givePermissions($permissions);
 
             DB::commit();
             session()->flash('add');
@@ -71,7 +75,7 @@ class DepartmentController extends Controller
 
 
     public function update(DerpartmentRequest $request, Department $department)
-    {   
+    {
         DB::beginTransaction();
         try {
             $data = $request->except('image');
@@ -82,6 +86,23 @@ class DepartmentController extends Controller
                 }
                 $this->verifyAndStoreImage($request, 'image', 'departments', 'uploads', $department->id, Department::class);
             }
+
+
+
+            if ($department->scientific_name != $data['scientific_name']) {
+
+                foreach (config('laratrust_seeder.permissions_map') as $map) {
+                    if ($map != 'read' && $map != 'status') {
+
+                        Permission::where('name', $map . '-' . $department->scientific_name)->update([
+                            'name' => $map . '-' . $data['scientific_name'],
+                            'display_name' => ucfirst($map) . ' ' . ucfirst($data['scientific_name']),
+                            'description' => ucfirst($map) . ' ' . ucfirst($data['scientific_name']),
+                        ]);
+                    }
+                }
+            }
+
             $department->update($data);
 
             DB::commit();
@@ -102,9 +123,12 @@ class DepartmentController extends Controller
                 $this->deleteImage('uploads', $department->image->url, $department->id);
             }
             foreach (config('laratrust_seeder.permissions_map') as  $map) {
+                if($map != 'read' && $map != 'status'){
+
                 Permission::where('name', $map . '-' . $department->scientific_name)->delete();
+                }
             }
-    
+
             $department->delete();
 
             DB::commit();
@@ -122,15 +146,17 @@ class DepartmentController extends Controller
         DB::beginTransaction();
         try {
 
-            foreach ( $ids as  $id) {
+            foreach ($ids as  $id) {
                 $department = Department::find($id);
                 foreach (config('laratrust_seeder.permissions_map') as  $map) {
+                    if($map != 'read' && $map != 'status'){
+
                     Permission::where('name', $map . '-' . $department->scientific_name)->delete();
+                    }
                 }
                 if ($department->image) {
                     $this->deleteImage('uploads', $department->image->url, $department->id);
                 }
-               
             }
             Department::destroy($ids);
             DB::commit();

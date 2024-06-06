@@ -5,7 +5,7 @@
 @endsection
 
 @include('components.breadcrumb',['route' => route('patients.show',['patient' => $patient->id]),'pervPage' =>
-$patient->name , 'currentPage' => __('medications.medications')])
+$patient->name , 'currentPage' => __('patients.medications')])
 
 @section('content')
 @include('components.messages_alert')
@@ -26,7 +26,6 @@ $patient->name , 'currentPage' => __('medications.medications')])
                             <button type="button" class="btn btn-danger"
                                 id="btn_delete_all">@lang('delete.btn_delete_selected_data')</button>
                             @endpermission
-                            <a href="{{ route('medications.index',['patient'=>$patient,'taken'=> 0]) }}" class="btn btn-info">@lang('patients.medications_taken')</a>
                         </div>
                         <i class="mdi mdi-dots-horizontal text-gray"></i>
                     </div>
@@ -43,7 +42,6 @@ $patient->name , 'currentPage' => __('medications.medications')])
                                     <th class="pr-2">@lang('medications.case_type')</th>
                                     <th class="pr-2">@lang('medications.dosage')</th>
                                     <th class="pr-2">@lang('medications.instructions')</th>
-
                                     <th class="pr-2">@lang('medications.date')</th>
                                     <th class="pr-2">@lang('medications.time')</th>
                                     <th class="pr-2">@lang('medications.medication_taken')</th>
@@ -70,7 +68,7 @@ $patient->name , 'currentPage' => __('medications.medications')])
                                     </td>
 
                                     <td class="pr-2">{{ $medication->date }}</td>
-                                    <td class="pr-2">{{ $medication->created_at->format('h:iA') }}</td>
+                                    <td class="pr-2">{{ $medication->time }}</td>
                                     <td class="pr-2">
                                         <span
                                             class="badge badge-{{$medication->medication_taken == 0  ? 'danger' : 'success'}}">{{$medication->medication_taken_value}}</span>
@@ -91,21 +89,20 @@ $patient->name , 'currentPage' => __('medications.medications')])
                                                 type="button">@lang('dropdown_op.processes')<i
                                                     class="fas fa-caret-down mx-1"></i></button>
                                             <div class="dropdown-menu tx-13">
+                                               
                                                 @permission('update-medications')
-                                                @if (auth()->guard()->name == 'admin' ||
-                                                !Carbon\Carbon::parse($medication->created_at)->addMinutes(5)->isPast())
+                                                @if (auth()->guard('admin')->check() || ((auth()->guard('doctor')->check() && auth()->user()->department->id == $medication->department_id) && !Carbon\Carbon::parse($medication->created_at)->addMinutes(5)->isPast()))
                                                 <a class="dropdown-item" href="#" data-toggle="modal"
-                                                    data-target="#edit{{ $medication->id }}"><i style="color: #0ba360"
-                                                        class="text-success ti-pencil-alt"></i>&nbsp;&nbsp;@lang('dropdown_op.drop_down_edit')</a>
+                                                data-target="#edit{{ $medication->id }}"><i style="color: #0ba360"
+                                                    class="text-success ti-pencil-alt"></i>&nbsp;&nbsp;@lang('dropdown_op.drop_down_edit')</a>
                                                 @endif
+                            
                                                 @endpermission
                                                 @permission('status-medications')
-                                                @if (!$medication->medication_taken)
-                                                @if(!Carbon\Carbon::parse($medication->created_at)->addMonth(3)->isPast())
+                                                @if(!Carbon\Carbon::parse($medication->date_medication)->addMonth(4)->isPast())
                                                 <a class="dropdown-item" data-toggle="modal"
                                                     data-target="#status{{ $medication->id }}" href="#"><i
                                                         class="text-warning ti-back-right"></i>&nbsp;&nbsp;@lang('dropdown_op.drop_down_status_medication')</a>
-                                                @endif
                                                 @endif
                                                 @endpermission
                                                 @permission('delete-medications')
@@ -121,20 +118,17 @@ $patient->name , 'currentPage' => __('medications.medications')])
                                     </td>
 
                                     @permission('update-medications')
-                                    @if (auth()->guard()->name == 'admin' ||
-                                    !Carbon\Carbon::parse($medication->created_at)->addMinutes(5)->isPast())
+                                    @if (auth()->guard('admin')->check() || ((auth()->guard('doctor')->check() && auth()->user()->department->id == $medication->department_id) && !Carbon\Carbon::parse($medication->created_at)->addMinutes(5)->isPast()))
                                     @include('medications._edit')
                                     @endif
                                     @endpermission
                                     @permission('status-medications')
-                                    @if (!$medication->medication_taken)
-                                    @if(!Carbon\Carbon::parse($medication->created_at)->addMonth(3)->isPast())
+                                    @if(!Carbon\Carbon::parse($medication->date_medication)->addMonths(4)->isPast())
                                     @include('medications._status')
-                                    @endif
                                     @endif
                                     @endpermission
                                     @permission('delete-medications')
-                                    @include('medications._delete',['id'=>$medication->id,'name' =>
+                                    @include('components.delete',['id'=>$medication->id,'name' =>
                                     $medication->name,'route'=>'medications','parameters'=>[$patient->id,$medication->id]])
                                     @endpermission
                                     @include('components.desc',['id'=>$medication->id,'name' =>
@@ -155,7 +149,7 @@ $patient->name , 'currentPage' => __('medications.medications')])
 @include('medications._create')
 @endpermission
 @permission('delete-medications')
-@include('medications._delete_select',['route' => 'medications','parameters'=>$patient->id])
+@include('components.delete_select',['route' => 'medications','parameters'=>$patient->id])
 @endpermission
 </div>
 <!-- Container closed -->

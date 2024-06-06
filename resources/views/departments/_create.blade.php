@@ -17,7 +17,7 @@
                         <div class="form-group col">
                             <label for="name_dep_{{ $local }}">@lang('departments.name_department_'. $local )<span
                                     class="tx-danger">*</span></label>
-                            <input id="name_dep_{{ $local }}"  type="text" name="{{ $local }}[name]"
+                            <input id="name_dep_{{ $local }}" value="{{ old($local.".name") }}"  type="text" name="{{ $local }}[name]"
                                 class="form-control">
                         </div>
                         @endforeach
@@ -27,14 +27,14 @@
                         <div class="form-group col">
                             <label for="scientfic_n">@lang('departments.scientific_name')<span
                                     class="tx-danger">*</span></label>
-                            <input id="scientfic_n" type="text"  name="scientific_name" class="form-control">
+                            <input id="scientfic_n" type="text" value="{{ old('scientific_name') }}"  name="scientific_name" class="form-control">
                         </div>
                         <div class="form-group col">
                             <label for="give_drug">@lang('departments.given_drug')<span
                                     class="tx-danger">*</span></label>
                             <select id="give_drug" name="status"  class="form-control">
-                                <option value="0" selected>@lang('departments.not_give_drug')</option>
-                                <option value="1">@lang('departments.give_drug')</option>
+                                <option value="0" {{ old('status') == 0 ? 'selected' : '' }}>@lang('departments.not_give_drug')</option>
+                                <option value="1" {{ old('status') == 1 ? 'selected' : '' }}>@lang('departments.give_drug')</option>
 
                             </select>
                         </div>
@@ -42,7 +42,7 @@
                     <div class="row">
                         <div class="col-lg-12 form-group">
                             <label for="image">@lang('departments.image')<span class="tx-danger">*</span></label>
-                            <input type="file" id="image" class="form-control" name="image" accept="image/png,image/svg">
+                            <input type="file"  id="image" class="form-control" name="image" accept="image/png,image/svg">
                             <span class="text-danger tx-12 mt-2">* @lang('file_upload.image_lable') :
                                 svg,png</span>
                         </div>
@@ -53,7 +53,7 @@
                     <div class="form-group ">
                         <label for="desc_{{ $local }}">@lang('departments.description_'. $local)</label>
                         <textarea style="resize: none" name="{{ $local }}[description]" id="desc_{{ $local }}" rows="5"
-                            class="form-control {{ $local == 'ar' ? 'text-right' : 'text-left' }}"></textarea>
+                            class="form-control {{ $local == 'ar' ? 'text-right' : 'text-left' }}">{{ old($local.".description") }}</textarea>
                     </div>
                     @endforeach
 

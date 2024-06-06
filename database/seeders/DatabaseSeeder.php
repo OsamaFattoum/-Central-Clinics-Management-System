@@ -21,11 +21,13 @@ class DatabaseSeeder extends Seeder
         $admin = $this->createAdmin();
 
         $this->call([LaratrustSeeder::class, DepartmentSeeder::class, DaysSeeder::class, FacilitySeeder::class, BloodTypeSeeder::class, UsersSeeder::class]);
+        
         $this->addPermissionToAdmin($admin);
+
         $admin->addRole('admin');
 
 
-        Patient::factory()->count(50)->create()->each(function ($patient) {
+        Patient::factory()->count(100)->create()->each(function ($patient) {
             $patient->profile()->save(Profile::factory()->create([
                 'profile_type' => get_class($patient),
                 'profile_id' => $patient->id
@@ -36,9 +38,9 @@ class DatabaseSeeder extends Seeder
     private function createAdmin()
     {
         $admin = Admin::create([
-            'name' => 'Manager System',
-            'email' => 'admin@app.com',
-            'phone' => '0775314544',
+            'name' => 'Ministry of Health',
+            'email' => 'ministry.health@jo.com',
+            'phone' => '+962794565232',
             'password' => bcrypt('password'),
         ]);
 
@@ -54,7 +56,7 @@ class DatabaseSeeder extends Seeder
 
         foreach ($departments as $department) {
             foreach (config('laratrust_seeder.permissions_map') as $map) {
-                if($map != 'read'){
+                if($map != 'read' && $map != 'status'){
                     $permissions[] = Permission::where('name', $map . '-' . $department->scientific_name)->first()->id;
                 }
             }

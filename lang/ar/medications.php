@@ -13,7 +13,7 @@ return [
     'case_type' => 'نوع الحالة',
     'dosage' => 'حجم الجرعة',
     'instructions' => 'تعليمات',
-    'medication_taken' => 'الحالة',
+    'medication_taken' => 'حالة الصرف',
     'has_alternative' => 'بديل',
 
     'departments' => 'الاقسام',
@@ -23,9 +23,9 @@ return [
     'time' => 'وقت الوصفة',
 
     'dispensed' => 'تم صرفه',
-    'undispensed' => 'فعال',
+    'undispensed' => 'لم يصرف',
     
-    'taken' => 'تم اخذه',
+    'taken' => 'تم اخذ',
     'not_taken' => 'لم يأخذ',
 
     

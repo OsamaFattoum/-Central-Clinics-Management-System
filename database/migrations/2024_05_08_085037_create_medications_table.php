@@ -21,6 +21,7 @@ return new class extends Migration
             $table->text('instructions');
             $table->boolean('medication_taken')->default(0);
             $table->boolean('has_alternative')->default(0);
+            $table->timestamp('date_medication');
             $table->timestamps();
         });
     }

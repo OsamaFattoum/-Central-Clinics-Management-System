@@ -28,6 +28,13 @@ class DerpartmentRequest extends FormRequest
 
             array_pop($rules['ar.name']);
             array_pop($rules['en.name']);
+        
+
+            if($this->image == null){
+                if($this->department->image){
+                   array_shift($rules['image']);
+                }
+            }
 
             $rules['ar.name'] = [
                 ...$rules['ar.name'],
@@ -37,6 +44,9 @@ class DerpartmentRequest extends FormRequest
                 ...$rules['en.name'],
                 Rule::unique('department_translations', 'name')->where('locale','en')->ignore($this->department->id, 'department_id'),
             ];
+
+      
+
         }
 
         return $rules;

@@ -34,11 +34,10 @@
                                                 name="select_all"><span></span></label>
                                     </th>
                                     <th class="pr-2">@lang('clinics.name_clinic')</th>
-                                    <th class="pr-2">@lang('facility.phone')</th>
                                     <th class="pr-2">@lang('clinics.department')</th>
-                                    <th class="pr-2">@lang('facility.description')</th>
+                                    <th class="pr-2">@lang('facility.phone')</th>
                                     <th class="pr-2">@lang('facility.city')</th>
-                                    <th class="pr-2">@lang('facility.postal_code')</th>
+                                    <th class="pr-2">@lang('facility.status_open')</th>
                                     <th class="pr-2">@lang('facility.status')</th>
                                     <th class="pr-2">@lang('dropdown_op.processes')</th>
                                 </tr>
@@ -54,22 +53,23 @@
                                     </td>
                                     <td class="pr-2"><a href="{{ route('clinics.show',$clinic->id) }}">{{
                                             $clinic->name }}</a></td>
-                                    <td class="pr-2">{{ $clinic->facilityProfile->phone }}</td>
                                     <td class="pr-2">
                                         @foreach ($clinic->departments as $department )
-
                                         <span class="badge badge-info">{{
                                             $department->translate(app()->getLocale())->name}}</span><br>
                                         @endforeach
                                     </td>
-                                    <td class="pr-2">
-                                        @include('components.description_data_table',['description'=>$clinic->description,'id'=>$clinic->id])
-                                    </td>
-                                    <td class="pr-2">{{ $clinic->cityName() }}</td>
-                                    <td class="pr-2">{{ $clinic->facilityProfile->postal_code }}</td>
-                                    <td class="pr-2"> <span class="badge badge-{{ $clinic->status ? 'success' : 'danger' }}">{{ $clinic->status ? __('facility.enabled') : __('facility.not_enabled') }}</span></td>
+                                    <td class="pr-2"><a href="tel:{{ $clinic->facilityProfile->phone }}">{{ $clinic->facilityProfile->phone }}</a></td>
 
-                                
+                                    <td class="pr-2"><span class="badge badge-dark">{{ $clinic->cityName() }}</span> </td>
+                                    <td class="pr-2"> <span class="badge badge-{{ $clinic->checkOpenStatus() ? 'success' : 'danger' }}">{{
+                                        $clinic->openStatusLabel() }}</span></td>
+                                    <td class="pr-2"> <span
+                                            class="badge badge-{{ $clinic->status ? 'success' : 'danger' }}">{{
+                                            $clinic->status ? __('facility.enabled') : __('facility.not_enabled')
+                                            }}</span></td>
+
+
                                     <td class="pr-2">
                                         <div class="dropdown">
                                             <button aria-expanded="false" aria-haspopup="true"
@@ -93,10 +93,8 @@
 
                                     </td>
                                     @include('components.delete',['id'=>$clinic->id,'name' =>
-                                    $clinic->name,'route'=>'clinics'])
+                                    $clinic->name,'route'=>'clinics','parameters'=> $clinic->id])
 
-                                    @include('components.desc',['id'=>$clinic->id,'name' =>
-                                    $clinic->name,'desc'=>$clinic->description])
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -118,5 +116,5 @@
 @endsection
 
 @section('js')
-@include('layouts.table-footer',['orderIndex'=>1,'targetsNotOrdered' => [0,2,3,4,6,8]])
+@include('layouts.table-footer',['orderIndex'=>1,'targetsNotOrdered' => [0,2,3,7]])
 @endsection

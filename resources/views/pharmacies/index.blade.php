@@ -35,9 +35,8 @@
                                     </th>
                                     <th class="pr-2">@lang('pharmacy.name_pharmacy')</th>
                                     <th class="pr-2">@lang('facility.phone')</th>
-                                    <th class="pr-2">@lang('facility.description')</th>
                                     <th class="pr-2">@lang('facility.city')</th>
-                                    <th class="pr-2">@lang('facility.postal_code')</th>
+                                    <th class="pr-2">@lang('facility.status_open')</th>
                                     <th class="pr-2">@lang('facility.status')</th>
                                     <th class="pr-2">@lang('dropdown_op.processes')</th>
                                 </tr>
@@ -53,13 +52,13 @@
                                     </td>
                                     <td class="pr-2"><a href="{{ route('pharmacies.show',$pharmacy->id) }}">{{
                                             $pharmacy->name }}</a></td>
-                                    <td class="pr-2">{{ $pharmacy->facilityProfile->phone }}</td>
-
-                                    <td class="pr-2">
-                                        @include('components.description_data_table',['description'=>$pharmacy->description,'id'=>$pharmacy->id])
+                                    <td class="pr-2"><a href="tel:{{ $pharmacy->facilityProfile->phone }}">{{
+                                            $pharmacy->facilityProfile->phone }}</a></td>
+                                    <td class="pr-2"><span class="badge badge-dark">{{ $pharmacy->cityName() }}</span>
                                     </td>
-                                    <td class="pr-2">{{ $pharmacy->cityName() }}</td>
-                                    <td class="pr-2">{{ $pharmacy->facilityProfile->postal_code }}</td>
+                                    <td class="pr-2"> <span
+                                            class="badge badge-{{ $pharmacy->checkOpenStatus() ? 'success' : 'danger' }}">{{
+                                            $pharmacy->openStatusLabel() }}</span></td>
                                     <td class="pr-2">
                                         <span class="badge badge-{{ $pharmacy->status ? 'success' : 'danger' }}">{{
                                             $pharmacy->status ? __('facility.enabled') : __('facility.not_enabled')}}
@@ -89,22 +88,21 @@
 
                                     </td>
                                     @include('components.delete',['id'=>$pharmacy->id,'name' =>
-                                    $pharmacy->name,'route'=>'pharmacies'])
+                                    $pharmacy->name,'route'=>'pharmacies','parameters' => $pharmacy->id])
 
-                                    @include('components.desc',['id'=>$pharmacy->id,'name' =>
-                                    $pharmacy->name,'desc'=>$pharmacy->description])
+
                                 </tr>
                                 @endforeach
                             </tbody>
 
                         </table>
-                        
+
                     </div>
-                    
+
                 </div>
-                
+
             </div>
-            
+
         </div>
         <!--/div-->
     </div>
@@ -118,5 +116,5 @@
 @endsection
 
 @section('js')
-@include('layouts.table-footer',['orderIndex'=>1,'targetsNotOrdered' => [0,2,3,5,7]])
+@include('layouts.table-footer',['orderIndex'=>1,'targetsNotOrdered' => [0,2,3,5]])
 @endsection

@@ -90,7 +90,7 @@
 
                                     </td>
                                     @include('components.delete',['id'=>$department->id,'name' =>
-                                    $department->name,'route'=>'departments'])
+                                    $department->name,'route'=>'departments','parameters'=> ['department' => $department->id]])
                                     @include('departments._edit')
                                     @include('components.desc',['id'=>$department->id,'name' =>
                                     $department->name,'desc'=>$department->description])
@@ -107,6 +107,7 @@
     </div>
 </div>
 @include('departments._create')
+
 @include('components.delete_select',['route' => 'departments'])
 </div>
 <!-- Container closed -->

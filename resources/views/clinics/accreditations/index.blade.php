@@ -83,7 +83,7 @@
                                     @include('clinics.accreditations._edit')
                                     @endpermission
                                     @permission('delete-clinics_accreditations')
-                                    @include('clinics.accreditations._delete',['id'=>$accreditation->id,'name' =>
+                                    @include('components.delete',['id'=>$accreditation->id,'name' =>
                                     $accreditation->name,'route'=>'accreditations','parameters'=>[$clinic->id,$accreditation->id]])
                                     @endpermission    
                             </tr>
@@ -102,7 +102,7 @@
 @include('clinics.accreditations._create')
 @endpermission
 @permission('delete-clinics_accreditations')
-@include('clinics.accreditations._delete_select',['route' => 'accreditations','clinicId'=>$clinic->id])
+@include('components.delete_select',['route' => 'accreditations','parameters'=>$clinic->id])
 @endpermission
 </div>
 <!-- Container closed -->

@@ -44,7 +44,7 @@ class TransferRequestController extends Controller
             $data['patient_id'] = $patient->id;
 
             TransferRequest::create($data);
-            session()->flash('add');
+            session()->flash('send');
             return redirect()->route('transferRequests.index', ['patient' => $patient->id]);
         } catch (\Exception $e) {
             return redirect()->route('transferRequests.index', ['patient' => $patient->id])->withErrors(['error' => $e->getMessage()]);

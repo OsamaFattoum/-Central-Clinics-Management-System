@@ -5,6 +5,7 @@ namespace App\Models\Record;
 use App\Models\Case\CaseType;
 use App\Models\Department\Department;
 use App\Models\Users\Patient;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -16,10 +17,15 @@ class Medication extends Model
 
     protected $appends = ['date','medication_taken_value','has_alternative_value'];
 
+
     //attr
     public function getDateAttribute()
     {
-        return $this->created_at->format('Y-m-d');
+        return Carbon::parse($this->date_medication)->format('Y-m-d');
+    } //end of date 
+    public function getTimeAttribute()
+    {
+        return Carbon::parse($this->date_medication)->format('h:iA');
     } //end of date 
 
     public function getMedicationTakenValueAttribute()

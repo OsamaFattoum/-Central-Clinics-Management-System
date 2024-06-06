@@ -20,14 +20,16 @@ class CheckEditable
             $model = empty($typeRequest) ? abort(403) : $request->route($typeRequest);
 
             if (auth()->guard('pharmacy')->check()) {
-                 // Check if model was created more than 5 minutes ago
-                 if (Carbon::parse($model->created_at)->addMonth(3)->isPast()) {
+                // Check if model was created more than 3 months ago
+                if (Carbon::parse($model->date_medication)->addMonth(3)->isPast()) {
                     abort(403);
                 }
             } else {
-                // Check if model was created more than 5 minutes ago
-                if (Carbon::parse($model->created_at)->addMinutes(5)->isPast()) {
-                    abort(403);
+                if ($request->route()->getName() != 'medications.status') {
+                    // Check if model was created more than 5 minutes ago
+                    if (Carbon::parse($model->created_at)->addMinutes(5)->isPast()) {
+                        abort(403);
+                    }
                 }
             }
         }

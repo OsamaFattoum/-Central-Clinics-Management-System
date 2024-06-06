@@ -6,6 +6,8 @@ use App\Http\Requests\MedicationRequest;
 use App\Models\Record\Medication;
 use App\Models\Users\Patient;
 use App\Models\Users\Profile;
+use Carbon\Carbon;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -16,18 +18,17 @@ class MedicationController extends Controller
         $this->middleware(['permission:read-medications'])->only(['index']);
         $this->middleware(['permission:create-medications'])->only(['store']);
         $this->middleware(['permission:update-medications', 'checkEditable:medication'])->only(['update']);
-        $this->middleware(['permission:status-medications','checkEditable:medication'])->only(['status']);
+        $this->middleware(['permission:status-medications', 'checkEditable:medication'])->only(['status']);
         $this->middleware(['permission:delete-medications'])->only(['destroy', 'bulk']);
         $this->middleware('checkDepartment');
-
     } //end of construct
 
 
-    public function index(Patient $patient, Request $request)
+    public function index(Patient $patient)
     {
-        $medications = Medication::when(isset($request->taken), function ($query) use ($request) {
-            return $query->where('medication_taken', $request->taken);
-        })->with('caseType')->where('patient_id', $patient->id)->get();
+
+        $medications = Medication::with('caseType')->where('patient_id', $patient->id)->get();
+
 
         return view('medications.index', compact('medications', 'patient'));
     } //end of index
@@ -36,13 +37,13 @@ class MedicationController extends Controller
     public function store(Patient $patient, MedicationRequest $request)
     {
 
-   
+
         try {
             $data = $request->except('department', 'case_type');
             $data['patient_id'] = $patient->id;
             $data['department_id'] = $request->department;
             $data['case_type_id'] = $request->case_type;
-
+            $data['date_medication'] = Carbon::now();
 
             Medication::create($data);
             session()->flash('add');
@@ -53,19 +54,44 @@ class MedicationController extends Controller
     } //end of store
 
     public function status(Patient $patient, Medication $medication, Request $request)
-    {  
-        if($medication->medication_taken){
-            abort(403);
-       }
+    {
         try {
-            $this->validate($request, [
+            $date_validation = [
                 'medication_taken' => ['required', 'in:0,1'],
                 'has_alternative' => ['required', 'in:0,1'],
-            ]);
-            $medication->update([
-                'medication_taken' => $request->medication_taken,
-                'has_alternative' => $request->has_alternative,
-            ]);
+            ];
+
+            if (auth()->guard('doctor')->check()) {
+                array_pop($date_validation);
+            } else {
+                if ($medication->medication_taken) {
+                    return redirect()->route('medications.index', ['patient' => $patient->id])->withErrors(['error' => __('messages.no-edit-medication'). ' ' . __('messages.medication-dispensed')]);
+                }
+            }
+
+            $data = $this->validate($request, $date_validation);
+
+            if (auth()->guard('doctor')->check()) {
+                if ($medication->medication_taken) {
+                    if ($medication->department_id != auth()->user()->department->id) {
+                        return redirect()->route('medications.index', ['patient' => $patient->id])->withErrors(['error' => __('messages.no-edit-medication') . ' ' . __('messages.medication-no-auth-edit') ]);
+                    } {
+                        $data['date_medication'] = Carbon::now();
+                        $data['has_alternative'] = false;
+                    }
+                } else {
+                    return redirect()->route('medications.index', ['patient' => $patient->id])->withErrors(['error' => __('messages.no-edit-medication') . ' ' . __('messages.medication-undispensed')]);
+                }
+            } else {
+                if ($data['has_alternative'] == 1 && $data['medication_taken'] == 0) {
+                    return redirect()->route('medications.index', ['patient' => $patient->id])->withErrors(['error' => __('messages.must-medciation-taken')]);
+                }
+            }
+
+
+
+            $medication->update($data);
+
             session()->flash('change_status');
             return redirect()->route('medications.index', ['patient' => $patient->id]);
         } catch (\Exception $e) {
@@ -81,7 +107,6 @@ class MedicationController extends Controller
             $data['patient_id'] = $patient->id;
             $data['department_id'] = $request->department;
             $data['case_type_id'] = $request->case_type;
-
 
             $medication->update($data);
             session()->flash('edit');

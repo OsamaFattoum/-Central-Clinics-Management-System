@@ -73,7 +73,7 @@ class CaseTypeController extends Controller
         DB::beginTransaction();
         try {
             foreach ($ids as $id) {
-                $department->caseTypes()->delete($id);
+                $department->caseTypes()->where('case_types.id',$id)->delete();
             }
             DB::commit();
             session()->flash('delete');

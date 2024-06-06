@@ -68,7 +68,7 @@
 
                                     </td>
                                     @include('departments.caseTypes._edit')
-                                    @include('departments.caseTypes._delete',['id'=>$caseType->id,'name' =>
+                                    @include('components.delete',['id'=>$caseType->id,'name' =>
                                     $caseType->name,'route'=>'case_types','parameters'=>[$department->id,$caseType->id]])
                                 </tr>
                                 @endforeach
@@ -83,7 +83,7 @@
     </div>
 </div>
 @include('departments.caseTypes._create')
-@include('departments.caseTypes._delete_select',['route' => 'case_types','departmentId'=>$department->id])
+@include('components.delete_select',['route' => 'case_types','parameters'=>$department->id])
 </div>
 <!-- Container closed -->
 </div>

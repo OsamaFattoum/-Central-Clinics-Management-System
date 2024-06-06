@@ -22,7 +22,7 @@ class ProfileFactory extends Factory
         return [
             'ar' => ['name' => $this->faker->name()],
             'en' => ['name' => $this->faker->name()],
-            'gender' => $this->faker->randomElement([1, 2]), // Example gender (1 or 2)
+            'gender' => $this->faker->randomElement([0,1]), // Example gender (1 or 2)
             'birth_date' => $this->faker->date('Y-m-d', '-30 years'), // Example birth date
             'phone' => $this->faker->e164PhoneNumber,
             'city' => $this->faker->numberBetween(1,13), // Example city ID

@@ -119,18 +119,20 @@ class PatientController extends Controller
     
         $appointments = $patient->appointments()->count();
         $transfer_requests = $patient->transferRequests();
+
+        $medications = $patient->medications();
+
         if(auth()->guard('doctor')->check()){
             $appointments = $patient->appointments()->where('doctor_id',auth()->user()->id)->count();
             $transfer_requests = $transfer_requests->where('doctor_id','!=',auth()->user()->id);
         }
-        
 
         return view('patients.show', [
             'records' => $this->getLatestRecordsByDepartment($patient),
             'departments' => Department::all(),
             'patient' => $patient,
             'appointments' => $appointments,
-            'medications' => $patient->medications()->count(),
+            'medications' => $medications->count(),
             'transfer_requests' => $transfer_requests->count(),
         ]);
     } //end of show

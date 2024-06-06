@@ -38,8 +38,10 @@ class MedicationRequest extends FormRequest
                 })->ignore($this->medication->id, 'id'),
             ];
 
-            $rules['medication_taken'] = ['required'];
-            $rules['has_alternative'] = ['required'];
+            if (auth()->guard('admin')->check()) {
+                $rules['medication_taken'] = ['required'];
+                $rules['has_alternative'] = ['required'];
+            }
         }
 
         return $rules;

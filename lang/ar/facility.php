@@ -29,6 +29,7 @@ return [
     'facility_contact' => 'معلومات التواصل',
 
     'status' => 'الحالة',
+    'status_open' => 'حالة الفتح',
     'open' => 'مفتوح',
     'close' => 'مغلق',
     'enabled' => 'مفعل',

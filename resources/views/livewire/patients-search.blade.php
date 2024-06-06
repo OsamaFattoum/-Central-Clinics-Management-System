@@ -68,9 +68,9 @@
                                         $patient->profile->name }}</a></td>
 
                                 <td class="pr-2">{{ $patient->civil_id }}</td>
-                                <td class="pr-2">{{ $patient->profile->phone }}</td>
-                                <td class="pr-2">{{ $patient->gender }}</td>
-                                <td class="pr-2">{{ $patient->city_name }}</td>
+                                <td class="pr-2"><a href="tel:{{ $patient->profile->phone }}">{{ $patient->profile->phone }}</a></td>
+                                <td class="pr-2"><span class="badge badge-{{ $patient->profile->gender == '1' ? 'primary' : 'pink' }}">{{ $patient->gender }}</span></td>
+                                <td class="pr-2"><span class="badge badge-dark">{{ $patient->city_name }}</span> </td>
 
                                 <td class="pr-2">
                                     <span class="badge badge-{{ $patient->status ? 'success' : 'danger' }}">{{
@@ -107,7 +107,7 @@
                                 </td>
                                 @permission('delete-patients')
                                 @include('components.delete',['id'=>$patient->id,'name' =>
-                                $patient->name,'route'=>'patients'])
+                                $patient->name,'route'=>'patients','parameters'=>$patient->id])
                                 @endpermission
                             </tr>
                             @empty

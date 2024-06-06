@@ -28,6 +28,7 @@
                                 class="form-control">
                         </div>
                     </div>
+                    @auth('admin')
                     <div class="row">
                         <div class="form-group col-lg-6">
                             <label for="med-taken">@lang('medications.medication_taken')<span
@@ -48,6 +49,8 @@
                             </select>
                         </div>
                     </div>
+                    @endauth
+                   
                     <div class="form-group">
                         <label for="instructions">@lang('medications.instructions')<span
                                 class="tx-danger">*</span></label>

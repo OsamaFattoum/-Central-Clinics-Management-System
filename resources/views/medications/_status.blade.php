@@ -21,6 +21,7 @@
                             <option {{ $medication->medication_taken == '1' ? 'selected' : '' }}  value="1">@lang('medications.dispensed')</option>
                         </select>
                     </div>
+                    @auth('pharmacy')
                     <div class="form-group">
                         <label for="has_alternative">@lang('medications.has_alternative')</label>
                         <select id="has_alternative" class="form-control" name="has_alternative">
@@ -28,6 +29,7 @@
                             <option {{ $medication->has_alternative == '1' ? 'selected' : '' }}  value="1">@lang('medications.taken')</option>
                         </select>
                     </div>
+                    @endauth
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary"

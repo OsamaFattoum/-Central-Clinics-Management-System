@@ -27,6 +27,17 @@
 
 </script>
 @endif
+@if (session()->has('send'))
+<script>
+    window.onload = function() {
+                notif({
+                    msg:  "{{ __('messages.send') }}",
+                    type: "success"
+                });
+            }
+
+</script>
+@endif
 
 
 @if (session()->has('change_status'))

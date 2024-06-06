@@ -79,6 +79,7 @@ class Doctor extends Component
                     $this->selectedDepartment = Department::findOrFail($this->form->department);
                     if ($this->selectedDepartment->status) {
                         $this->form->permissions['read-medications'] = true;
+                        $this->form->permissions['status-medications'] = true;
                     }        
                 }
 
@@ -87,6 +88,8 @@ class Doctor extends Component
                 $this->selectedDepartment = Department::findOrFail($this->form->department);
                 if ($this->selectedDepartment->status) {
                     $this->form->permissions['read-medications'] = true;
+                    $this->form->permissions['status-medications'] = true;
+
                 }    
             }
 
