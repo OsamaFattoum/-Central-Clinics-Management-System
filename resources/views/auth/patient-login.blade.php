@@ -16,7 +16,7 @@
                     <div class="card-body p-md-5 mx-md-4">
                         <div class="text-center">
                             <h4 class="mt-1 mb-5 pb-1">
-                                <span>تسجيل الدخول إلى حسابك</span><i class="fa fa-user mx-2" aria-hidden="true"></i>
+                                <span>@lang('users.t_patient_login')</span><i class="fa fa-user mx-2" aria-hidden="true"></i>
                             </h4>
                         </div>
 
@@ -24,28 +24,28 @@
                             @csrf
                             <input type="hidden" name="type" value="patient">
                             <div class="form-group">
-                                <label for="civil_id">الرقم الوطني</label>
+                                <label for="civil_id">@lang('users.civil_id')</label>
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text  bg-gray-100" id="basic-addon1">
                                             <i class="fa fa-hashtag"></i>
                                         </span>
                                     </div>
-                                    <input type="text" id="civil_id" name="civil_id" aria-describedby="basic-addon1"
+                                    <input type="text" placeholder="{{ __('users.placeholder_civil_id') }}" id="civil_id" name="civil_id" aria-describedby="basic-addon1"
                                         class="form-control @error('civil_id') parsley-error @enderror" placeholder="">
                                     @include('components.input-error',['input' => 'civil_id'])
 
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="password">كلمة المرور</label>
+                                <label for="password">@lang('users.password')</label>
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text bg-gray-100" id="basic-addon1">
                                             <i class="fa fa-eye" id="togglePassword" style="cursor: pointer;"></i>
                                         </span>
                                     </div>
-                                    <input type="password" name="password" aria-describedby="basic-addon1"
+                                    <input type="password" placeholder="{{ __('users.password') }}" name="password" aria-describedby="basic-addon1"
                                         class="form-control id_password @error('password') parsley-error @enderror"
                                         placeholder="">
                                     @include('components.input-error',['input' => 'password'])
@@ -63,9 +63,9 @@
 
 
                         </form>
-                        <div class="main-signin-footer mt-3">
+                        {{-- <div class="main-signin-footer mt-3">
                             <p><a href="">@lang('users.t_forgot_password')</a></p>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
 

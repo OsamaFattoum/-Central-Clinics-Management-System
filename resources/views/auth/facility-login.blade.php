@@ -67,9 +67,9 @@
                                                 class="btn btn-primary btn-block">@lang('facility.btn_login')</button>
 
                                         </form>
-                                        <div class="main-signin-footer mt-3">
+                                        {{-- <div class="main-signin-footer mt-3">
                                             <p><a href="">@lang('facility.t_forgot_password')</a></p>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                 </div>
                             </div>

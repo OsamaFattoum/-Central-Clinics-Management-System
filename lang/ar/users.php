@@ -45,6 +45,7 @@ return [
     'btn_login' => 'تسجيل الدخول',
     't_forgot_password' => 'هل نسيت كلمه السر؟',
 
+    't_patient_login' => 'تسجيل الدخول إلى حسابك',
 
 
 ];

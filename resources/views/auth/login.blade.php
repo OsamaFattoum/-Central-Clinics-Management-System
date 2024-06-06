@@ -44,7 +44,7 @@
 
                                         </form>
                                         <div class="main-signin-footer mt-3">
-                                            <p><a href="">@lang('admin_auth.t_forgot_password')</a></p>
+                                            <p><a href="{{ route('password.request') }}">@lang('admin_auth.t_forgot_password')</a></p>
                                         </div>
                                     </div>
                                 </div>
