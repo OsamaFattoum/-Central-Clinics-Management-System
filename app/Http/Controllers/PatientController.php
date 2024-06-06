@@ -124,7 +124,7 @@ class PatientController extends Controller
 
         if(auth()->guard('doctor')->check()){
             $appointments = $patient->appointments()->where('doctor_id',auth()->user()->id)->count();
-            $transfer_requests = $transfer_requests->where('doctor_id','!=',auth()->user()->id);
+            $transfer_requests = $transfer_requests->where('department_id',auth()->user()->department->id);
         }
 
         return view('patients.show', [
