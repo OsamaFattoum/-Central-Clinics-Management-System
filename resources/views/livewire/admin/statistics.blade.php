@@ -202,8 +202,8 @@
             datasets: [{
                 label: @json(__('charts.title_new_patients')),
                 data: @json($monthlyPatientData),
-                backgroundColor: 'rgba(153, 102, 255, 0.2)',
-                borderColor: 'rgba(153, 102, 255, 1)',
+                backgroundColor: 'rgb(153, 102, 255)',
+                borderColor: 'rgb(153, 102, 255)',
                 borderWidth: 1
             }]
             },
@@ -230,8 +230,8 @@
                 datasets: [{
                     label: @json(__('charts.title_doctors_chart')),
                     data: @json($doctorDepartmentData),
-                    backgroundColor: 'rgba(153, 102, 255, 0.2)',
-                borderColor: 'rgba(153, 102, 255, 1)',
+                    backgroundColor:'rgba(14, 41, 84,0.7)',
+                    borderColor:'rgb(14, 41, 84)',
                     borderWidth: 1
                 }]
             },
@@ -256,14 +256,14 @@
                 datasets: [{
                     data: @json($appointmentStatusData),
                     backgroundColor: [
-                        'rgba(169, 169, 169,0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(255, 99, 132,0.7)',
+                        'rgba(169, 169, 169,0.7)',
+                        'rgba(54, 162, 235,0.7)',
                     ],
                     borderColor: [ 
-                        'rgba(169, 169, 169,1)',
-                        'rgba(54, 162, 235,1)',
-                        'rgba(255, 99, 132, 1)',
+                        'rgb(255, 99, 132)',
+                        'rgb(169, 169, 169)',
+                        'rgb(54, 162, 235)',
                     ],
                     borderWidth: 1
                 }]
@@ -291,12 +291,12 @@
                 datasets: [{
                     data: @json($bloodTypeData),
                     backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(255, 99, 132, 0.7)',
+                        'rgba(54, 162, 235, 0.7)',
+                        'rgba(255, 206, 86, 0.7)',
+                        'rgba(75, 192, 192, 0.7)',
+                        'rgba(153, 102, 255, 0.7)',
+                        'rgba(255, 159, 64, 0.7)',
                      
                     ],
                     borderColor: [
@@ -333,11 +333,11 @@
                 datasets: [{
                     data: [{{ $activeDoctors }}, {{ $inactiveDoctors }}],
                     backgroundColor: [
-                        'rgba(34 ,192, 60,0.2)',
-                        'rgba(255, 99, 132, 0.2)'
+                        'rgba(65, 176, 110,0.7)',
+                        'rgba(255, 99, 132,0.7)'
                     ],
                     borderColor: [
-                        'rgba(34 ,192, 60,1)',
+                        'rgba(65, 176, 110,1)',
                         'rgba(255, 99, 132, 1)'
                     ],
                     borderWidth: 1
