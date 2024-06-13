@@ -91,16 +91,21 @@ class AppointmentController extends Controller
                 return redirect()->route('appointments.index', ['patient' => $patient->id])->withErrors(['error' => __('appointments.closed_clinic')])->withInput();
             }
 
+         
             $existingAppointment = Appointment::where('doctor_id', $request->doctor)
                 ->where('date', $request->date)
                 ->where('time', $request->time)
                 ->first();
-                if($appointment->id != $existingAppointment->id){
-                    if ($existingAppointment) {
-                        return redirect()->route('appointments.index', ['patient' => $patient->id])->withErrors(['error' => __('appointments.has_appointment')])->withInput();
+               
+                if($existingAppointment){
+                    if($appointment->id != $existingAppointment->id){
+                        if ($existingAppointment) {
+                            return redirect()->route('appointments.index', ['patient' => $patient->id])->withErrors(['error' => __('appointments.has_appointment')])->withInput();
+                        }
                     }
                 }
-           
+               
+                
             $appointment->update($data);
             session()->flash('edit');
             return redirect()->route('appointments.index', ['patient' => $patient->id]);
