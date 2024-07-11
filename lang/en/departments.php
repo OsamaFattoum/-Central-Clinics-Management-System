@@ -1,0 +1,37 @@
+<?php
+
+return [
+    'btn_create_department' => 'Add Department',
+    'name_department' => 'Department Name',
+    'name_department_ar' => 'Department Name in Arabic',
+    'name_department_en' => 'Department Name in English',
+    'scientific_name' => 'Scientific Name',
+    'description' => 'Description',
+    'description_ar' => 'Description in Arabic',
+    'description_en' => 'Description in English',
+    'related_clinic' => 'Related Clinics',
+    'related_case_type' => 'Related Case Types',
+    'given_drug' => 'Prescribe Drugs',
+    'give_drug' => 'Prescribe',
+    'not_give_drug' => 'Do Not Prescribe',
+    'created_at' => 'Created At',
+    'image' => 'Department Icon',
+
+    // validation
+    'name.ar.required' => 'The name in Arabic field is required.',
+    'name.en.required' => 'The name in English field is required.',
+    'name.string' => 'The name must be a string.',
+    'name.ar.min' => 'The name in Arabic must be at least :min characters.',
+    'name.en.min' => 'The name in English must be at least :min characters.',
+    'name.ar.max' => 'The name in Arabic may not be greater than :max characters.',
+    'name.en.max' => 'The name in English may not be greater than :max characters.',
+    'name.ar.unique' => 'The name in Arabic has already been taken.',
+    'name.en.unique' => 'The name in English has already been taken.',
+    'name.en.different' => 'The name in English must be different.',
+    'scientific_name.required' => 'The scientific name field is required.',
+    'scientific_name.string' => 'The scientific name must be a string.',
+    'scientific_name.max' => 'The scientific name may not be greater than :max characters.',
+    'status.required' => 'The status field is required.',
+    'status.in' => 'The status must be either prescribe or do not prescribe.',
+    'image.required' => 'The icon field is required',
+];

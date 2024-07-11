@@ -10,7 +10,7 @@
     @if (!Request::is('dashboard'))
     <div class="d-flex my-xl-auto mt-lg-0 mt-2">
         <div class="pr-1 mb-3 mb-xl-0">
-            <a href="{{ isset($route) ? $route : route('dashboard') }}" class="btn btn-sm btn-primary {{ app()->getLocale() == 'ar' ? 'mr-2' : 'ml-2' }}">@lang('site.back')<i class="fa fa-{{ app()->getLocale() == 'ar' ? 'backward' : 'forward' }} mr-2" aria-hidden="true"></i></a>
+            <a href="{{ isset($route) ? $route : route('dashboard') }}" class="btn btn-sm btn-primary {{ app()->getLocale() == 'ar' ? 'mr-2' : 'ml-2' }}">@lang('site.back')<i class="fa fa-{{ app()->getLocale() == 'ar' ? 'backward  mr-2' : 'forward  ml-2' }}" aria-hidden="true"></i></a>
         </div>
     </div>
     @endif

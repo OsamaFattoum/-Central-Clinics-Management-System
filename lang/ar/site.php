@@ -27,6 +27,7 @@ return [
 
 
     //website 
+    'title_header' => "معا في الصحة, متصلون من اجل الحياة",
     'personal_account' => 'الملف الشخصي',
     'call_us' => 'اتصل بنا',
     'support' => 'الدعم والمساعدة',

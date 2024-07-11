@@ -2,7 +2,7 @@
 <nav class=" navbar sticky-top navbar-expand-lg  bg-white" id="navbar">
     <div class="container">
         <a class="navbar-brand" href="{{ route('welcome') }}">
-            <img src="{{ URL::asset('assets/website/images/logo_ar.png') }}" alt="Logo" width="220" height="60"
+            <img src="{{ URL::asset('assets/website/images/logo_'. app()->getLocale() .'.png') }}" alt="Logo" width="220" height="60"
                 class="img-fluid">
         </a>
         <div class="d-flex align-items-center">
