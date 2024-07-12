@@ -17,6 +17,13 @@ class Profile extends Model implements ContractsTranslatable
 
     protected $guarded = [];
 
+    //attr
+    public function getNameAttribute(){
+
+        return $this->translate(app()->getLocale())->name;
+
+    }//end of get name 
+    
     //relation
     public function profile()
     {

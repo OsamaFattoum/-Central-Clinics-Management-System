@@ -13,6 +13,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RecordController;
 use App\Http\Controllers\TransferRequestController;
 use Illuminate\Support\Facades\Route;
+use Livewire\Livewire;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +25,11 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Livewire::setUpdateRoute(function ($handle) {
+    
+    return Route::post('/custom/livewire/update', $handle);
+});
 
 Route::get('/', function () {
     return view('welcome');

@@ -31,6 +31,18 @@ class Pharmacy extends Authenticatable implements ContractsTranslatable,Laratrus
     protected $appends = ['image_path'];
 
     //attr
+    public function getNameAttribute(){
+
+        return $this->translate(app()->getLocale())->name;
+
+    }//end of get name 
+
+    public function getDescriptionAttribute(){
+
+        return $this->translate(app()->getLocale())->description;
+
+    }//end of get description 
+
     public function getImagePathAttribute()
     {
         $disk = 'uploads/';

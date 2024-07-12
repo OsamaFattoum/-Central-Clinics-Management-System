@@ -17,6 +17,16 @@ class Day extends Model implements ContractsTranslatable
 
     protected $guarded = [];
 
+    //attr
+    public function getDayAttribute(){
+
+        return $this->translate(app()->getLocale())->day;
+
+    }//end of get day facility
+
+
+
+    //relation
     public function facilityDays()
     {
         return $this->hasMany(FacilityDay::class);

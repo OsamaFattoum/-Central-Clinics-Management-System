@@ -27,6 +27,8 @@ return [
     'start_date_gt_end_date' => 'Start date must be before end date',
     'start_date' => 'From Date',
     'end_date' => 'To Date',
+    'clear_history' => 'Clear Search',
+
 
     // Validation
     'case_type.required' => 'Case type is required.',

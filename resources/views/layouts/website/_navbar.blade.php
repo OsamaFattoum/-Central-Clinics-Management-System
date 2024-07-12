@@ -2,14 +2,24 @@
 <nav class=" navbar sticky-top navbar-expand-lg  bg-white" id="navbar">
     <div class="container">
         <a class="navbar-brand" href="{{ route('welcome') }}">
-            <img src="{{ URL::asset('assets/website/images/logo_'. app()->getLocale() .'.png') }}" alt="Logo" width="220" height="60"
-                class="img-fluid">
+            <img src="{{ URL::asset('assets/website/images/logo_'. app()->getLocale() .'.png') }}" alt="Logo"
+                width="220" height="60" class="img-fluid">
         </a>
         <div class="d-flex align-items-center">
-            {{-- <a href="" class="nav-link btn btn-outline-info btn-lang">
+            @if (App::getLocale() == 'ar')
+            <a hreflang="en" href="{{ LaravelLocalization::getLocalizedURL('en', null, [], true) }}"
+                class="nav-link btn btn-outline-info btn-lang">
                 <button type="button" class="btn btn-outline-info btn-lang"><span
                         class="fw-bold text-btn-lang">EN</span></button>
-            </a> --}}
+            </a>
+            @else
+            <a hreflang="ar" href="{{ LaravelLocalization::getLocalizedURL('ar', null, [], true) }}" class="nav-link btn btn-outline-info btn-lang">
+                <button type="button" class="btn btn-outline-info btn-lang"><span
+                        class="fw-bold text-btn-lang">AR</span></button>
+            </a>
+            @endif
+
+           
             @if (isset($guardName) && auth()->guard($guardName)->check())
             <div class="dropdown custom-dropdown">
                 <a href="#" data-toggle="dropdown" class="d-flex align-items-center dropdown-link text-left"
@@ -19,12 +29,16 @@
                     </div>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a href="{{ route('dashboard') }}" class="dropdown-item"><i class="fa fa-circle-user"></i><span class="mx-2">@lang('site.personal_account')</span></a>
-                    {{-- <a href="" class="dropdown-item"><i class="fa fa-address-book"></i><span class="mx-2">@lang('site.call_us')</span></a>
-                    <a href="" class="dropdown-item"><i class="fa fa-headset"></i><span class="mx-2">@lang('site.support')</span></a> --}}
+                    <a href="{{ route('dashboard') }}" class="dropdown-item"><i class="fa fa-circle-user"></i><span
+                            class="mx-2">@lang('site.personal_account')</span></a>
+                    {{-- <a href="" class="dropdown-item"><i class="fa fa-address-book"></i><span
+                            class="mx-2">@lang('site.call_us')</span></a>
+                    <a href="" class="dropdown-item"><i class="fa fa-headset"></i><span
+                            class="mx-2">@lang('site.support')</span></a> --}}
                     <a href="#" class="dropdown-item"
                         onclick="event.preventDefault();document.getElementById('logoutForm').submit()"
-                        href="{{ route('logout') }}"><i class="fa fa-sign-out"></i><span class="mx-2">@lang('site.logout')</span></a>
+                        href="{{ route('logout') }}"><i class="fa fa-sign-out"></i><span
+                            class="mx-2">@lang('site.logout')</span></a>
                     <form action="{{route('logout')}}" method="POST" id="logoutForm" style="display: none">
                         @csrf
                         <input type="hidden" name="guard" value="{{ $guardName }}">

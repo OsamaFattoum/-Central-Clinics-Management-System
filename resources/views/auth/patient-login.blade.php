@@ -9,7 +9,7 @@
             <div class="row g-0">
                 <div
                     class="col-md-6 col-lg-6 col-xl-6 bg-gray-100 d-none d-md-flex justify-content-center align-items-center">
-                    <a href="{{ route('welcome') }}"> <img src="{{ URL::asset('assets/website/images/trans_logo_ar.png') }}" alt="">
+                    <a href="{{ route('welcome') }}"> <img src="{{ URL::asset('assets/website/images/trans_logo_'. app()->getLocale() .'.png') }}" alt="">
                     </a>
                 </div>
                 <div class="col-md-6 col-lg-6 col-xl-6 d-flex justify-content-center align-items-center">

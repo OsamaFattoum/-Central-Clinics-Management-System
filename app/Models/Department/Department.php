@@ -29,6 +29,17 @@ class Department extends Model implements ContractsTranslatable
 
     //attr
 
+    public function getNameAttribute(){
+
+        return $this->translate(app()->getLocale())->name;
+
+    }//end of get name 
+
+    public function getDescriptionAttribute(){
+
+        return $this->translate(app()->getLocale())->description;
+
+    }//end of get description 
 
     public function getImagePathAttribute()
     {

@@ -27,6 +27,7 @@ return [
     'start_date_gt_end_date' => 'التاريخ الاول يجب ان يكون اقل من التاريخ الثاني',
     'start_date' => 'من تاريخ',
     'end_date' => 'الى تاريخ',
+    'clear_history' => 'محو البحث',
     
 
     //validation

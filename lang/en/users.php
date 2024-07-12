@@ -43,7 +43,7 @@ return [
     'btn_login' => 'Login',
     't_forgot_password' => 'Forgot Password?',
 
-    't_patient_login' => 'Patient Login',
+    't_patient_login' => 'Log in to your account',
 
 
 ];

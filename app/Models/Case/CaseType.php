@@ -20,6 +20,13 @@ class CaseType extends Model implements ContractsTranslatable
 
 
     //attr
+    public function getNameAttribute(){
+
+        return $this->translate(app()->getLocale())->name;
+
+    }//end of get name 
+
+    
 
     //relation
     public function department()

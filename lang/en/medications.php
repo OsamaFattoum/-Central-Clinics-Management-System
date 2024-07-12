@@ -10,7 +10,7 @@ return [
     'case_type' => 'Case Type',
     'dosage' => 'Dosage',
     'instructions' => 'Instructions',
-    'medication_taken' => 'Medication Dispensing Status',
+    'medication_taken' => 'Medication Dispensing',
     'has_alternative' => 'Has Alternative',
 
     'departments' => 'Departments',
