@@ -27,7 +27,6 @@ use Livewire\Livewire;
 */
 
 Livewire::setUpdateRoute(function ($handle) {
-    
     return Route::post('/custom/livewire/update', $handle);
 });
 
@@ -37,11 +36,19 @@ Route::get('/', function () {
 
 
 
+
+
 Route::middleware(['auth:admin,clinic,pharmacy,doctor,patient', 'statusCheck'])->group(function () {
 
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+
+    Route::middleware('auth:patient')->group(function(){
+        Route::get('/search',function(){
+            return view('patient.search_facility');
+        })->name('facility.search');
+    });
 
     Route::get('profile', [ProfileController::class, 'index'])->name('profile');
 

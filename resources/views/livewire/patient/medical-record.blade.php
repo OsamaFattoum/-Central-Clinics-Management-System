@@ -1,13 +1,3 @@
-{{-- @push('medical-record')
-<script>
-    $(function(){
-        @this.on('openModal',()=>{
-            $('#showMoreRecords').modal('show');
-        }); 
-    });
-</script>
-
-@endpush --}}
 
 <div class="mb-3">
     @if (!$showMoreStatus)

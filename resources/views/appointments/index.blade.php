@@ -116,7 +116,7 @@ $patient->name , 'currentPage' => __('appointments.appointments')])
                                 @include('appointments._status')
                                 @endpermission
                                 @permission('delete-appointments')
-                                @include('appointments._delete',['id'=>$appointment->id,'name' =>
+                                @include('components.delete',['id'=>$appointment->id,'name' =>
                                 __('appointments.appointment'),'route'=>'appointments','parameters'=>[$patient->id,$appointment->id]])
                                 @endpermission
                                 @include('components.desc',['id'=>$appointment->id,'name' =>
@@ -136,7 +136,7 @@ $patient->name , 'currentPage' => __('appointments.appointments')])
 @include('appointments._create')
 @endpermission
 @permission('delete-appointments')
-@include('appointments._delete_select',['route' => 'appointments','parameters'=>$patient->id])
+@include('components.delete_select',['route' => 'appointments','parameters'=>$patient->id])
 @endpermission
 
 

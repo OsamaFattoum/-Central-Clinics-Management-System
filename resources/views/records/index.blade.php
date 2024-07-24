@@ -102,7 +102,7 @@ $department->name . ")"])
                                         @endif
                                     </td>
                                     @permission('delete-'.$department->scientific_name)
-                                    @include('records._delete',['id'=>$record->id,'name' =>
+                                    @include('components.delete',['id'=>$record->id,'name' =>
                                     '(' . $record->caseType->name .') ' . __('records.in_date') . ' (' . ( $record->date
                                     ) . ')','route'=>'records','parameters'=> ['patient' => $patient->id,'department' =>
                                     $department->id,'record'=>$record->id]])
@@ -130,7 +130,7 @@ $department->name . ")"])
 @include('records._create')
 @endpermission
 @permission('delete-'.$department->scientific_name)
-@include('records._delete_select',['route' => 'records','parameters'=>['patient' => $patient->id,'department' =>
+@include('components.delete_select',['route' => 'records','parameters'=>['patient' => $patient->id,'department' =>
 $department->id]])
 @endpermission
 </div>

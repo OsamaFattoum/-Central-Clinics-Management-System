@@ -20,6 +20,8 @@ return [
 
     'patients_t' => 'المرضى',
     'patients_add_t' => 'إضافة مريض',
+    
+    'facility_search' => 'بحث عن منشأة',
 
 
     'all' => 'عرض الكل',

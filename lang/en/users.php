@@ -23,6 +23,9 @@ return [
     'department' => 'Department',
 
 
+    'type_facility' => 'Type Facility',
+
+
 
     'title_owner_info' => 'Owner Information',
     'owner_name' => 'Name',

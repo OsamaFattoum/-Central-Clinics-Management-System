@@ -20,6 +20,9 @@ return [
     'patients_t' => 'Patients',
     'patients_add_t' => 'Add Patient',
 
+    'facility_search' => 'Search for a facility',
+
+
     'all' => 'View All',
 
 

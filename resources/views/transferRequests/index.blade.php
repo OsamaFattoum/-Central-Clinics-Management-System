@@ -102,7 +102,7 @@ $patient->name , 'currentPage' => __('transfer.transfer_requests')])
 
 
                                 @permission('delete-transfer-requests')
-                                @include('transferRequests._delete',['id'=>$transferRequest->id,'name' =>
+                                @include('components.delete',['id'=>$transferRequest->id,'name' =>
                                 __('transfer.transfer_request'),'route'=>'transferRequests','parameters'=>[$patient->id,$transferRequest->id]])
                                 @endpermission
                                 @include('components.desc',['id'=>$transferRequest->id,'name' =>
@@ -124,7 +124,7 @@ $patient->name , 'currentPage' => __('transfer.transfer_requests')])
 @endpermission
 
 @permission('delete-transfer-requests')
-@include('transferRequests._delete_select',['route' => 'transferRequests','parameters'=>['patient'=>$patient->id]])
+@include('components.delete_select',['route' => 'transferRequests','parameters'=>['patient'=>$patient->id]])
 @endpermission
 
 </div>

@@ -23,6 +23,8 @@ return [
     'clinic' => 'العيادة',
     'department' => 'القسم',
 
+    'type_facility' => 'نوع المنشأة',
+
 
    
 
