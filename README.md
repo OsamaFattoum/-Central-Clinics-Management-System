@@ -1,66 +1,143 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🏥 Central Clinics Management System  
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+The **Central Clinics Management System (CCMS)** is a full-stack healthcare management platform designed to streamline **patient records, appointments, pharmacy operations, and clinical workflows**.  
+It connects multiple departments (clinics, doctors, pharmacies, and patients) into one unified system with **role-based access**.  
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## ✨ Features  
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### 👨‍💼 Admin  
+- Secure login/logout using email & password  
+- Manage personal account (update info, change password)  
+- Manage clinic departments (view, add, edit, delete)  
+- Manage clinics (view, add, edit, delete, assign departments)  
+- Manage doctors (view, add, edit, delete, assign permissions)  
+- Manage patients (view, add, edit, delete, view details)  
+- Manage patient records (medical reports, diagnoses)  
+- Manage transfer requests (view, update status, delete)  
+- Manage patient appointments (view, add, edit, delete)  
+- Manage pharmacies (view, add, edit, delete, manage medications)  
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 🏢 Clinic Owner  
+- Login/logout using **owner number** & password  
+- Manage personal account (update info, change password)  
+- Manage doctors (view, add, edit, assign permissions)  
+- Manage appointments (view, update status)  
 
-## Learning Laravel
+### 👨‍⚕️ Doctor  
+- Login/logout using **job number** & password  
+- Manage personal account (update info, change password)  
+- Manage patients (add, view details)  
+- Manage patient records (add, edit medical reports/diagnoses, depending on permissions)  
+- Manage transfer requests (add, view details)  
+- Manage appointments (view, add, edit status)  
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 💊 Pharmacy Doctor  
+- Login/logout using **pharmacy number** & password  
+- Manage personal account (update info, change password)  
+- Dispense medications or provide substitutes to patients  
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### 🧑‍🤝‍🧑 Patients  
+- Login/logout using **civil ID** & password  
+- Manage personal account (update info, change password)  
+- Manage appointments (view, book new)  
+- View medical records, reports, and diagnoses  
+- View prescribed medications and details  
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-## Laravel Sponsors
+## 🛠️ Tech Stack  
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+- **Backend:** PHP (Laravel)  
+- **Frontend:** JavaScript, Bootstrap, jQuery  
+- **Database:** MySQL  
+- **Version Control:** Git  
+- **IDE/Tools:** VS Code, Laragon  
 
-### Premium Partners
+---
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+## 📸 Screenshots  
 
-## Contributing
+![Home Page](screenshots/Home.png)  
+![Admin Dashboard Page](screenshots/AdminDashboard.png)
+![Login Page](screenshots/Login.png)
+![Patient Record Page](screenshots/PatientRecord.png)
+![Search Facility Page](screenshots/SearchFacility.png)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+---
 
-## Code of Conduct
+## 🚀 Installation & Setup  
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+1. **Clone the repository**  
+   ```bash
+   git clone https://github.com/yourusername/central-clinic-management.git
+   cd central-clinic-management
+---
 
-## Security Vulnerabilities
+2. **Set up environment**
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+   * Install [Laragon](https://laragon.org/) or [XAMPP](https://www.apachefriends.org/).
+   * Place the project folder in `www` or `htdocs`.
 
-## License
+3. **Database setup**
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+   * Create a new MySQL database (e.g., `ccms_db`).
+   * Import the included SQL file (`ccms_db.sql`).
+   * Update `.env` file with database credentials.
+
+4. **Run migrations & seed (if applicable)**
+
+   ```bash
+   php artisan migrate --seed
+   ```
+
+5. **Start server**
+
+   ```bash
+   php artisan serve
+   ```
+
+   Open [http://localhost:8000](http://localhost:8000).
+
+---
+
+## 🎮 Usage
+
+* **Admin:** Full system control (departments, clinics, doctors, patients, pharmacy, appointments).
+* **Clinic Owner:** Manage their clinic, doctors, and appointments.
+* **Doctor:** Manage patients, medical reports, and appointments.
+* **Pharmacy Doctor:** Dispense medications.
+* **Patients:** Book appointments, view medical history & medications.
+
+---
+
+## 🔮 Future Improvements
+
+* 📩 Add email & SMS notifications for appointments.
+* 📊 Generate analytics dashboards for admins.
+* 📱 Develop a mobile-friendly version using Flutter.
+* 🔒 Enhance security with 2FA (two-factor authentication).
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome!
+
+1. Fork the repository
+2. Create a new branch (`feature/your-feature`)
+3. Commit your changes
+4. Open a Pull Request
+
+---
+
+## 📜 License
+
+This project is licensed under the **MIT License** – feel free to use and modify it.
+
+---
+
+## 👤 Author
+
+**Osama Fattoum**
