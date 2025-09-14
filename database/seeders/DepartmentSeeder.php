@@ -52,11 +52,11 @@ class DepartmentSeeder extends Seeder
             ],
         ];
 
-        $images = [
-            '21578EdaLTNKNBedEVTDQl3aBRWhKLCKTVOgfx4H.png',
-            '21578EdaLTNKNBedEVTDQl3aBRWhKLCKTVOgfx4O.png',
-            '21578EdaLTNKNBedEVTDQl3aBRWhKLCKTVOgfx4W.png',
-        ];
+            $images = [
+                '21578EdaLTNKNBedEVTDQl3aBRWhKLCKTVOgfx4H.png',
+                '21578EdaLTNKNBedEVTDQl3aBRWhKLCKTVOgfx4O.png',
+                '21578EdaLTNKNBedEVTDQl3aBRWhKLCKTVOgfx4W.png',
+            ];
 
         $per = [];
         foreach ($departments as $index => $departmentData) {
